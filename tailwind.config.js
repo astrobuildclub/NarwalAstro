@@ -1,6 +1,13 @@
 /** @type {import('tailwindcss').Config} */
+
+const fluid = require('fluid-tailwind')
+const { extract } = fluid
+
 module.exports = {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: {
+    files: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+    extract,
+  },
   theme: {
     extend: {
       gridTemplateColumns: {
@@ -10,9 +17,7 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-fluid-type')({
-      // your fluid type settings
-      // works only with unitless numbers
-      // This numbers are the defaults settings
+      // Jouw fluid type instellingen
       settings: {
         fontSizeMin: 1.125, // 1.125rem === 18px
         fontSizeMax: 1.25, // 1.25rem === 20px
@@ -24,9 +29,6 @@ module.exports = {
         prefix: '', // set a prefix to use it alongside the default font sizes
         extendValues: true, // When you set extendValues to true it will extend the default values. Set it to false to overwrite the values.
       },
-      // Creates the text-xx classes
-      // This are the default settings and analog to the tailwindcss defaults
-      // Each `lineHeight` is set unitless and we think that's the way to go especially in context with fluid type.
       values: {
         xs: [-2, 1.6],
         sm: [-1, 1.6],
@@ -43,6 +45,7 @@ module.exports = {
         '9xl': [10, 1],
       },
     }),
+    fluid,
   ],
   darkMode: ['class', '.darkmode'],
 }

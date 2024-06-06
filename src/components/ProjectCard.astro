@@ -50,47 +50,49 @@ if (size) {
 <div class={`project-card ${cardclasses}`}>
   <div class="project-media">
     {
-      vidsrc && ( // if video src is set, show video
-        <div class="project-video ">
+      vidsrc ? (
+        // if video src is set, show video with poster image
+        <div class="w-full project-video">
           <video
-            preload=""
+            preload="metadata"
             tabindex="-1"
-            disablepictureinpicture=""
-            loop=""
+            disablepictureinpicture
+            playsinline
+            loop
             title={title}
-            playsinline=""
             src={vidsrc}
-            autoplay="true"
+            poster={imgsrc}
+            autoplay
+            class="w-full"
           />
         </div>
-      )
-    }
-
-    {
-      imgsrc && ( // if image src is set, show image
-        <div class="project-image">
-          <Image
-            src={imgsrc}
-            alt={imgalt}
-            inferSize={true}
-            widths={[240, 540, 720, projImg.width]}
-            sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${projImg.width}px`}
-            class="min-w-full"
-          />
-        </div>
+      ) : (
+        imgsrc && (
+          // if no video, show image
+          <div class="project-image">
+            <Image
+              src={imgsrc}
+              alt={imgalt}
+              inferSize={true}
+              widths={[240, 540, 720, projImg.width]}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${projImg.width}px`}
+              class="min-w-full"
+            />
+          </div>
+        )
       )
     }
   </div>
 
   <div class="project-content">
-    <div class="project-meta flex justify-between py-2">
-      {client && <h3 class="project-client text-xs">{client}</h3>}
+    <div class="flex justify-between py-4 align-baseline project-meta">
+      {client && <h3 class="text-xs project-client">{client}</h3>}
       {meta && <TagGroup tags={meta} />}
     </div>
 
     {
       title && (
-        <h2 class="project-title text-xl3">
+        <h2 class="leading-none project-title text-xl3">
           <a href={slug} class="project-link">
             {title}
           </a>
@@ -102,7 +104,7 @@ if (size) {
   <style is:global>
     .project-card {
       position: relative;
-      overflow: hidden;
+      /* overflow: hidden; */
       transition: box-shadow 0.15s ease-in-out;
       color: var(--font-color);
     }
