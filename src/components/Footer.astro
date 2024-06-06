@@ -4,15 +4,23 @@ import CallToAction from './CallToAction.astro'
 const currentYear = new Date().getFullYear()
 ---
 
-<footer>
-  <CallToAction />
-  <section class="py-8">
+<footer class="fixed -z-10">
+  <!-- <CallToAction /> -->
+  <section class="min-h-screen py-8">
     <div class="container">
-      <p>
-        &copy; {currentYear} - Starter Theme for <a href="https://astro.build/">Astro</a>. Made with ❤️ by <a
-          href="https://github.com/markteekman">Mark Teekman</a
-        >.
-      </p>
+      <div class="grid grid-cols-1 content md:grid-cols-4">
+        <div class="col">1</div>
+        <div class="col">2</div>
+        <div class="col">3</div>
+        <div class="col">4</div>
+      </div>
+      <div class="legal">
+        <p>
+          &copy; {currentYear} - Starter Theme for <a href="https://astro.build/">Astro</a>. Made with ❤️ by <a
+            href="https://github.com/markteekman">Mark Teekman</a
+          >.
+        </p>
+      </div>
     </div>
   </section>
 </footer>

@@ -35,7 +35,7 @@ const {
   </head>
   <body>
     <Header />
-    <main id="main-content" transition:animate="fade">
+    <main id="main-content" class="relative z-5" transition:animate="fade">
       <slot />
     </main>
     <Footer />
@@ -73,7 +73,7 @@ const {
       // sticky footer on low content pages
       html,
       body {
-        height: 100%;
+        // height: 100%;
         overflow-x: hidden;
       }
 
@@ -85,6 +85,8 @@ const {
 
         main {
           flex: 1 0 auto;
+          background: var(--background);
+          margin-bottom: 100vh;
         }
 
         footer {

@@ -5,7 +5,7 @@ import { Image } from 'astro:assets'
 import logo from '../assets/img/logo.svg'
 ---
 
-<div id="main-navigation" class="is-desktop py-8">
+<div id="main-navigation" class="z-10 py-8 is-desktop">
   <div class="container">
     <a href="/" class="flex items-center gap-2 !no-underline">
       <Image src={logo} alt="Your Logo" width="47" height="37" />
@@ -221,6 +221,8 @@ import logo from '../assets/img/logo.svg'
   @use '../assets/scss/base/outline' as *;
 
   #main-navigation {
+    background: var(--background);
+
     > .container {
       display: flex;
       justify-content: space-between;
