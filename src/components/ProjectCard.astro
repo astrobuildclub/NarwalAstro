@@ -13,10 +13,13 @@ const {
   slug = '#',
   size = 'default',
   meta = [{ label: 'Campaign' }, { label: 'Identity' }],
+ ignoreSize
 } = Astro.props
 // add ignore feature
 
 let cardclasses = ''
+
+if(ignoreSize === "false"){
 if (size) {
   switch (size) {
     case 'small':
@@ -31,6 +34,8 @@ if (size) {
     default:
       cardclasses = 'lg:col-span-6'
   }
+}}else{
+  cardclasses = 'lg:col-span-2'
 }
 // class=`project-card ${slugify(size)}
 
