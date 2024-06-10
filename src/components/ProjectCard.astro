@@ -1,35 +1,40 @@
 ---
-import { slugify } from '../lib/utils'
+// Import Components
 import Image from 'astro/components/Image.astro'
 import TagGroup from '../components/TagGroup.astro'
-import projImg from '../assets/img/koppert.png'
 
-const {
-  client = 'Koppert',
-  title = 'Agriculture Campaign',
-  imgsrc = projImg,
-  imgalt = 'Agriculture Campaign',
-  vidsrc = '',
-  slug = '#',
-  size = 'default',
-  meta = [{ label: 'Campaign' }, { label: 'Identity' }],
- ignoreSize
-} = Astro.props
-// add ignore feature
+// Type Definitions
+type Meta = {
+  label: string;
+}; 
+type ProjectProps = {
+  client?: string;
+  title?: string;
+  imgsrc?: string;
+  imgalt?: string;
+  vidsrc?: string;
+  link?: string;
+  size?: string;
+  meta?: Meta[];
+  fitCards?: boolean;
+};
+
+// Defaults
+const { client, title, imgsrc, imgalt = '', vidsrc, link, size, meta, fitCards} = Astro.props;
 
 let cardclasses = ''
 
-if(ignoreSize === "false"){
+if(fitCards !== true){
 if (size) {
   switch (size) {
     case 'small':
       cardclasses = 'lg:col-span-4'
       break
     case 'large':
-      cardclasses = 'lg:col-span-8' // Assuming large should span 4 columns
+      cardclasses = 'lg:col-span-8' 
       break
     case 'full':
-      cardclasses = 'lg:col-span-12' // Assuming full should span all 16 columns
+      cardclasses = 'lg:col-span-12'
       break
     default:
       cardclasses = 'lg:col-span-6'
@@ -37,27 +42,12 @@ if (size) {
 }}else{
   cardclasses = 'lg:col-span-2'
 }
-// class=`project-card ${slugify(size)}
-
-// sizes
-// small
-// const cardclasses = 'col-span-4'
-
-// default
-// const cardclasses = 'col-span-8'
-
-// large
-// const cardclasses = 'col-span-12'
-
-// full
-// const cardclasses = 'col-span-16'
 ---
 
 <div class={`project-card ${cardclasses}`}>
   <div class="overflow-hidden rounded-lg project-media">
     {
-      vidsrc ? (
-        // if video src is set, show video with poster image
+      vidsrc ? ( // if vidsrc is set, show video with poster image
         <div class="w-full project-video">
           <video
             preload="metadata"
@@ -68,20 +58,19 @@ if (size) {
             title={title}
             src={vidsrc}
             poster={imgsrc}
-            autoplay
-            class="w-full"
+            autoplay={true}
+            muted 
           />
         </div>
       ) : (
-        imgsrc && (
-          // if no video, show image
+        imgsrc && ( // if no video, show image
           <div class="project-image">
             <Image
               src={imgsrc}
               alt={imgalt}
               inferSize={true}
-              widths={[240, 540, 720, projImg.width]}
-              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${projImg.width}px`}
+              widths={[240, 540, 720, imgsrc.width]}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${imgsrc.width}px`}
               class="min-w-full"
             />
           </div>
@@ -99,7 +88,7 @@ if (size) {
     {
       title && (
         <h2 class="leading-none project-title text-xl3">
-          <a href={slug} class="project-link">
+          <a href={link} class="project-link">
             {title}
           </a>
         </h2>
