@@ -1,88 +1,57 @@
 ---
+const {slides} = Astro.props;
 ---
 <section class="carousel-gallery">
   <div class="carousels">
+
     <!-- Background Carousel -->
     <div class="carousel carousel-background swiper">
       <!-- Slides -->
       <div role="list" class="swiper-wrapper">
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">
-          <!-- Video -->
-          <div class="video-wrapper">
-            <div class="video-overlay">
-              <video class="video" playsinline="" loop="" muted="" autoplay="">
-                <source
-                  src="https://assets-global.website-files.com/652e94d9295cf0f25e8f370e/654b828223d944492487b176_IIVO_Benefit_Banner_3_v1-transcode.mp4"
+        {slides &&
+          slides.map((slide)=>(
+
+            <!-- Slide -->
+            <div role="group" class="swiper-slide">
+              
+              {slide.vidsrc &&
+                 <!-- Video -->
+                <div class="video-wrapper">
+                  <div class="video-overlay">
+                    <video class="video" playsinline="" loop="" muted="" autoplay="">
+                      <source
+                        src={slide.vidsrc}
+                      />
+                    </video>
+                  </div>
+                </div>
+              }
+
+              {slide.imgsrc && 
+                <!-- Image -->
+                <img
+                  src={slide.imgsrc}
+                  alt={slide.imgalt}
+                  sizes="100vw"
+                  class="poster"
                 />
-              </video>
+              }
             </div>
-          </div>
-          <!-- Image -->
-          <img
-            src="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png"
-            alt="Customer Benefit Campagne"
-            sizes="100vw"
-            srcset="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-500.png 500w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-800.png 800w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-1080.png 1080w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-1600.png 1600w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png 1920w"
-            class="poster"
-          />
-        </div>
-
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">
-          <!-- Image -->
-          <img
-            src="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png"
-            alt="World Athletics Championships"
-            sizes="100vw"
-            srcset="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-500.png 500w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-800.png 800w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1080.png 1080w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1600.png 1600w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png 1920w"
-            class="poster"
-          />
-        </div>
-
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">
-           <!-- Image -->
-           <img
-           src="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png"
-           alt="World Athletics Championships"
-           sizes="100vw"
-           srcset="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-500.png 500w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-800.png 800w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1080.png 1080w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1600.png 1600w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png 1920w"
-           class="poster"
-         />
-        </div>
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">
-           <!-- Image -->
-           <img
-           src="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png"
-           alt="World Athletics Championships"
-           sizes="100vw"
-           srcset="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-500.png 500w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-800.png 800w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1080.png 1080w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1600.png 1600w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png 1920w"
-           class="poster"
-         />
-        </div>
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">
-           <!-- Image -->
-           <img
-           src="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png"
-           alt="World Athletics Championships"
-           sizes="100vw"
-           srcset="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-500.png 500w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-800.png 800w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1080.png 1080w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1600.png 1600w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png 1920w"
-           class="poster"
-         />
-        </div>
+          ))
+        }    
       </div>
     </div>
     <!-- Foreground Carousel -->
     <div class="carousel carousel-foreground swiper">
         <div role="list" class="swiper-wrapper">
-          <div role="group" class="swiper-slide"><h3>client</h3><h1>Caption 1</h1></div>
-          <div role="group" class="swiper-slide"><h3>client</h3><h1>Caption 2</h1></div>
-          <div role="group" class="swiper-slide"><h3>client</h3><h1>Caption 3</h1></div>
-          <div role="group" class="swiper-slide"><h3>client</h3><h1>Caption 4</h1></div>
-          <div role="group" class="swiper-slide"><h3>client</h3><h1>Caption 5</h1></div>
+          {slides &&   slides.map((slide)=>(
+            <!-- Slide -->
+            <div role="group" class="swiper-slide">
+              <h3>{slide.client}</h3>
+              <h1>{slide.title}</h1>
+            </div>
+          ))
+        }    
         </div>
     </div>
     <!-- Carousel Controls -->
