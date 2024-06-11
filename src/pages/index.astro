@@ -5,9 +5,68 @@ import ProjectList from '../components/ProjectList.astro'
 import Feature from '../components/Feature.astro'
 import Counter from '../components/Counter.astro'
 import ContentMedia from '../components/ContentMedia.astro'
+
+// This will become CMS data
+const ProjectData = {
+  "projects": [
+    {
+      title: "Hello Campaign",
+      client: "Poepje",
+      link: "#",
+      size: "large",
+      imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png",
+      imgalt: "",
+      vidsrc: "",
+      meta: [{ label: 'Brand' }, { label: 'Identity' }],
+    },
+    {
+      title: "Goodbye Campaign",
+      client: "Snoepje",
+      link: "#",
+      size: "large",
+      imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png",
+      imgalt: "",
+      vidsrc: "",
+      meta: [{ label: 'Campaign' }, { label: 'Website' }],
+    },
+    {
+      title: "Nice Campaign",
+      client: "fLoepje",
+      link: "#",
+      size: "small",
+      imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png",
+      imgalt: "",
+      vidsrc: "",
+      meta: [{ label: 'Strategy' }, { label: 'Identity' }],
+    },
+    {
+      title: "Video Campaign",
+      client: "fLoepje",
+      link: "#",
+      size: "full",
+      imgsrc : "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png",
+      imgalt: "",
+      vidsrc: "https://assets-global.website-files.com/652e94d9295cf0f25e8f370e/654b828223d944492487b176_IIVO_Benefit_Banner_3_v1-transcode.mp4",
+      meta: [{ label: 'Campaign' }, { label: 'Stickers' }],
+    },
+    {
+      title: "Standaard",
+      client: "fLoepje",
+      link: "#",
+      size: "",
+      imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png",
+      imgalt: "",
+      vidsrc: "",
+      meta: [{ label: 'Nothing' }, { label: 'Identity' }],
+    },
+  ]
+};
+
+
 ---
 
 <DefaultLayout title="Home">
+  
   <Carousel />
 
   <section class="my-24">
@@ -24,7 +83,9 @@ import ContentMedia from '../components/ContentMedia.astro'
     </div>
   </section>
 
-  <ProjectList type="grid" />
+  <ProjectList projects={ProjectData.projects} layout="grid" fitCards={false} />
+
+  <ProjectList projects={ProjectData.projects} layout="list" fitCards={true} />
 
   <!--   
 
