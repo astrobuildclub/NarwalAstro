@@ -1,4 +1,7 @@
 ---
+// Import Components
+import Image from 'astro/components/Image.astro'
+
 const {slides} = Astro.props;
 ---
 <section class="carousel-gallery">
@@ -9,13 +12,10 @@ const {slides} = Astro.props;
       <!-- Slides -->
       <div role="list" class="swiper-wrapper">
         {slides &&
-          slides.map((slide)=>(
-
-            <!-- Slide -->
+          slides.map((slide:any)=>( // slide
             <div role="group" class="swiper-slide">
               
-              {slide.vidsrc &&
-                 <!-- Video -->
+              {slide.vidsrc && // video
                 <div class="video-wrapper">
                   <div class="video-overlay">
                     <video class="video" playsinline="" loop="" muted="" autoplay="">
@@ -27,12 +27,13 @@ const {slides} = Astro.props;
                 </div>
               }
 
-              {slide.imgsrc && 
-                <!-- Image -->
-                <img
+              {slide.imgsrc && // image 
+                <Image
                   src={slide.imgsrc}
                   alt={slide.imgalt}
-                  sizes="100vw"
+                  inferSize={true}
+                  widths={[240, 540, 720, slide.imgsrc.width]}
+                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${slide.imgsrc.width}px`}
                   class="poster"
                 />
               }
@@ -44,8 +45,8 @@ const {slides} = Astro.props;
     <!-- Foreground Carousel -->
     <div class="carousel carousel-foreground swiper">
         <div role="list" class="swiper-wrapper">
-          {slides &&   slides.map((slide)=>(
-            <!-- Slide -->
+          {slides && 
+            slides.map((slide:any)=>( // slide
             <div role="group" class="swiper-slide">
               <h3>{slide.client}</h3>
               <h1>{slide.title}</h1>
