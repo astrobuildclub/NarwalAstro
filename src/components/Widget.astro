@@ -1,0 +1,9 @@
+---
+const {title} = Astro.props;
+---
+<div class="widget col">
+  {title &&
+    <h5>{title}</h5>
+  }
+  <slot />
+</div>

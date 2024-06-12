@@ -1,25 +1,50 @@
 ---
 import CallToAction from './CallToAction.astro'
+import Widget from './Widget.astro';
+import Newsletter from './Newsletter.astro';
 
 const currentYear = new Date().getFullYear()
 ---
 
+
 <footer class="fixed -z-10">
+
+
   <!-- <CallToAction /> -->
   <section class="min-h-screen py-8">
     <div class="container">
       <p>We’re always up to meet new people. Feel free to reach out to discuss your ambitions.</p>
       <div class="grid grid-cols-1 content md:grid-cols-4">
-        <div class="col">1</div>
-        <div class="col">2</div>
-        <div class="col">3</div>
-        <div class="col">4</div>
+        <Widget title="Join our Newsletter">
+          <Newsletter />
+        </Widget>
+        <Widget title="Address">
+          <address>
+            <ul role="list">
+              <li>Narwal Creative</li>
+              <li>Westerkade 4 — 5</li>
+              <li>3511 HA Utrecht</li>
+              <li>The Netherlands</li>
+            </ul>
+          </address>
+        </Widget>
+        <Widget title="Socialize">
+          <ul role="list">
+            <li><a href="https://www.instagram.com/narwalcreative/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.behance.net/jelmerscheffer" target="_blank">Behance</a></li>
+            <li><a href="https://www.linkedin.com/company/narwal-creative" target="_blank">Linkedin</a></li>
+          </ul>
+        </Widget>
+        <Widget title="Get in touch">
+          <ul role="list">
+            <li><a href="tel:+31302270459">+31 (0)30 227 04 59</a></li>
+            <li><a href="mailto:info@narwalcreative.com?subject=Hello!">info@narwalcreative.com</a></li>
+          </ul>
+        </Widget>
       </div>
       <div class="legal">
         <p>
-          &copy; {currentYear} - Starter Theme for <a href="https://astro.build/">Astro</a>. Made with ❤️ by <a
-            href="https://github.com/markteekman">Mark Teekman</a
-          >.
+          &copy; {currentYear} - Narwal Creative <a href="https://astro.build/">Terms & Conditions</a>
         </p>
       </div>
     </div>
