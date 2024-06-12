@@ -1,0 +1,17 @@
+---
+---
+<div class="newsletter">
+  <form id="newsletter-form" name="newsletter-form" method="get" class="form-fields" aria-label="Newsletter Form">
+    <label for="name" class="field-label">Name</label>
+    <input class="field-input field_name" maxlength="256" name="name" placeholder="" type="text" id="name">
+    <label for="email" class="field-label">Email Address</label>
+    <input class="field-input field_email" maxlength="256" name="email" placeholder="" type="email" id="email" required="">
+    <input type="submit" data-wait="Please wait..." class="field-submit" value="Submit">
+  </form>
+  <div class="form-success" tabindex="-1" role="region" aria-label="Newsletter Form success">
+    <p>Thank you! Your submission has been received!</p>
+  </div>
+  <div class="form-error" tabindex="-1" role="region" aria-label="Newsletter Form failure">
+    <p>Oops! Something went wrong while submitting the form.</p>
+  </div>
+</div>
