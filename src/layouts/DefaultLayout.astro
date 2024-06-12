@@ -49,6 +49,8 @@ const {
         --font-family-stack: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
         --font-family-default: 'Inter', var(--font-family-stack);
         --font-family-special: 'Inter Tight', var(--font-family-stack);
+
+        --footer-height: 100vh;
         // light theme
         --font-color: var(--neutral-900);
         --action-color: var(--primary-300);
@@ -86,7 +88,7 @@ const {
         main {
           flex: 1 0 auto;
           background: var(--background);
-          margin-bottom: 100vh;
+          margin-bottom: var(--footer-height);
         }
 
         footer {

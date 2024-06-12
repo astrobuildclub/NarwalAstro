@@ -8,12 +8,44 @@ const currentYear = new Date().getFullYear()
   <!-- <CallToAction /> -->
   <section class="min-h-screen py-8">
     <div class="container">
+      <img src="logo.svg" />
       <p>We’re always up to meet new people. Feel free to reach out to discuss your ambitions.</p>
-      <div class="grid grid-cols-1 content md:grid-cols-4">
-        <div class="col">1</div>
-        <div class="col">2</div>
-        <div class="col">3</div>
-        <div class="col">4</div>
+      <div class="grid grid-cols-1 gap-4 content md:grid-cols-4">
+        <div class="col">
+          <h3>Join our newsletter</h3>
+          <ul class="footer-list">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Address</h3>
+          <ul class="footer-list">
+            <li>Narwal Creative Westerkade 4 & 5</li>
+            <li>3511 HA Utrecht</li>
+            <li>The Netherlands</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Contact</h3>
+          <ul class="footer-list">
+            <li><a href=" tel:+31302270459" title="call us!" target="_blank"> +31 (0)30 227 04 59</a></li>
+            <li>
+              <a href="mailto:info@narwalcreative.com" title="send an email" target=" _blank">info@narwalcreative.com</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Social</h3>
+          <ul class="footer-list">
+            <li><a href="https://www.instagram.com/narwalcreative/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/company/narwal-creative/" target="_blank">LinkedIn</a></li>
+            <li><a href="https://www.behance.net/jelmerscheffer" target="_blank">Behance</a></li>
+          </ul>
+        </div>
       </div>
       <div class="legal">
         <p>
@@ -23,5 +55,15 @@ const currentYear = new Date().getFullYear()
         </p>
       </div>
     </div>
+
+    <style>
+      footer {
+        background: var(--);
+      }
+
+      ul {
+        list-style-type: '';
+      }
+    </style>
   </section>
 </footer>
