@@ -1,63 +1,59 @@
 ---
+// Import Components
+import Image from 'astro/components/Image.astro'
 
+const {slides} = Astro.props;
 ---
 <section class="carousel-gallery">
   <div class="carousels">
+
     <!-- Background Carousel -->
     <div class="carousel carousel-background swiper">
       <!-- Slides -->
       <div role="list" class="swiper-wrapper">
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">
-          <!-- Video -->
-          <div class="video-wrapper">
-            <div class="video-overlay">
-              <video class="video" playsinline="" loop="" muted="" autoplay="">
-                <source
-                  src="https://assets-global.website-files.com/652e94d9295cf0f25e8f370e/654b828223d944492487b176_IIVO_Benefit_Banner_3_v1-transcode.mp4"
+        {slides &&
+          slides.map((slide:any)=>( // slide
+            <div role="group" class="swiper-slide">
+              
+              {slide.vidsrc && // video
+                <div class="video-wrapper">
+                  <div class="video-overlay">
+                    <video class="video" playsinline="" loop="" muted="" autoplay="">
+                      <source
+                        src={slide.vidsrc}
+                      />
+                    </video>
+                  </div>
+                </div>
+              }
+
+              {slide.imgsrc && // image 
+                <Image
+                  src={slide.imgsrc}
+                  alt={slide.imgalt}
+                  inferSize={true}
+                  widths={[240, 540, 720, slide.imgsrc.width]}
+                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${slide.imgsrc.width}px`}
+                  class="poster"
                 />
-              </video>
+              }
             </div>
-          </div>
-          <!-- Image -->
-          <img
-            src="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png"
-            alt="Customer Benefit Campagne"
-            sizes="100vw"
-            srcset="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-500.png 500w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-800.png 800w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-1080.png 1080w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9-p-1600.png 1600w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png 1920w"
-            class="poster"
-          />
-        </div>
-
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">
-          <!-- Image -->
-          <img
-            src="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png"
-            alt="World Athletics Championships"
-            sizes="100vw"
-            srcset="https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-500.png 500w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-800.png 800w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1080.png 1080w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB-p-1600.png 1600w, https://cdn.prod.website-files.com/652e95f945884e792746f7e7/6548c08f3958da44b00f7fd0_PUMA-World-Athletics-Champs-16x9-FULL-THUMB.png 1920w"
-            class="poster"
-          />
-        </div>
-
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">Background slide 3</div>
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">Background slide 4</div>
-        <!-- Slide -->
-        <div role="group" class="swiper-slide">Background slide 5</div>
+          ))
+        }    
       </div>
     </div>
     <!-- Foreground Carousel -->
     <div class="carousel carousel-foreground swiper">
-      <div role="list" class="swiper-wrapper">
-        <div role="group" class="swiper-slide">Caption 1</div>
-        <div role="group" class="swiper-slide">Caption 2</div>
-        <div role="group" class="swiper-slide">Caption 3</div>
-        <div role="group" class="swiper-slide">Caption 4</div>
-        <div role="group" class="swiper-slide">Caption 5</div>
-      </div>
+        <div role="list" class="swiper-wrapper">
+          {slides && 
+            slides.map((slide:any)=>( // slide
+            <div role="group" class="swiper-slide">
+              <h3>{slide.client}</h3>
+              <h1>{slide.title}</h1>
+            </div>
+          ))
+        }    
+        </div>
     </div>
     <!-- Carousel Controls -->
     <div class="controls swiper-controls">
@@ -107,26 +103,25 @@
 
 <script src="../lib/swiper.js"></script>
 
-<style>
-  /* Algemene instellingen voor de carousel gallery */
+<style>/* Algemene instellingen voor de carousel gallery */
   .carousel-gallery {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  
     width: 100%;
     height: 80vh;
     position: relative;
     overflow: hidden;
   }
-
+  
   .carousels {
-    padding: 0;
+    padding:0;
     margin: 0;
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
   }
-
+  
   /* Achtergrond carousel instellingen */
   .carousel-background {
     position: absolute;
@@ -136,7 +131,7 @@
     height: 100%;
     z-index: 1; /* Achtergrond */
   }
-
+  
   .carousel-background .swiper-slide {
     position: relative;
     display: flex;
@@ -146,7 +141,7 @@
     height: 100%;
     overflow: hidden; /* Zorgt ervoor dat de inhoud in de viewport past */
   }
-
+  
   .carousel-background .video-wrapper {
     position: absolute;
     top: 0;
@@ -155,22 +150,22 @@
     height: 100%;
     z-index: 2; /* Zorgt ervoor dat de video boven de afbeelding ligt */
   }
-
+  
   .carousel-background .video,
   .carousel-background video {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Past de video aan om de hele slide te bedekken */
   }
-
-  .carousel-background .poster,
+  
+  .carousel-background .poster ,
   .carousel-background img {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Past de afbeelding aan om de hele slide te bedekken */
     z-index: 1; /* Zorgt ervoor dat de afbeelding onder de video ligt */
   }
-
+  
   /* Voorgrond carousel instellingen */
   .carousel-foreground {
     position: relative;
@@ -182,8 +177,8 @@
     align-items: flex-end;
     pointer-events: none; /* Zorgt ervoor dat alleen de controls klikbaar zijn */
   }
-  .carousel-foreground .swiper-wrapper {
-    width: 100%;
+  .carousel-foreground .swiper-wrapper{
+    width:100%;
     height: 100%;
     padding: 20px;
   }
@@ -200,7 +195,7 @@
     margin: 0;
     overflow: hidden;
   }
-
+  
   /* Control instellingen */
   .controls {
     position: absolute;
@@ -211,17 +206,17 @@
     align-items: center;
     justify-content: center;
   }
-
+  
   .controls-wrapper {
     display: flex;
-    align-items: center;
-  }
+    align-items: center
+  }  
 
   .controls {
     z-index: 10;
     grid-column-gap: 0em;
     grid-row-gap: 1.5em;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(1, 1, 1, 0.6));
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(1, 1, 1, .6));
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
@@ -233,9 +228,9 @@
     right: 0%;
     padding: 20px;
   }
-  .controls-wrapper {
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 0.5rem;
+  .controls-wrapper{
+    grid-column-gap: .5rem;
+    grid-row-gap: .5rem;
     flex-wrap: wrap;
     flex: 0 auto;
     justify-content: flex-end;

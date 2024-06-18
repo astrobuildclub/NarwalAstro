@@ -1,0 +1,50 @@
+query GetHomeFields {
+  pageBy(uri: "/") {
+    homeFields {
+      content {
+        intro
+        statement
+      }
+      featured {
+        nodes {
+          ... on Project {
+            slug
+            projectHero {
+              details {
+                title
+                subtitle
+              }
+            }
+            projectMeta {
+              projectClient {
+                nodes {
+                  ... on Client {
+                    title
+                  }
+                }
+              }
+              services {
+                nodes {
+                  ... on Service {
+                    title
+                  }
+                }
+              }
+              thumbnailGroup {
+                size
+                aspectRatio
+                vimeo
+                thumbnail {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

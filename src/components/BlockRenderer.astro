@@ -1,0 +1,51 @@
+---
+import type { ContentFields, ContentField } from "src/types/contentblocks";
+// Import Content Block Components
+import TextBlock from "./blocks/TextBlock.astro";
+import ImageBlock from "./blocks/ImageBlock.astro";
+import VideoBlock from "./blocks/VideoBlock.astro";
+import ColorBlock from "./blocks/ColorBlock.astro";
+import TestimonialBlock from "./blocks/TestimonialBlock.astro";
+
+type Props = {
+  blocks: ContentField[];
+};
+
+const { blocks } = Astro.props;
+---
+
+<div>
+  {
+    blocks.map((block) => {
+      // console.log(block);
+      switch (block.__typename) {
+        case "ContentFieldsContentTextLayout": // Text Block
+          return (
+            <TextBlock
+              content={block.text?.text || ""}
+              width={block.text?.width}
+            />
+          );
+        case "ContentFieldsContentImageLayout": // Image Block
+          // console.log(block);
+          return (
+            <ImageBlock
+              sourceUrl={block.image.node.sourceUrl}
+              altText={block.image.node.altText}
+              size={block.size}
+            />
+          );
+        case "ContentFieldsContentVideoLayout": // Video Block
+          return <VideoBlock />;
+        case "ContentFieldsContentColorModeLayout": // Color Block
+          return <ColorBlock />;
+        case "ContentFieldsContentColorModeLayout": // Color Block
+          return <ColorBlock />;
+        case "ContentFieldsContentTestimonialLayout": // Testimonial Block
+          return <TestimonialBlock />;
+        default:
+          null;
+      }
+    })
+  }
+</div>

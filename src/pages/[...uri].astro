@@ -1,0 +1,25 @@
+---
+export const prerender = true;
+
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+import { getAllUris } from "../lib/api";
+import { getNodeData, getTemplateByRoute } from "../lib/routes";
+
+export async function getStaticPaths() {
+  return await getAllUris();
+}
+
+// Dynamische parameter ophalen
+const { uri } = Astro.params;
+const slug = uri ? `/${uri}/` : "/";
+
+let node = await getNodeData(slug);
+const Template = getTemplateByRoute(node);
+---
+
+<DefaultLayout
+  title={node.title || "Studio Homepage"}
+  description="Our amazing studio from Rotterdam"
+>
+  <Template content={node} />
+</DefaultLayout>

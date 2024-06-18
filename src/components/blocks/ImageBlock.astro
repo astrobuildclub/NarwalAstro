@@ -1,0 +1,19 @@
+---
+type Props = {
+  size: string;
+  altText: string;
+  sourceUrl: string;
+};
+
+const { sourceUrl, size, altText } = Astro.props;
+
+import { Image } from "astro:assets";
+---
+
+<Image
+  src={sourceUrl}
+  alt={altText}
+  class="w-full aspect-auto object-cover"
+  width="100"
+  height="100"
+/>

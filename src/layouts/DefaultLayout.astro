@@ -2,16 +2,23 @@
 import '@astrojs/tailwind/base.css'
 import '../assets/scss/globals.scss'
 import SiteMeta from '../components/SiteMeta.astro'
-import Header from '../components/Header.astro'
-import Footer from '../components/Footer.astro'
+import SiteNavigation from "../components/SiteNavigation.astro"
+import SiteFooter from "../components/SiteFooter.astro"
 
-const {
-  title = 'Astro',
-  description = 'A starter project with accessibility features using Astro static site builder. Contains accessible landmarks, skip links, a dark mode color scheme, better focus outline and keyboard menu navigation.',
-  url,
-  image = '/social-preview-image.png',
-  author = 'Mark Teekman',
-} = Astro.props
+import { getNavigation } from "../lib/api";
+
+type Props = {
+  title: string;
+  description: string;
+  image: string;
+  author: string;
+};
+
+const { title, description, image = '/social-preview-image.png',
+author = 'AstroBuildClub™' } = Astro.props;
+const { menus, generalSettings } = await getNavigation();
+const primaryMenu = menus.nodes[0];
+
 ---
 
 <html lang="en" dir="ltr">
@@ -31,83 +38,12 @@ const {
       author={author}
     />
   </head>
+
   <body>
-    <Header />
-    <main id="main-content" class="relative z-5" transition:animate="fade">
+    <SiteNavigation menu={primaryMenu} generalSettings={generalSettings} />
+    <main>
       <slot />
     </main>
-    <Footer />
-    <style lang="scss" is:global>
-      // theme settings
-      :root {
-        --radius-small: 3px;
-        --radius-large: 6px;
-        --gap-default: 2rem;
-        --font-measure: 70ch;
-        --font-family-stack: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-        --font-family-default: 'Inter', var(--font-family-stack);
-        --font-family-special: 'Inter Tight', var(--font-family-stack);
-        // light theme
-        --font-color: var(--neutral-900);
-        --action-color: var(--primary-300);
-        --action-color-state: var(--primary-500);
-        --background: var(--neutral-100);
-        --primary-background: var(--primary-100);
-        --neutral-background: var(--neutral-200);
-        --tag-bg: var(--neutral-200);
-      }
-
-      // dark color scheme overrides
-      .darkmode {
-        --font-color: var(--neutral-100);
-        --action-color: var(--secondary-100);
-        --action-color-state: var(--secondary-500);
-        --background: var(--dark-100);
-        --primary-background: var(--primary-500);
-        --neutral-background: var(--neutral-900);
-        --tag-bg: var(--neutral-800);
-      }
-
-      // sticky footer on low content pages
-      html,
-      body {
-        // height: 100%;
-        overflow-x: hidden;
-      }
-
-      body {
-        display: flex;
-        flex-direction: column;
-        color: var(--font-color);
-        background-color: var(--background);
-
-        main {
-          flex: 1 0 auto;
-          background: var(--background);
-          margin-bottom: 100vh;
-        }
-
-        footer {
-          flex-shrink: 0;
-        }
-      }
-
-      pre {
-        padding: 1rem;
-        border-radius: 0.35rem;
-        border: 2px solid var(--action-color);
-      }
-
-      body .pagination a {
-        &:hover,
-        &:focus-visible {
-          background-color: var(--action-color-state);
-
-          svg path {
-            stroke: white;
-          }
-        }
-      }
-    </style>
+    <SiteFooter />
   </body>
 </html>

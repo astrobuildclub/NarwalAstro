@@ -1,0 +1,15 @@
+query GetPageByUri($uri: String!) {
+  nodeByUri(uri: $uri) {
+    __typename
+    ... on Page {
+      id
+      status
+      title
+      content
+      isFrontPage
+      template {
+        templateName
+      }
+    }
+  }
+}
