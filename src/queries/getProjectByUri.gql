@@ -1,0 +1,81 @@
+query GetProjectByUri($uri: String!) {
+  nodeByUri(uri: $uri) {
+    __typename
+    ... on Project {
+      id
+      excerpt
+      featuredImage {
+        node {
+          altText
+          sourceUrl
+        }
+      }
+      projectFields {
+        details {
+          color
+          coverMedia
+          intro
+          media {
+            coverImage {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+          }
+          subtitle
+          title
+        }
+      }
+      contentFields {
+        content {
+          ... on ContentFieldsContentTextLayout {
+            __typename
+            text {
+              fieldGroupName
+              text
+              width
+            }
+          }
+          ... on ContentFieldsContentImageLayout {
+            __typename
+            showCaption
+            image {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+          }
+          ... on ContentFieldsContentVideoLayout {
+            __typename
+            embed
+            embedCopy
+            video {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+          }
+          ... on ContentFieldsContentTestimonialLayout {
+            __typename
+            name
+          }
+          ... on ContentFieldsContentGalleryLayout {
+            __typename
+          }
+          ... on ContentFieldsContentColorModeLayout {
+            __typename
+            colorMode
+          }
+        }
+      }
+      seo {
+        title
+        metaDesc
+        canonical
+      }
+    }
+  }
+}

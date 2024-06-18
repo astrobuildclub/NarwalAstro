@@ -5,5 +5,5 @@ const { tags } = Astro.props
 ---
 
 <ul class="flex gap-2">
-  {tags.map((item: any) => <Tag link={item.link} label={item.label} />)}
+  {tags.map((item: any) => <Tag link={item.link} label={item.title} />)}
 </ul>
