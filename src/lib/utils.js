@@ -1,25 +1,4 @@
 // @ts-nocheck
-
-export function slugify(input) {
-  if (!input) return ''
-
-  // make lower case and trim
-  var slug = input.toLowerCase().trim()
-
-  // remove accents from charaters
-  slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-
-  // replace invalid chars with spaces
-  slug = slug.replace(/[^a-z0-9\s-]/g, ' ').trim()
-
-  // replace multiple spaces or hyphens with a single hyphen
-  slug = slug.replace(/[\s-]+/g, '-')
-
-  return slug
-}
-
-export const joinClasses = (...classes) => classes.filter(c => !!c).join(" ");
-
 export function numberWithZero(num) {
   return num < 10 ? "0" + num : num;
 }

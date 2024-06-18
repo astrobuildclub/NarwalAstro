@@ -4,24 +4,24 @@ import Image from 'astro/components/Image.astro'
 import TagGroup from '../components/TagGroup.astro'
 
 // Type Definitions
-type Meta = {
-  label: string;
+type Services = {
+  title: string;
 }; 
 type ProjectProps = {
-  client?: string;
+  clientname?: string;
   title?: string;
   imgsrc?: string;
   imgalt?: string;
   vidsrc?: string;
   link?: string;
   size?: string;
-  meta?: Meta[];
+  services?: Services[];
   fitCards?: boolean;
 };
 
-// Defaults
-const { client, title, imgsrc, imgalt = '', vidsrc, link, size, meta, fitCards} = Astro.props;
 
+// Defaults
+const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards} = Astro.props;
 let cardclasses = ''
 
 if(fitCards !== true){
@@ -81,8 +81,8 @@ if (size) {
 
   <div class="project-content">
     <div class="flex justify-between py-4 align-baseline project-meta">
-      {client && <h3 class="text-xs project-client">{client}</h3>}
-      {meta && <TagGroup tags={meta} />}
+      {clientname && <h3 class="text-xs project-client">{clientname}</h3>}
+      {services && <TagGroup tags={services} />}
     </div>
 
     {

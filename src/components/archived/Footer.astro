@@ -1,7 +1,7 @@
 ---
 import CallToAction from './CallToAction.astro'
-import Widget from './Widget.astro'
-import Newsletter from './Newsletter.astro'
+import Widget from '../Widget.astro'
+import Newsletter from '../Newsletter.astro'
 
 const currentYear = new Date().getFullYear()
 ---
@@ -10,9 +10,8 @@ const currentYear = new Date().getFullYear()
   <!-- <CallToAction /> -->
   <section class="min-h-screen py-8">
     <div class="container">
-      <img src="logo.svg" />
       <p>We’re always up to meet new people. Feel free to reach out to discuss your ambitions.</p>
-      <div class="grid grid-cols-1 content md:grid-cols-4">
+      <div class="content grid grid-cols-1 md:grid-cols-4">
         <Widget title="Join our Newsletter">
           <Newsletter />
         </Widget>
@@ -46,15 +45,5 @@ const currentYear = new Date().getFullYear()
         </p>
       </div>
     </div>
-
-    <style>
-      footer {
-        background: var(--);
-      }
-
-      ul {
-        list-style-type: '';
-      }
-    </style>
   </section>
 </footer>
