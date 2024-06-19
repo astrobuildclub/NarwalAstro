@@ -3,16 +3,18 @@ import Hero from "../Hero.astro";
 import BlockRenderer from "../BlockRenderer.astro";
 
 type Props = {
-  content: any;
+  data: any;
 };
 
-const { content } = Astro.props;
+const { data } = Astro.props;
 
-const projectFields = content.projectFields.details;
-const contentFields = content.contentFields.content;
+const projectHero= data.projectHero.details;
+const projectContent = data.projectContent.content;
 ---
 
-<Hero content={projectFields} />
+<Hero data={projectHero} />
+
+
 <article class="max-w-[64rem] flex flex-col mx-auto size-full">
-  <BlockRenderer blocks={contentFields} />
+  <BlockRenderer blocks={projectContent} />
 </article>
