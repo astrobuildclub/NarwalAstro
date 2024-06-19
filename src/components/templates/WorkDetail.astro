@@ -8,13 +8,14 @@ type Props = {
 
 const { data } = Astro.props;
 
-const projectHero= data.projectHero.details;
-const projectContent = data.projectContent.content;
+const projectHero= data.projectHero?.details;
+const projectContent = data.projectContent?.content;
 ---
 
 <Hero data={projectHero} />
 
-
+{projectContent && 
 <article class="max-w-[64rem] flex flex-col mx-auto size-full">
   <BlockRenderer blocks={projectContent} />
 </article>
+}
