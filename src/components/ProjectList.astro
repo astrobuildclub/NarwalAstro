@@ -11,7 +11,8 @@ const projectCards = projects.map((project:any) =>({
   imgsrc: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.sourceUrl || "",
   imgalt: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.altText || "",
   vidsrc: project.projectMeta?.thumbnailGroup?.vimeo || "",
-  services: project.projectMeta?.services?.nodes || []
+  services: project.projectMeta?.services?.nodes || [],
+  link: `/project/${project.slug}/`,
 }));
 
 ---
