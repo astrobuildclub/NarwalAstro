@@ -1,5 +1,4 @@
-
-import { getHomeFields, getNodeByUri } from "../lib/api";
+import { getHomeFields, getSlideFields, getAllProjects, getNodeByUri } from "../lib/api";
 
 // templates
 import Single from "../components/templates/Single.astro";
@@ -17,13 +16,14 @@ export async function getNodeData(slug: string) {
   //fetch additional fields on the homepage
   if (node.isFrontPage){
     let homeFields = await getHomeFields();
-    node = {...node, ...homeFields.pageBy}
+    let slideFields = await getSlideFields();
+    node = {...node, ...homeFields.pageBy, ...slideFields}
   }
   // fetch additional fields on the project
-  // if (node.template?.templateName === "Work"){
-  //   let projectFields = await getProjectFields();
-  //   node = {...node, ...projectFields}
-  // }
+  if (node.template?.templateName === "Work"){
+    let allProjects = await getAllProjects();
+    node = {...node, ...allProjects}
+  }
   return node;
 }
 

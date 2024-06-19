@@ -7,6 +7,7 @@ import TagGroup from '../components/TagGroup.astro'
 type Services = {
   title: string;
 }; 
+
 type ProjectProps = {
   clientname?: string;
   title?: string;
@@ -19,9 +20,8 @@ type ProjectProps = {
   fitCards?: boolean;
 };
 
-
 // Defaults
-const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards} = Astro.props;
+const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards} = Astro.props as ProjectProps;
 let cardclasses = ''
 
 if(fitCards !== true){
@@ -69,8 +69,8 @@ if (size) {
               src={imgsrc}
               alt={imgalt}
               inferSize={true}
-              widths={[240, 540, 720, imgsrc.width]}
-              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${imgsrc.width}px`}
+              widths={[240, 540, 720]}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px`}
               class="min-w-full"
             />
           </div>

@@ -3,14 +3,13 @@ query GetProjectByUri($uri: String!) {
     __typename
     ... on Project {
       id
-      excerpt
-      featuredImage {
-        node {
-          altText
-          sourceUrl
-        }
+      status
+      seo {
+        title
+        metaDesc
+        canonical
       }
-      projectFields {
+      projectHero {
         details {
           color
           coverMedia
@@ -27,17 +26,16 @@ query GetProjectByUri($uri: String!) {
           title
         }
       }
-      contentFields {
+      projectContent {
         content {
-          ... on ContentFieldsContentTextLayout {
+          ... on ProjectContentContentTextLayout {
             __typename
             text {
-              fieldGroupName
               text
               width
             }
           }
-          ... on ContentFieldsContentImageLayout {
+          ... on ProjectContentContentImageLayout {
             __typename
             showCaption
             image {
@@ -46,11 +44,14 @@ query GetProjectByUri($uri: String!) {
                 sourceUrl
               }
             }
+            size
           }
-          ... on ContentFieldsContentVideoLayout {
+          ... on ProjectContentContentVideoLayout {
             __typename
             embed
             embedCopy
+            option
+            size
             video {
               node {
                 altText
@@ -58,23 +59,77 @@ query GetProjectByUri($uri: String!) {
               }
             }
           }
-          ... on ContentFieldsContentTestimonialLayout {
+          ... on ProjectContentContentTestimonialLayout {
             __typename
             name
+            photo {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            roleCompany
+            testimonial
           }
-          ... on ContentFieldsContentGalleryLayout {
+          ... on ProjectContentContentMultiColsLayout {
             __typename
+            col {
+              showText
+              tet
+              text
+              titlw
+              verticalAlign
+              video
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
           }
-          ... on ContentFieldsContentColorModeLayout {
+          ... on ProjectContentContentColorModeLayout {
             __typename
             colorMode
+            fieldGroupName
+          }
+          ... on ProjectContentContentGalleryLayout {
+            __typename
+            gallery {
+              nodes {
+                altText
+                sourceUrl
+              }
+            }
           }
         }
       }
-      seo {
-        title
-        metaDesc
-        canonical
+      projectMeta {
+        credits
+        projectClient {
+          nodes {
+            ... on Client {
+              id
+              title
+            }
+          }
+        }
+        related {
+          nodes {
+            ... on Project {
+              id
+              title
+            }
+          }
+        }
+        services {
+          nodes {
+            ... on Service {
+              id
+              title
+            }
+          }
+        }
       }
     }
   }
