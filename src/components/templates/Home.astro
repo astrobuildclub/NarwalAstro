@@ -7,18 +7,16 @@ const { data } = Astro.props;
 
 const fields = data.homeFields;
 const slides = data.slides.nodes;
+const projects = fields.featured.nodes;
 
 const intro = fields.content.intro;
 const statement = fields.content.statement;
-const featuredProjects = fields.featured.nodes;
-
-console.log(featuredProjects)
 ---
-<Carousel slides={featuredProjects} />
+<Carousel {slides} />
 
 <PageIntro> 
   <Fragment slot="column-one" set:html={intro} />
   <Fragment slot="column-two" set:html={statement} />
 </PageIntro>
 
-<ProjectList projects={featuredProjects} layout="grid" />
+<ProjectList {projects} layout="grid" />

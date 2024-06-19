@@ -1,7 +1,23 @@
 query GetSlideFields {
   slides {
     nodes {
-      title
+      status
+      slideFields {
+        slideTitle
+        videoUrl
+        slideSub
+        image {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        link {
+          url
+          title
+          target
+        }
+      }
     }
   }
 }
