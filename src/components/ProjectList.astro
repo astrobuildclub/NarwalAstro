@@ -3,6 +3,17 @@ import type { ActionError, ActionInputError } from 'astro:actions';
 import ProjectCard from '../components/ProjectCard.astro'
 
 const {projects, layout, fitCards} = Astro.props;
+
+const projectCards = projects.map((project:any) =>({
+  title: project.projectHero?.details?.title || "",
+  clientname: project.projectMeta?.projectClient?.nodes[0].title || "",
+  size: project.projectMeta?.thumbnailGroup?.size?.toString() || "",
+  imgsrc: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.sourceUrl || "",
+  imgalt: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.altText || "",
+  vidsrc: project.projectMeta?.thumbnailGroup?.vimeo || "",
+  services: project.projectMeta?.services?.nodes || []
+}));
+
 ---
 
 <section class="my-24" class:list={
@@ -15,18 +26,9 @@ const {projects, layout, fitCards} = Astro.props;
  }>
   <div class="container">
     <div class="grid items-start gap-12 project-list start lg:grid-cols-12">
-      {projects && 
-        projects.map((item: any) => {
-
-          let title = item.projectHero.details.title || "";
-          let clientname = item.projectMeta.projectClient.nodes[0].title || "";
-          let services = item.projectMeta.services.nodes || [];
-          let size =  item.projectMeta.thumbnailGroup.size.toString() || "";
-          let vidsrc = item.projectMeta.thumbnailGroup.vimeo || "";
-          let imgsrc =  item.projectMeta.thumbnailGroup.thumbnail.node.sourceUrl || "";
-          let imgalt =  item.projectMeta.thumbnailGroup.thumbnail.node.altText || "";
-
-          return <ProjectCard {title} {clientname} {size} {imgsrc} {imgalt} {vidsrc} {services} {fitCards} />
+      {projectCards && 
+        projectCards.map((item: any) => {
+          return <ProjectCard {...item} {fitCards} />
         } )
       }
     </div>

@@ -12,6 +12,7 @@ type Props = {
 };
 
 const { blocks } = Astro.props;
+console.log(blocks);
 ---
 
 <div>
@@ -19,29 +20,27 @@ const { blocks } = Astro.props;
     blocks.map((block) => {
       // console.log(block);
       switch (block.__typename) {
-        case "ContentFieldsContentTextLayout": // Text Block
+        case "ProjectContentContentTextLayout":// Text Block
           return (
-            <TextBlock
-              content={block.text?.text || ""}
-              width={block.text?.width}
-            />
-          );
-        case "ContentFieldsContentImageLayout": // Image Block
-          // console.log(block);
+              <TextBlock
+                content={block.text?.text || ""}
+                width={block.text?.width}
+              />
+            );
+
+        case "ProjectContentContentImageLayout": // Image block
           return (
-            <ImageBlock
-              sourceUrl={block.image.node.sourceUrl}
-              altText={block.image.node.altText}
-              size={block.size}
-            />
-          );
-        case "ContentFieldsContentVideoLayout": // Video Block
+              <ImageBlock
+                sourceUrl={block.image.node.sourceUrl}
+                altText={block.image.node.altText}
+                size={block.size}
+              />
+            );
+        case "ProjectContentContentVideoLayout": // Video Block
           return <VideoBlock />;
-        case "ContentFieldsContentColorModeLayout": // Color Block
+        case "ProjectContentContentColorModeLayout": // Color Block
           return <ColorBlock />;
-        case "ContentFieldsContentColorModeLayout": // Color Block
-          return <ColorBlock />;
-        case "ContentFieldsContentTestimonialLayout": // Testimonial Block
+        case "ProjectContentContentTestimonialLayout": // Testimonial Block
           return <TestimonialBlock />;
         default:
           null;

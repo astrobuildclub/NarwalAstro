@@ -1,5 +1,13 @@
 ---
+import ProjectList from "../ProjectList.astro";
+
+const {data} = Astro.props;
+
+const projectData = data.work.nodes;
+console.log(data.work.nodes);
 
 ---
 
 <div>WerkOverzicht</div>
+
+<ProjectList projects={projectData} layout="grid" fitCards={true} />

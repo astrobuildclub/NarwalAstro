@@ -106,6 +106,19 @@ export async function getHomeFields() {
 }
 
 
+export async function getSlideFields() {
+  const query = await loadQuery('getSlideFields.gql');
+  return await fetchGraphQL(query);
+}
+
+export async function getAllProjects() {
+  const query = await loadQuery('getAllProjects.gql');
+  return await fetchGraphQL(query);
+}
+
+
+
+
 
 
 // export async function getProjectDataByUri(uri){

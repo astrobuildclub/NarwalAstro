@@ -1,14 +1,15 @@
 ---
 import type { Details } from "../types/projectdetails";
 type Props = {
-  content: Details;
+  data: Details;
 };
 
-const { content } = Astro.props;
-const isCover = content.coverMedia;
-const heroTitle = content.title;
-const heroDescription = content.intro;
-const heroBackgroundColor = content.color;
+const { data } = Astro.props;
+
+const isCover = data.coverMedia;
+const heroTitle = data.title;
+const heroDescription = data.intro;
+const heroBackgroundColor = data.color;
 ---
 
 <section class:list={["hero", { is_cover: isCover }]}>
