@@ -2,43 +2,19 @@
 // Import Components
 import Image from 'astro/components/Image.astro'
 
-// const {slides} = Astro.props;
+const {slides} = Astro.props;
 
+const backgroundSlides = slides.map((slide:any) =>({
+  imgsrc: slide.slideFields?.image?.node?.sourceUrl || "",
+  imgalt: slide.slideFields?.image?.node?.altText || slide.slideFields?.slideTitle || "",
+  vidsrc: slide.slideFields?.videoUrl || ""
+}));
 
-const slides = [
-  {
-    title: "Caption 1",
-    client: "client",
-    imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png",
-    imgalt: "joi",
-    vidsrc: "https://assets-global.website-files.com/652e94d9295cf0f25e8f370e/654b828223d944492487b176_IIVO_Benefit_Banner_3_v1-transcode.mp4",
-    link: "",
-  },
-  {
-    title: "Caption 2",
-    client: "client",
-    imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png",
-    imgalt: "adsad",
-    vidsrc: "",
-    link: "",
-  },
-  {
-    title: "Caption 3",
-    client: "client",
-    imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png",
-    imgalt: "ups",
-    vidsrc: "https://assets-global.website-files.com/652e94d9295cf0f25e8f370e/654b828223d944492487b176_IIVO_Benefit_Banner_3_v1-transcode.mp4",
-    link: "",
-  },
-  {
-    title: "Caption 4",
-    client: "client",
-    imgsrc: "https://cdn.prod.website-files.com/652e95f945884e792746f7e7/654b822b564a3d23c5d198c1_Hoogendoorn-Customer-Benefits-Campaign-Thumbnail-16x9.png",
-    imgalt: "downs",
-    vidsrc: "",
-    link: "",
-  }
-];
+const foregroundSlides = slides.map((slide:any) =>({
+  title: slide.slideFields?.slideTitle || "",
+  subtitle: slide.slideFields?.slideSub || ""
+}));
+
 
 ---
 <section class="carousel-gallery">
@@ -48,8 +24,8 @@ const slides = [
     <div class="carousel carousel-background swiper">
       <!-- Slides -->
       <div role="list" class="swiper-wrapper">
-        {slides &&
-          slides.map((slide:any)=>( // slide
+        {backgroundSlides &&
+          backgroundSlides.map((slide:any)=>( // slide
             <div role="group" class="swiper-slide">
               {slide.vidsrc && // video
                 <div class="video-wrapper">
@@ -68,8 +44,8 @@ const slides = [
                   src={slide.imgsrc}
                   alt={slide.imgalt}
                   inferSize={true}
-                  widths={[240, 540, 720, slide.imgsrc.width]}
-                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${slide.imgsrc.width}px`}
+                  widths={[240, 540, 720]}
+                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px`}
                   class="poster"
                 />
               }
@@ -81,10 +57,10 @@ const slides = [
     <!-- Foreground Carousel -->
     <div class="carousel carousel-foreground swiper">
         <div role="list" class="swiper-wrapper">
-          {slides && 
-            slides.map((slide:any)=>( // slide
+          {foregroundSlides && 
+            foregroundSlides.map((slide:any)=>( // slide
             <div role="group" class="swiper-slide">
-              <h3>{slide.client}</h3>
+              <h3>{slide.subtitle}</h3>
               <h1>{slide.title}</h1>
             </div>
           ))
