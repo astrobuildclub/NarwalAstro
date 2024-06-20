@@ -79,14 +79,17 @@ body {
   color: #fff;
 }
 
+
+
 .content {
-  --gap: clamp(1rem, 6vw, 3rem);
+   --gap: clamp(1rem, 6vw, 3rem);
   --full: minmax(var(--gap), 1fr);
-  --content: min(50ch, 100% - var(--gap) * 2);
-  --popout: minmax(0, 2rem);
-  --feature: minmax(0, 5rem);
+  --content: min(80ch, 100% - var(--gap) * 2);
+  --popout: minmax(0, calc(5rem + 10vw));
+  --feature: minmax(0, calc(10rem + 10vw));
 
   display: grid;
+
   grid-template-columns:
     [full-start] var(--full)
     [feature-start] var(--feature)
