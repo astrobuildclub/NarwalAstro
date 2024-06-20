@@ -1,18 +1,21 @@
 ---
-import ProjectList from "../ProjectList.astro";
-import PageIntro from "../PageIntro.astro";
+import ProjectList from '../ProjectList.astro'
+import PageIntro from '../PageIntro.astro'
 
-const {data} = Astro.props;
-const projectData = data.work.nodes;
-
+const { data } = Astro.props
+const projectData = data.work.nodes
 ---
+
 <header>
   <h1>Our work</h1>
 </header>
-<PageIntro> 
-  <p slot="column-one">Narwal is boutique. Narwal is no-nonsense. Founded in 2020, the creative agency blends creative disciplines with heart and soul to humanize brand stories and create cool stuff with lasting impact. Visual identities, campaigns, events and experiences, you name it, they can make it happen in-house with their hands-on creative and production team.</p>
-  <Fragment slot="column-two">
-    Filters go here
-  </Fragment>
+<PageIntro>
+  <p slot="column-one">
+    Narwal is boutique. Narwal is no-nonsense. Founded in 2020, the creative agency blends creative disciplines with
+    heart and soul to humanize brand stories and create cool stuff with lasting impact. Visual identities, campaigns,
+    events and experiences, you name it, they can make it happen in-house with their hands-on creative and production
+    team.
+  </p>
+  <Fragment slot="column-two">Filters go here</Fragment>
 </PageIntro>
-<ProjectList projects={projectData} layout="grid" fitCards={true} />
+<ProjectList projects={projectData} layout="list" fitCards={true} />

@@ -25,7 +25,7 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="project-list start grid items-center gap-12 lg:grid-cols-12">
+  <div class="project-list start grid gap-12">
     {
       projectCards &&
         projectCards.map((item: any) => {
@@ -43,7 +43,17 @@ const projectCards = projects.map((project: any) => ({
   .layout-grid {
     /* background-color: aqua; */
   }
+
+  .layout-grid .project-list {
+    align-items: center;
+  }
+
   .layout-list {
-    /* background-color: yellow; */
+    /* background: yellow; */
+  }
+
+  .layout-list .project-list {
+    grid-template-columns: repeat(6, 1fr);
+    align-items: start;
   }
 </style>

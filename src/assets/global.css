@@ -11,7 +11,7 @@
 
   /* Colors */
 
-  --clr-salmon: #ffdbbb;
+  --clr-white: #fff;
   --clr-orange: #f79433;
   --clr-general: #dbcadb;
   --clr-purple: #806180;
@@ -24,7 +24,7 @@
     /* Fonts */
 
   --font-system: system-ui, sans-serif; /* use as fallback */
-  --font-body: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  --font-body: 'Helvetica Neue', Inter, Roboto, 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
 
