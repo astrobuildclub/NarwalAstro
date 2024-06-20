@@ -16,7 +16,7 @@ const projectCards = projects.map((project: any) => ({
 ---
 
 <section
-  class="my-24"
+  class="my-32"
   class:list={[
     {
       'layout-grid': layout === 'grid',
@@ -24,23 +24,25 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="container">
-    <div class="project-list start grid items-start gap-12 lg:grid-cols-12">
-      {
-        projectCards &&
-          projectCards.map((item: any) => {
-            return <ProjectCard {...item} {fitCards} />
-          })
-      }
-    </div>
+  <div class="project-list start grid items-center gap-12 lg:grid-cols-12">
+    {
+      projectCards &&
+        projectCards.map((item: any) => {
+          return <ProjectCard {...item} {fitCards} />
+        })
+    }
   </div>
 </section>
 
 <style>
+  section {
+    padding: var(--site-padding);
+  }
+
   .layout-grid {
     background-color: aqua;
   }
   .layout-list {
-    background-color: yellow;
+    /* background-color: yellow; */
   }
 </style>

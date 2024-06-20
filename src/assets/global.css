@@ -1,32 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /*---------------------*/
 /* VARIABLES           */
 /*---------------------*/
 
 :root {
-  /*--------------------------------------------------------------------------------------------------------------*/
-  /* Typography           */
-  /*--------------------------------------------------------------------------------------------------------------*/
 
-  /* https://www.fluid-type-scale.com/ */
 
-  --fs-xs: clamp(0.64rem, -0.01vi + 0.64rem, 0.63rem);
-  --fs-sm: clamp(0.8rem, 0.05vi + 0.79rem, 0.84rem);
-  --fs-base: clamp(1rem, 0.13vi + 0.97rem, 1.13rem);
-  --fs-md: clamp(1.25rem, 0.26vi + 1.19rem, 1.5rem);
-  --fs-lg: clamp(1.56rem, 0.45vi + 1.46rem, 2rem);
-  --fs-xl: clamp(1.95rem, 0.73vi + 1.79rem, 2.66rem);
-  --fs-2xl: clamp(2.44rem, 1.14vi + 2.19rem, 3.55rem);
-  --fs-3xl: clamp(3.05rem, 1.73vi + 2.66rem, 4.73rem);
-  --fs-4xl: clamp(3.81rem, 2.56vi + 3.24rem, 6.31rem);
-
-  --font-system: system-ui, sans-serif; /* use as fallback */
-  --font-body: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-  --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
-
-  /*----------------------*/
-  /* Colors               */
-  /*----------------------*/
+  /* Colors */
 
   --clr-salmon: #ffdbbb;
   --clr-orange: #f79433;
@@ -36,9 +19,47 @@
   --clr-teal-rgb: 60, 193, 153;
   --clr-blue: #151f52;
 
+  --tag-bg: #333;
+
+    /* Fonts */
+
+  --font-system: system-ui, sans-serif; /* use as fallback */
+  --font-body: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+
+
+  /* Font Sizes */
+  /* https://www.fluid-type-scale.com/ / https://bit.ly/4b7CNn3 */
+
+  --fs-xs: clamp(0.89rem, -0.09vi + 0.91rem, 0.8rem);
+  --fs-sm: clamp(1rem, 0vi + 1rem, 1rem);
+  --fs-base: clamp(1.13rem, 0.13vi + 1.1rem, 1.25rem);
+  --fs-md: clamp(1.27rem, 0.3vi + 1.21rem, 1.56rem);
+  --fs-lg: clamp(1.42rem, 0.53vi + 1.32rem, 1.95rem);
+  --fs-xl: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem);
+  --fs-2xl: clamp(1.8rem, 1.25vi + 1.55rem, 3.05rem);
+  --fs-3xl: clamp(2.03rem, 1.79vi + 1.67rem, 3.81rem);
+  --fs-4xl: clamp(2.28rem, 2.49vi + 1.78rem, 4.77rem);
+  --fs-5xl: clamp(2.57rem, 3.39vi + 1.89rem, 5.96rem);
+  --fs-6xl: clamp(2.89rem, 4.56vi + 1.97rem, 7.45rem);
+  --fs-7xl: clamp(3.25rem, 6.07vi + 2.03rem, 9.31rem);
+  --fs-8xl: clamp(3.65rem, 7.99vi + 2.06rem, 11.64rem);
+
+
+
+
+
+  --site-padding: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem);
+  --grid-gutter: 
+
   --radius-default: clamp(1rem, 0.7692rem + 1.0256vw, 2rem);
-  --radius-left: var(--radius-default) 0 0 var(--radius-default);
-  --radius-right: 0 var(--radius-default) var(--radius-default) 0;
+
+  --easing-easeOutBack: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --easing-easeInOutQuart: cubic-bezier(0.76, 0, 0.24, 1);
+  --easing-easeOutExpo: cubic-bezier(0.16, 1, 0.3, 1);
+  
+
 
   /*----------------------*/
   /* Colors
@@ -54,6 +75,8 @@ body {
 body {
   font-size: 1rem;
   text-rendering: optimizeLegibility;
+  background: #000;
+  color: #fff;
 }
 
 .content {

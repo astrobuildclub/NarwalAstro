@@ -5,50 +5,51 @@ import TagGroup from '../components/TagGroup.astro'
 
 // Type Definitions
 type Services = {
-  title: string;
-}; 
+  title: string
+}
 
 type ProjectProps = {
-  clientname?: string;
-  title?: string;
-  imgsrc?: string;
-  imgalt?: string;
-  vidsrc?: string;
-  link?: string;
-  size?: string;
-  services?: Services[];
-  fitCards?: boolean;
-};
+  clientname?: string
+  title?: string
+  imgsrc?: string
+  imgalt?: string
+  vidsrc?: string
+  link?: string
+  size?: string
+  services?: Services[]
+  fitCards?: boolean
+}
 
 // Defaults
-const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards} = Astro.props as ProjectProps;
+const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards } = Astro.props as ProjectProps
 let cardclasses = ''
 
-if(fitCards !== true){
-if (size) {
-  switch (size) {
-    case 'small':
-      cardclasses = 'lg:col-span-4'
-      break
-    case 'large':
-      cardclasses = 'lg:col-span-8' 
-      break
-    case 'full':
-      cardclasses = 'lg:col-span-12'
-      break
-    default:
-      cardclasses = 'lg:col-span-6'
+if (fitCards !== true) {
+  if (size) {
+    switch (size) {
+      case 'small':
+        cardclasses = 'lg:col-span-4'
+        break
+      case 'large':
+        cardclasses = 'lg:col-span-8'
+        break
+      case 'full':
+        cardclasses = 'lg:col-span-12'
+        break
+      default:
+        cardclasses = 'lg:col-span-6'
+    }
   }
-}}else{
+} else {
   cardclasses = 'lg:col-span-2'
 }
 ---
 
 <div class={`project-card ${cardclasses}`}>
-  <div class="overflow-hidden rounded-lg project-media">
+  <div class="project-media overflow-hidden rounded-lg">
     {
       vidsrc ? ( // if vidsrc is set, show video with poster image
-        <div class="w-full project-video">
+        <div class="project-video w-full">
           <video
             preload="metadata"
             tabindex="-1"
@@ -59,7 +60,7 @@ if (size) {
             src={vidsrc}
             poster={imgsrc}
             autoplay={true}
-            muted 
+            muted
           />
         </div>
       ) : (
@@ -80,14 +81,14 @@ if (size) {
   </div>
 
   <div class="project-content">
-    <div class="flex justify-between py-4 align-baseline project-meta">
-      {clientname && <h3 class="text-xs project-client">{clientname}</h3>}
+    <div class="project-meta flex justify-between pb-3 pt-6 align-baseline">
+      {clientname && <h3 class="project-client self-baseline text-xs font-bold text-neutral-400">{clientname}</h3>}
       {services && <TagGroup tags={services} />}
     </div>
 
     {
       title && (
-        <h2 class="leading-none project-title text-xl3">
+        <h2 class="project-title text-4xl font-bold">
           <a href={link} class="project-link">
             {title}
           </a>
@@ -99,15 +100,34 @@ if (size) {
   <style is:global>
     .project-card {
       position: relative;
-      /* overflow: hidden; */
+      overflow: hidden;
       transition: box-shadow 0.15s ease-in-out;
       color: var(--font-color);
+      transition: transform 0.4s var(--easing-easeOutExpo);
     }
 
     .project-card:hover,
     .project-card:focus-within {
       box-shadow: 0 0 0 0.5rem;
       box-shadow: none;
+
+      cursor: pointer;
+    }
+
+    .project-card img,
+    .project-card video {
+      transform: scale(1.15);
+      transition: all 1.4s var(--easing-easeOutExpo);
+      opacity: 0.85;
+    }
+
+    .project-card:hover img,
+    .project-card:hover video {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .project-card:hover {
+      transform: scale(0.98);
     }
 
     .project-content a {
@@ -123,6 +143,15 @@ if (size) {
       content: '';
       position: absolute;
       inset: 0;
+    }
+
+    img,
+    video {
+      width: 100%;
+    }
+
+    .project-title {
+      text-edge: cap alphabetic;
     }
   </style>
 </div>

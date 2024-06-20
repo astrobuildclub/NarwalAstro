@@ -1,20 +1,21 @@
 ---
-import Carousel from "../Carousel.astro";
-import PageIntro from "../PageIntro.astro";
-import ProjectList from "../ProjectList.astro";
+import Carousel from '../Carousel.astro'
+import PageIntro from '../PageIntro.astro'
+import ProjectList from '../ProjectList.astro'
 
-const { data } = Astro.props;
+const { data } = Astro.props
 
-const fields = data.homeFields;
-const slides = data.slides.nodes;
-const projects = fields.featured.nodes;
+const fields = data.homeFields
+const slides = data.slides.nodes
+const projects = fields.featured.nodes
 
-const intro = fields.content.intro;
-const statement = fields.content.statement;
+const intro = fields.content.intro
+const statement = fields.content.statement
 ---
+
 <Carousel {slides} />
 
-<PageIntro> 
+<PageIntro>
   <Fragment slot="column-one" set:html={intro} />
   <Fragment slot="column-two" set:html={statement} />
 </PageIntro>
