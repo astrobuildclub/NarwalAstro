@@ -2,6 +2,8 @@
 // Import Components
 import Image from 'astro/components/Image.astro'
 
+// import replaceUrls from '../lib/utils'
+
 const {slides} = Astro.props;
 
 const backgroundSlides = slides.map((slide:any) =>({
@@ -14,7 +16,6 @@ const foregroundSlides = slides.map((slide:any) =>({
   title: slide.slideFields?.slideTitle || "",
   subtitle: slide.slideFields?.slideSub || ""
 }));
-
 
 ---
 <section class="carousel-gallery">
