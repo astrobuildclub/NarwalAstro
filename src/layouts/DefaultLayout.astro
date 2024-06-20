@@ -1,24 +1,22 @@
 ---
-import '@astrojs/tailwind/base.css'
-import '../assets/scss/globals.scss'
+import '../assets/global.css'
+// import '../assets/scss/globals.scss'
 import SiteMeta from '../components/SiteMeta.astro'
-import SiteNavigation from "../components/SiteNavigation.astro"
-import SiteFooter from "../components/SiteFooter.astro"
+import SiteNavigation from '../components/SiteNavigation.astro'
+import SiteFooter from '../components/SiteFooter.astro'
 
-import { getNavigation } from "../lib/api";
+import { getNavigation } from '../lib/api'
 
 type Props = {
-  title: string;
-  description: string;
-  image: string;
-  author: string;
-};
+  title: string
+  description: string
+  image: string
+  author: string
+}
 
-const { title, description, image = '/social-preview-image.png',
-author = 'AstroBuildClub™' } = Astro.props;
-const { menus, generalSettings } = await getNavigation();
-const primaryMenu = menus.nodes[0];
-
+const { title, description, image = '/social-preview-image.png', author = 'AstroBuildClub™' } = Astro.props
+const { menus, generalSettings } = await getNavigation()
+const primaryMenu = menus.nodes[0]
 ---
 
 <html lang="en" dir="ltr">

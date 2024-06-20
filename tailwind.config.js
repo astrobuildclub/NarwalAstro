@@ -24,7 +24,7 @@ module.exports = {
         ratioMin: 1.125, // Multiplicator Min
         ratioMax: 1.2, // Multiplicator Max
         screenMin: 20, // 20rem === 320px
-        screenMax: 96, // 96rem === 1536px
+        screenMax: 160, // 96rem === 1536px
         unit: 'rem', // default is rem but it's also possible to use 'px'
         prefix: '', // set a prefix to use it alongside the default font sizes
         extendValues: true, // When you set extendValues to true it will extend the default values. Set it to false to overwrite the values.
@@ -42,7 +42,13 @@ module.exports = {
         '6xl': [7, 1.1],
         '7xl': [8, 1],
         '8xl': [9, 1],
-        '9xl': [10, 1],
+        '9xl': [
+          10,
+          {
+            lineHeight: 0.85,
+            letterSpacing: '-0.02em',
+          },
+        ],
       },
     }),
     fluid,

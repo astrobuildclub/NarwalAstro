@@ -1,46 +1,49 @@
 ---
-import type { ActionError, ActionInputError } from 'astro:actions';
+import type { ActionError, ActionInputError } from 'astro:actions'
 import ProjectCard from '../components/ProjectCard.astro'
 
-const {projects, layout, fitCards} = Astro.props;
+const { projects, layout, fitCards } = Astro.props
 
-const projectCards = projects.map((project:any) =>({
-  title: project.projectHero?.details?.title || "",
-  clientname: project.projectMeta?.projectClient?.nodes[0].title || "",
-  size: project.projectMeta?.thumbnailGroup?.size?.toString() || "",
-  imgsrc: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.sourceUrl || "",
-  imgalt: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.altText || "",
-  vidsrc: project.projectMeta?.thumbnailGroup?.vimeo || "",
+const projectCards = projects.map((project: any) => ({
+  title: project.projectHero?.details?.title || '',
+  clientname: project.projectMeta?.projectClient?.nodes[0].title || '',
+  size: project.projectMeta?.thumbnailGroup?.size?.toString() || '',
+  imgsrc: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.sourceUrl || '',
+  imgalt: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.altText || '',
+  vidsrc: project.projectMeta?.thumbnailGroup?.vimeo || '',
   services: project.projectMeta?.services?.nodes || [],
   link: `/project/${project.slug}/`,
-}));
-
+}))
 ---
 
-<section class="my-24" class:list={
-  [
+<section
+  class="my-32"
+  class:list={[
     {
-       'layout-grid': layout === "grid",
-       'layout-list': layout !== "grid"
-     }
-   ]
- }>
-  <div class="container">
-    <div class="grid items-start gap-12 project-list start lg:grid-cols-12">
-      {projectCards && 
+      'layout-grid': layout === 'grid',
+      'layout-list': layout !== 'grid',
+    },
+  ]}
+>
+  <div class="project-list start grid items-center gap-12 lg:grid-cols-12">
+    {
+      projectCards &&
         projectCards.map((item: any) => {
           return <ProjectCard {...item} {fitCards} />
-        } )
-      }
-    </div>
+        })
+    }
   </div>
 </section>
 
 <style>
-  .layout-grid{
-    background-color: aqua;
+  section {
+    padding: var(--site-padding);
   }
-  .layout-list{
-    background-color: yellow;
+
+  .layout-grid {
+    /* background-color: aqua; */
+  }
+  .layout-list {
+    /* background-color: yellow; */
   }
 </style>

@@ -1,12 +1,23 @@
 ---
 ---
+
 <section class="page-intro">
-  <div class="container">
-    <div class="col">
+  <div class="grid grid-cols-2 content-baseline gap-12">
+    <div class="col self-baseline text-lg/8 font-bold">
       <slot name="column-one" />
     </div>
-    <div class="col">
+    <div class="col self-baseline text-4xl/tight font-bold">
       <slot name="column-two" />
     </div>
   </div>
 </section>
+
+<style>
+  section {
+    padding: var(--site-padding);
+  }
+
+  section div:nth-child(2) {
+    color: Red;
+  }
+</style>
