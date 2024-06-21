@@ -1,21 +1,29 @@
 ---
-import Hero from "../Hero.astro";
-import BlockRenderer from "../BlockRenderer.astro";
+import Hero from '../Hero.astro'
+import BlockRenderer from '../BlockRenderer.astro'
 
 type Props = {
-  data: any;
-};
+  data: any
+}
 
-const { data } = Astro.props;
+const { data } = Astro.props
 
-const projectHero= data.projectHero?.details;
-const projectContent = data.projectContent?.content;
+const projectHero = data.projectHero?.details
+const projectContent = data.projectContent?.content
 ---
 
 <Hero data={projectHero} />
 
-{projectContent && 
-<article class="max-w-[64rem] flex flex-col mx-auto size-full">
-  <BlockRenderer blocks={projectContent} />
-</article>
+{
+  projectContent && (
+    <article class="project">
+      <BlockRenderer blocks={projectContent} />
+    </article>
+  )
 }
+
+<style>
+  .project {
+    padding: var(--site-padding);
+  }
+</style>

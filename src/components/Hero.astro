@@ -1,20 +1,20 @@
 ---
-import type { Details } from "../types/projectdetails";
+import type { Details } from '../types/projectdetails'
 type Props = {
-  data: Details;
-};
+  data: Details
+}
 
-const { data } = Astro.props;
+const { data } = Astro.props
 
-const isCover = data.coverMedia;
-const heroTitle = data.title;
-const heroDescription = data.intro;
-const heroBackgroundColor = data.color;
+const isCover = data.coverMedia
+const heroTitle = data.title
+const heroDescription = data.intro
+const heroBackgroundColor = data.color
 ---
 
-<section class:list={["hero", { is_cover: isCover }]}>
-  <div class="content">
-    {heroTitle && <h1 class="hero-title">{heroTitle}</h1>}
+<section class:list={['hero', { is_cover: isCover }]}>
+  <div class="full grid">
+    {heroTitle && <h1 class="hero-title text-xl4">{heroTitle}</h1>}
     {heroDescription && <p class="hero-description">{heroDescription}</p>}
   </div>
 </section>
@@ -36,9 +36,9 @@ const heroBackgroundColor = data.color;
     padding: 6rem 8rem;
   }
   .hero-title {
-    font-family: "Times New Roman", Times, serif;
+    font-family: 'Times New Roman', Times, serif;
     letter-spacing: -0.075rem;
-    font-size: clamp(4rem, 8vw, 20rem);
+    /* font-size: var(--fs-5xl); */
   }
   .hero-description {
     font-size: clamp(1.5rem, 2vw, 4rem);

@@ -11,7 +11,7 @@
 
   /* Colors */
 
-  --clr-salmon: #ffdbbb;
+  --clr-white: #fff;
   --clr-orange: #f79433;
   --clr-general: #dbcadb;
   --clr-purple: #806180;
@@ -24,7 +24,7 @@
     /* Fonts */
 
   --font-system: system-ui, sans-serif; /* use as fallback */
-  --font-body: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  --font-body: 'Helvetica Neue', Inter, Roboto, 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
 
@@ -45,9 +45,6 @@
   --fs-6xl: clamp(2.89rem, 4.56vi + 1.97rem, 7.45rem);
   --fs-7xl: clamp(3.25rem, 6.07vi + 2.03rem, 9.31rem);
   --fs-8xl: clamp(3.65rem, 7.99vi + 2.06rem, 11.64rem);
-
-
-
 
 
   --site-padding: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem);
@@ -79,14 +76,17 @@ body {
   color: #fff;
 }
 
+
+
 .content {
-  --gap: clamp(1rem, 6vw, 3rem);
+   --gap: clamp(1rem, 6vw, 3rem);
   --full: minmax(var(--gap), 1fr);
-  --content: min(50ch, 100% - var(--gap) * 2);
-  --popout: minmax(0, 2rem);
-  --feature: minmax(0, 5rem);
+  --content: min(80ch, 100% - var(--gap) * 2);
+  --popout: minmax(0, calc(5rem + 10vw));
+  --feature: minmax(0, calc(10rem + 10vw));
 
   display: grid;
+
   grid-template-columns:
     [full-start] var(--full)
     [feature-start] var(--feature)
@@ -95,4 +95,20 @@ body {
     var(--popout) [popout-end]
     var(--feature) [feature-end]
     var(--full) [full-end];
+}
+
+.content > * {
+  grid-column: content;
+}
+
+.popout {
+  grid-column: popout;
+}
+
+.feature {
+  grid-column: feature;
+}
+
+.full {
+  grid-column: full;
 }

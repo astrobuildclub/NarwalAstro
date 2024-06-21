@@ -1,49 +1,44 @@
 ---
-import type { ContentFields, ContentField } from "src/types/contentblocks";
+import type { ContentFields, ContentField } from 'src/types/contentblocks'
 // Import Content Block Components
-import TextBlock from "./blocks/TextBlock.astro";
-import ImageBlock from "./blocks/ImageBlock.astro";
-import VideoBlock from "./blocks/VideoBlock.astro";
-import ColorBlock from "./blocks/ColorBlock.astro";
-import TestimonialBlock from "./blocks/TestimonialBlock.astro";
+import TextBlock from './blocks/TextBlock.astro'
+import ImageBlock from './blocks/ImageBlock.astro'
+import VideoBlock from './blocks/VideoBlock.astro'
+import ColorBlock from './blocks/ColorBlock.astro'
+import TestimonialBlock from './blocks/TestimonialBlock.astro'
+import MultiCols from './blocks/MultiCols.astro'
 
 type Props = {
-  blocks: ContentField[];
-};
+  blocks: ContentField[]
+}
 
-const { blocks } = Astro.props;
-console.log(blocks);
+const { blocks } = Astro.props
+console.log(blocks)
 ---
 
-<div>
+<div class="content">
   {
     blocks.map((block) => {
       // console.log(block);
       switch (block.__typename) {
-        case "ProjectContentContentTextLayout":// Text Block
-          return (
-              <TextBlock
-                content={block.text?.text || ""}
-                width={block.text?.width}
-              />
-            );
+        case 'ProjectContentContentTextLayout': // Text Block
+          return <TextBlock content={block.text?.text || ''} width={block.text?.width} />
 
-        case "ProjectContentContentImageLayout": // Image block
+        case 'ProjectContentContentImageLayout': // Image block
           return (
-              <ImageBlock
-                sourceUrl={block.image.node.sourceUrl}
-                altText={block.image.node.altText}
-                size={block.size}
-              />
-            );
-        case "ProjectContentContentVideoLayout": // Video Block
-          return <VideoBlock />;
-        case "ProjectContentContentColorModeLayout": // Color Block
-          return <ColorBlock />;
-        case "ProjectContentContentTestimonialLayout": // Testimonial Block
-          return <TestimonialBlock />;
+            <ImageBlock sourceUrl={block.image.node.sourceUrl} altText={block.image.node.altText} size={block.size} />
+          )
+        case 'ProjectContentContentVideoLayout': // Video Block
+          return <VideoBlock />
+        case 'ProjectContentContentColorModeLayout': // Color Block
+          return <ColorBlock />
+        case 'ProjectContentContentTestimonialLayout': // Testimonial Block
+          return <TestimonialBlock />
+        case 'ProjectContentContentMultiColsLayout': // Testimonial Block
+          return <MultiCols />
+
         default:
-          null;
+          null
       }
     })
   }
