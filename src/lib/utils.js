@@ -16,6 +16,6 @@ export function getCount(parent, getChildrensChildren){
   return relevantChildren;
 }
 
-export const replaceUrls = (content:string, replacementUrl:string) => {
+export function replaceUrls(content, replacementUrl){
   return content.replaceAll(`${import.meta.env.PUBLIC_WP_URL}`, replacementUrl);
 };

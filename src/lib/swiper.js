@@ -9,7 +9,8 @@
 
   import {numberWithZero, getCount} from "../lib/utils";
   
-  document.addEventListener( 'DOMContentLoaded', function() {
+
+  document.addEventListener( 'astro:page-load', function() {
 
     const carousels = document.querySelectorAll(".carousel-gallery");
 
@@ -82,6 +83,6 @@
     }
 
     });
-});
+},{ once: false });
 
 
