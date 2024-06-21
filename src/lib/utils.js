@@ -15,3 +15,7 @@ export function getCount(parent, getChildrensChildren){
   }
   return relevantChildren;
 }
+
+export function replaceUrls(content, replacementUrl){
+  return content.replaceAll(`${import.meta.env.PUBLIC_WP_URL}`, replacementUrl);
+};

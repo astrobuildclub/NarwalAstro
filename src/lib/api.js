@@ -90,7 +90,6 @@ export async function getAllUris() {
     return { params: { uri: trimmedURI } };
   })
   .filter(node => node.params.uri !== ''); 
-
   return uris;
 }
 
