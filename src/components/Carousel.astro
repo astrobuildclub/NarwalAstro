@@ -1,20 +1,38 @@
 ---
 // Import Components
 import Image from 'astro/components/Image.astro'
+import {replaceUrls} from '../lib/utils'
 
 const {slides} = Astro.props;
 
-const backgroundSlides = slides.map((slide:any) =>({
+// Replace links and add them back to slides
+const processedSlides = slides.map(slide => {
+  const linkObj = slide.slideFields.link;
+  const updatedUrl = replaceUrls(linkObj.url, `${import.meta.env.DEV_SITE_URL}`);
+  return{
+    ...slide,
+    slideFields: {
+      ...slide.slideFields,
+      link:{
+        title: linkObj.title,
+        url: updatedUrl,
+        target: linkObj.target
+      }
+    }
+  }
+});
+
+const backgroundSlides = processedSlides.map((slide:any) =>({
   imgsrc: slide.slideFields?.image?.node?.sourceUrl || "",
   imgalt: slide.slideFields?.image?.node?.altText || slide.slideFields?.slideTitle || "",
   vidsrc: slide.slideFields?.videoUrl || ""
 }));
 
-const foregroundSlides = slides.map((slide:any) =>({
+const foregroundSlides = processedSlides.map((slide:any) =>({
   title: slide.slideFields?.slideTitle || "",
-  subtitle: slide.slideFields?.slideSub || ""
+  subtitle: slide.slideFields?.slideSub || "",
+  link: [slide.slideFields?.link ]|| [],
 }));
-
 
 ---
 <section class="carousel-gallery">
@@ -60,8 +78,17 @@ const foregroundSlides = slides.map((slide:any) =>({
           {foregroundSlides && 
             foregroundSlides.map((slide:any)=>( // slide
             <div role="group" class="swiper-slide">
-              <h3>{slide.subtitle}</h3>
-              <h1>{slide.title}</h1>
+              {slide.link ?
+                slide.link.map((l:any)=>( // slide
+                <a href={l.url} target={l.target}>
+                  <h3>{slide.subtitle}</h3>
+                  <h1>{slide.title}</h1>
+                </a>
+                ))
+              :
+                <h3>{slide.subtitle}</h3>
+                <h1>{slide.title}</h1>
+              }
             </div>
           ))
         }    
