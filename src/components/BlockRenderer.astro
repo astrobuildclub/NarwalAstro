@@ -13,7 +13,6 @@ type Props = {
 }
 
 const { blocks } = Astro.props
-console.log(blocks)
 ---
 
 <div class="content">
@@ -35,7 +34,7 @@ console.log(blocks)
         case 'ProjectContentContentTestimonialLayout': // Testimonial Block
           return <TestimonialBlock />
         case 'ProjectContentContentMultiColsLayout': // Testimonial Block
-          return <MultiCols />
+          return <MultiCols cols={block.col} />
 
         default:
           null

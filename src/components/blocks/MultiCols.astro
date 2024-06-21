@@ -1,8 +1,49 @@
 ---
+// Import Content Block Components
+import TextBlock from '../blocks/TextBlock.astro'
+import ImageBlock from '../blocks/ImageBlock.astro'
+import VideoBlock from '../blocks/VideoBlock.astro'
+
+
+const { cols } = Astro.props
 ---
 
 <div class="project-multicols full">
-  <div class="col">
+   {cols &&
+    cols.map((col) => {
+       console.log(col);
+      switch (col.contentType) {
+        case 'image': // Image
+          if(!col.showText){
+            return (
+              <div class="col"><ImageBlock sourceUrl={col.image?.node?.sourceUrl || ""} altText={col.image?.node?.altText || ""} /></div>
+            )
+          }else{
+            return (
+              <div class="col">
+                <ImageBlock sourceUrl={col.image?.node?.sourceUrl || ""} altText={col.image?.node?.altText || ""} />
+                <TextBlock title={col.title || ""} content={col.text || ""}  />
+              </div>
+            )
+          }
+        case 'video': //Videoblock
+        if(!col.showText){
+            return <div class="col"><VideoBlock /></div>
+          }else{
+            return (
+              <div class="col">
+               <VideoBlock />
+                <TextBlock title={col.title || ""} content={col.text || ""}  />
+              </div>
+            )
+          }
+        case 'text':  // Textblock
+        default:
+          return <TextBlock title={col.title || ""} content={col.text || ""}  />
+      }
+    })
+  }
+  <!-- <div class="col">
     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, doloribus iste? Voluptas commodi officiis voluptate.
     Iure, corrupti dolorum earum quia nisi incidunt molestias magnam ipsa ad quae, cum soluta totam!
   </div>
@@ -19,7 +60,7 @@
     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur aliquid, ullam perspiciatis accusamus, enim
     maiores, dolores aut in dolor commodi beatae laborum. Impedit, dignissimos porro? Quibusdam, deleniti cumque!
     Tempora, odio.
-  </div>
+  </div> -->
 </div>
 
 <style>
