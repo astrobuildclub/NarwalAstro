@@ -2,8 +2,8 @@
 const { menu, generalSettings } = Astro.props
 ---
 
-<nav class="flex flex-wrap items-center justify-between bg-gray-950 p-6">
-  <div class="mr-6 flex flex-shrink-0 items-center text-white">
+<nav class="flex flex-wrap items-center justify-between p-6 bg-gray-950">
+  <div class="flex items-center flex-shrink-0 mr-6 text-white">
     <a href="/">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@ const { menu, generalSettings } = Astro.props
       {
         menu.menuItems.nodes.map((menuItem: any) => {
           return (
-            <li class="mr-4 mt-4 block text-teal-200 hover:text-white lg:mt-0 lg:inline-block">
+            <li class="block mt-4 mr-4 text-teal-200 hover:text-white lg:mt-0 lg:inline-block">
               <a href={menuItem.uri || '/'}>{menuItem.label}</a>
             </li>
           )

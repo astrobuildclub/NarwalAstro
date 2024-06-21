@@ -6,6 +6,7 @@ import ImageBlock from './blocks/ImageBlock.astro'
 import VideoBlock from './blocks/VideoBlock.astro'
 import ColorBlock from './blocks/ColorBlock.astro'
 import TestimonialBlock from './blocks/TestimonialBlock.astro'
+import MultiCols from './blocks/MultiCols.astro'
 
 type Props = {
   blocks: ContentField[]
@@ -33,6 +34,9 @@ console.log(blocks)
           return <ColorBlock />
         case 'ProjectContentContentTestimonialLayout': // Testimonial Block
           return <TestimonialBlock />
+        case 'ProjectContentContentMultiColsLayout': // Testimonial Block
+          return <MultiCols />
+
         default:
           null
       }

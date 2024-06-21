@@ -16,10 +16,14 @@ const projectContent = data.projectContent?.content
 
 {
   projectContent && (
-    <article class="project ">
+    <article class="project">
       <BlockRenderer blocks={projectContent} />
     </article>
   )
 }
 
-<style></style>
+<style>
+  .project {
+    padding: var(--site-padding);
+  }
+</style>
