@@ -1,19 +1,22 @@
 ---
 type Props = {
+  title?:string;
   content?: string;
   width: string[];
 };
 
-const { content, width } = Astro.props;
+const { title, content, width } = Astro.props;
 let classes;
 
-if (width.at(0) == "full") {
+if (width && width.at(0) == "full") {
   classes = "w-full py-8 px-8 bg-black text-white";
 } else {
   classes = "w-8/12 py-8 px-8";
 }
 ---
-
+{title &&
+  <h2 set:html={title} />
+}
 <div set:html={content} class={classes} />
 
 

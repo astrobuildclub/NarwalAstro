@@ -74,10 +74,10 @@ query GetProjectByUri($uri: String!) {
           ... on ProjectContentContentMultiColsLayout {
             __typename
             col {
+              contentType
               showText
-              tet
               text
-              titlw
+              title
               verticalAlign
               video
               image {
