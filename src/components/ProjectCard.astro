@@ -2,6 +2,7 @@
 // Import Components
 import Image from 'astro/components/Image.astro'
 import TagGroup from '../components/TagGroup.astro'
+import {slugify} from '../lib/utils.js';
 
 // Type Definitions
 type Services = {
@@ -43,9 +44,12 @@ if (fitCards !== true) {
 } else {
   cardclasses = 'lg:col-span-2'
 }
+
+const serviceTitles = services?.map(service => slugify(service.title)).join(' ') || '';
+
 ---
 
-<div class={`project-card ${cardclasses}`}>
+<div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
   <div class="project-media overflow-hidden rounded-lg">
     {
       vidsrc ? ( // if vidsrc is set, show video with poster image
