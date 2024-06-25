@@ -11,7 +11,6 @@ const { cols } = Astro.props
 <div class="project-multicols full">
    {cols &&
     cols.map((col) => {
-       console.log(col);
       switch (col.contentType) {
         case 'image': // Image
           if(!col.showText){

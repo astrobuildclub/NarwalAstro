@@ -1,0 +1,28 @@
+---
+import {getAspectRatioFromEmbedString} from "../../lib/utils";
+const {code, size} = Astro.props;
+const aspectRatio = getAspectRatioFromEmbedString(code);
+---
+<div class:list={['embed-code', size]} set:html={code} />
+
+<style is:global define:vars={{aspectRatio}}>
+.embed-code{
+    position: relative;
+    aspect-ratio: var(--aspectRatio);
+    height: auto;
+    overflow: hidden;
+}
+.embed-code iframe {
+    position: absolute;
+    margin:0;
+    top: 0;
+    left: 0;
+    width: 100%!important;
+    height: 100%;
+    display: block;
+    opacity: ;
+}
+.embed-code.inline{
+  background-color: greenyellow;
+}
+</style>

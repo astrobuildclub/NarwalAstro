@@ -13,7 +13,6 @@ export async function getStaticPaths() {
 const { uri } = Astro.params;
 const slug = uri ? `/${uri}/` : "/";
 
-console.log(slug);
 let node = await getNodeData(slug);
 const Template = getTemplateByRoute(node);
 

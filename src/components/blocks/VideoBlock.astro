@@ -1,8 +1,19 @@
 ---
+const {url, type, size} = Astro.props;
+
+console.log("custom video embed", url,type);
 ---
 
-<div class="project-video full">
-  <div class="popout flex aspect-video items-center justify-center bg-slate-400">
-    <pre>VideoBlock</pre>
-  </div>
+<div class:list={['custom-video', size]}>
+  <video
+    preload="metadata"
+    tabindex="-1"
+    disablepictureinpicture
+    playsinline
+    loop
+    title=""
+    src={url}
+    autoplay={true}
+    muted
+  />
 </div>
