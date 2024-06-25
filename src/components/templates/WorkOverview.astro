@@ -1,9 +1,16 @@
 ---
-import ProjectList from '../ProjectList.astro'
 import PageIntro from '../PageIntro.astro'
+import ProjectList from '../ProjectList.astro'
+import {slugify} from '../../lib/utils.js';
 
-const { data } = Astro.props
-const projectData = data.work.nodes
+const { data } = Astro.props;
+const projectData = data.work.nodes;
+
+const allServices = projectData.flatMap(project => 
+  project.projectMeta?.services?.nodes?.map(service => service.title) || []
+).filter(Boolean);
+
+const uniqueServices = [...new Set(allServices)];
 ---
 
 <header>
@@ -16,6 +23,48 @@ const projectData = data.work.nodes
     events and experiences, you name it, they can make it happen in-house with their hands-on creative and production
     team.
   </p>
-  <Fragment slot="column-two">Filters go here</Fragment>
+  <Fragment slot="column-two">
+    <ul>
+      {uniqueServices.map(service => (
+         <li key={service}>
+          <button on:click={() => { filterProjects( slugify(service)) }} data-service={slugify(service)} >{service}</button>
+        </li>
+      ))}
+    </ul>
+  </Fragment>
 </PageIntro>
 <ProjectList projects={projectData} layout="list" fitCards={true} />
+
+
+<script>
+  //@ts-nocheck
+  function filterProjects(service) {
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+      const services = card.getAttribute('data-services').split(' ');
+      if (services.includes(service) || service === 'all') {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const serviceButtons = document.querySelectorAll('button');
+    serviceButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const activeService = button.getAttribute('data-service');
+        filterProjects(activeService);
+      });
+    });
+
+    // Add a button to show all projects
+    const showAllButton = document.createElement('button');
+    showAllButton.textContent = 'All';
+    showAllButton.addEventListener('click', () => {
+      filterProjects('all');
+    });
+    document.querySelector('ul').prepend(showAllButton);
+  });
+</script>
