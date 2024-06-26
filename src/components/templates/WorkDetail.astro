@@ -17,7 +17,7 @@ const projectContent = data.projectContent?.content
 {
   projectContent && (
     <article class="project">
-      <BlockRenderer blocks={projectContent} />
+      <BlockRenderer prefix="ProjectContent" blocks={projectContent} />
     </article>
   )
 }

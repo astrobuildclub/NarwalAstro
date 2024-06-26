@@ -1,9 +1,11 @@
 ---
 import PageIntro from '../PageIntro.astro'
 import ProjectList from '../ProjectList.astro'
-import {slugify} from '../../lib/utils.js';
+import ProjectFilter from '../ProjectFilter.astro';
 
 const { data } = Astro.props;
+const pageTitle = data.title;
+const pageIntroduction = data.content;
 const projectData = data.work.nodes;
 
 const allServices = projectData.flatMap(project => 
@@ -13,58 +15,17 @@ const allServices = projectData.flatMap(project =>
 const uniqueServices = [...new Set(allServices)];
 ---
 
+{pageTitle &&
 <header>
-  <h1>Our work</h1>
+  <h1>{pageTitle}</h1>
 </header>
+}
+
 <PageIntro>
-  <p slot="column-one">
-    Narwal is boutique. Narwal is no-nonsense. Founded in 2020, the creative agency blends creative disciplines with
-    heart and soul to humanize brand stories and create cool stuff with lasting impact. Visual identities, campaigns,
-    events and experiences, you name it, they can make it happen in-house with their hands-on creative and production
-    team.
-  </p>
-  <Fragment slot="column-two">
-    <ul>
-      {uniqueServices.map(service => (
-         <li key={service}>
-          <button on:click={() => { filterProjects( slugify(service)) }} data-service={slugify(service)} >{service}</button>
-        </li>
-      ))}
-    </ul>
-  </Fragment>
-</PageIntro>
-<ProjectList projects={projectData} layout="list" fitCards={true} />
-
-
-<script>
-  //@ts-nocheck
-  function filterProjects(service) {
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-      const services = card.getAttribute('data-services').split(' ');
-      if (services.includes(service) || service === 'all') {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
+  {pageIntroduction &&
+    <Fragment slot="column-one" set:html={pageIntroduction} />
   }
+  <ProjectFilter services={uniqueServices} slot="column-two" />
+</PageIntro>
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const serviceButtons = document.querySelectorAll('button');
-    serviceButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const activeService = button.getAttribute('data-service');
-        filterProjects(activeService);
-      });
-    });
-
-    // Add a button to show all projects
-    const showAllButton = document.createElement('button');
-    showAllButton.textContent = 'All';
-    showAllButton.addEventListener('click', () => {
-      filterProjects('all');
-    });
-    document.querySelector('ul').prepend(showAllButton);
-  });
-</script>
+<ProjectList projects={projectData} layout="list" fitCards={true} />
