@@ -32,6 +32,7 @@ const { blocks } = Astro.props
             return <VideoBlock type={block.option} url={block.embed} size={block.size}/>
           }
         case 'ProjectContentContentColorModeLayout': // Color Block
+          console.log(block);
           return <ColorBlock />
         case 'ProjectContentContentTestimonialLayout': // Testimonial Block
           return <TestimonialBlock />

@@ -1,5 +1,21 @@
 ---
+import PageIntro from '../PageIntro.astro'
 
+const { data } = Astro.props;
+const pageTitle = data.title;
+const pageIntroduction = data.content;
 ---
 
-<div>Pagina Biatch</div>
+{pageTitle &&
+<header>
+  <h1>{pageTitle}</h1>
+</header>
+}
+
+<PageIntro>
+  {pageIntroduction &&
+    <Fragment slot="column-one" set:html={pageIntroduction} />
+  }
+</PageIntro>
+
+<div>Content goes here</div>
