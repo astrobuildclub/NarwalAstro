@@ -8,8 +8,8 @@ const pageTitle = data.title;
 const pageIntroduction = data.content;
 const projectData = data.work.nodes;
 
-const allServices = projectData.flatMap(project => 
-  project.projectMeta?.services?.nodes?.map(service => service.title) || []
+const allServices = projectData.flatMap((project:any) => 
+  project.projectMeta?.services?.nodes?.map((service:any) => service.title) || []
 ).filter(Boolean);
 
 const uniqueServices = [...new Set(allServices)];

@@ -1,11 +1,37 @@
 ---
-// Import Content Block Components
+// Import Components & Scripts
 import TextBlock from '../blocks/TextBlock.astro'
 import ImageBlock from '../blocks/ImageBlock.astro'
 import VideoBlock from '../blocks/VideoBlock.astro'
+import { boolean } from 'astro/zod'
 
+// Define Types
+interface ImageNode {
+  altText: string;
+  title: string;
+  sourceUrl: string;
+}
+interface Image {
+  node: ImageNode;
+}
+interface ColItem {
+  contentType: "image" | "video" | "text";
+  showText: boolean;
+  text: string | null;
+  title: string | null;
+  verticalAlign: string[];
+  video: any | null;
+  image: Image;
+}
+type Props = {
+  cols: ColItem[];
+}
 
+// Define Vars
 const { cols } = Astro.props
+
+console.log(cols);
+
 ---
 
 <div class="project-multicols full">

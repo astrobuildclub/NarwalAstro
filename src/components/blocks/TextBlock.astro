@@ -2,13 +2,13 @@
 type Props = {
   title?:string;
   content?: string;
-  width: string[];
+  size?: string[];
 };
 
-const { title, content, width } = Astro.props;
+const { title, content, size } = Astro.props;
 let classes;
 
-if (width && width.at(0) == "full") {
+if (size && size.at(0) == "full") {
   classes = "w-full py-8 px-8 bg-black text-white";
 } else {
   classes = "w-8/12 py-8 px-8";
