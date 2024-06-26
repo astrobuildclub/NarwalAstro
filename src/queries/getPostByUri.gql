@@ -9,6 +9,7 @@ query GetPostByUri($uri: String!) {
       featuredImage {
         node {
           altText
+          title
           sourceUrl
         }
       }

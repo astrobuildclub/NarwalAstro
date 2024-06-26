@@ -1,14 +1,28 @@
 ---
-type Props = {
-  size: string
-  altText: string
-  sourceUrl: string
+// Import Types
+
+// Import Components & Scripts
+import { Image } from 'astro:assets'
+
+// Define Types
+interface Props{
+  sourceUrl: string;
+  altText?: string;
+  titleText?: string;
+  size?: "inline" | "popout" | "feature" | "full" | "inherit";
 }
 
-const { sourceUrl, size, altText } = Astro.props
-import { Image } from 'astro:assets'
+// Define Vars
+const { sourceUrl, altText, titleText, size,  } = Astro.props;
 ---
-
-<div class="full">
-  <Image src={sourceUrl} alt={altText} class="aspect-auto w-full object-cover" width="100" height="100" />
+<div class="image-block">
+  <Image 
+    src={sourceUrl} 
+    width="10";
+    height="10";
+    widths={[240, 540, 720]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px`}
+    format='afiv'
+    alt={altText || ""} 
+  />
 </div>

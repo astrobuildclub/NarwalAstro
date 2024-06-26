@@ -37,6 +37,7 @@ query GetHomeFields {
                 thumbnail {
                   node {
                     altText
+                    title
                     sourceUrl
                   }
                 }
