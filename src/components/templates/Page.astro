@@ -1,9 +1,11 @@
 ---
+import BlockRenderer from '../BlockRenderer.astro';
 import PageIntro from '../PageIntro.astro'
 
 const { data } = Astro.props;
 const pageTitle = data.title;
 const pageIntroduction = data.content;
+const pageContent = data.pageContent?.content;
 ---
 
 {pageTitle &&
@@ -18,4 +20,4 @@ const pageIntroduction = data.content;
   }
 </PageIntro>
 
-<div>Content goes here</div>
+<BlockRenderer prefix="PageContent" blocks={pageContent} />

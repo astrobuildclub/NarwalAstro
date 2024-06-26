@@ -10,33 +10,34 @@ import MultiCols from './blocks/MultiCols.astro'
 import EmbedBlock from './blocks/EmbedBlock.astro'
 
 type Props = {
-  blocks: ContentField[]
+  prefix: string;
+  blocks: ContentField[];
 }
 
-const { blocks } = Astro.props
----
+const { prefix, blocks } = Astro.props;
 
+
+---
 <div class="content">
-  {
+  {blocks &&
     blocks.map((block) => {
       switch (block.__typename) {
-        case 'ProjectContentContentTextLayout': // Text Block
+        case `${prefix}ContentTextLayout`: // Text Block
           return <TextBlock content={block.text?.text || ''} width={block.text?.width} />
-        case 'ProjectContentContentImageLayout': // Image block
-          return 
-            <ImageBlock sourceUrl={block.image.node.sourceUrl} altText={block.image.node.altText} size={block.size} />
-        case 'ProjectContentContentVideoLayout': // Video Block
+        case `${prefix}ContentImageLayout`: // Image block
+          return <ImageBlock sourceUrl={block.image?.node?.sourceUrl} altText={block.image?.node?.altText} size={block.size} />
+        case `${prefix}ContentVideoLayout`: // Video Block
           if(block.option === "embed"){
             return <EmbedBlock code={block.embedCopy} size={block.size} />
           }else{
             return <VideoBlock type={block.option} url={block.embed} size={block.size}/>
           }
-        case 'ProjectContentContentColorModeLayout': // Color Block
+        case `${prefix}ContentColorModeLayout`: // Color Block
           console.log(block);
           return <ColorBlock />
-        case 'ProjectContentContentTestimonialLayout': // Testimonial Block
+        case `${prefix}ContentTestimonialLayout`: // Testimonial Block
           return <TestimonialBlock />
-        case 'ProjectContentContentMultiColsLayout': // Testimonial Block
+        case `${prefix}ContentMultiColsLayout`: // Testimonial Block
           return <MultiCols cols={block.col} />
         default:
           null

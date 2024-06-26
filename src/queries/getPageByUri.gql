@@ -10,6 +10,84 @@ query GetPageByUri($uri: String!) {
       template {
         templateName
       }
+      pageContent {
+        content {
+          ... on PageContentContentTextLayout {
+            __typename
+            text {
+              text
+              width
+            }
+          }
+          ... on PageContentContentImageLayout {
+            __typename
+            showCaption
+            image {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            size
+          }
+          ... on PageContentContentVideoLayout {
+            __typename
+            embed
+            embedCopy
+            option
+            size
+            video {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+          }
+          ... on PageContentContentTestimonialLayout {
+            __typename
+            name
+            photo {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            roleCompany
+            testimonial
+          }
+          ... on PageContentContentMultiColsLayout {
+            __typename
+            col {
+              contentType
+              showText
+              text
+              title
+              verticalAlign
+              video
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
+          ... on PageContentContentColorModeLayout {
+            __typename
+            colorMode
+            fieldGroupName
+          }
+          ... on PageContentContentGalleryLayout {
+            __typename
+            gallery {
+              nodes {
+                altText
+                sourceUrl
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
