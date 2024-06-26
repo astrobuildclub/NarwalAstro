@@ -1,5 +1,5 @@
 ---
-import type { ContentFields, ContentField } from 'src/types/contentblocks'
+// import type { ContentField } from '../types/contentblocks'
 // Import Content Block Components
 import TextBlock from './blocks/TextBlock.astro'
 import ImageBlock from './blocks/ImageBlock.astro'
@@ -11,19 +11,17 @@ import EmbedBlock from './blocks/EmbedBlock.astro'
 
 type Props = {
   prefix: string;
-  blocks: ContentField[];
+  blocks: any;
 }
 
 const { prefix, blocks } = Astro.props;
-
-
 ---
 <div class="content">
   {blocks &&
-    blocks.map((block) => {
+    blocks.map((block:any) => {
       switch (block.__typename) {
         case `${prefix}ContentTextLayout`: // Text Block
-          return <TextBlock content={block.text?.text || ''} width={block.text?.width} />
+          return <TextBlock content={block.text?.text || ''} size={block.text?.size} />
         case `${prefix}ContentImageLayout`: // Image block
           return <ImageBlock 
                     sourceUrl={block.image?.node?.sourceUrl} 
