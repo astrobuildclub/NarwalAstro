@@ -5,12 +5,13 @@ import Newsletter from '../components/Newsletter.astro'
 const currentYear = new Date().getFullYear()
 ---
 
-<footer>
+<footer class="fixed bottom-0 flex flex-col min-h-screen -z-10">
   <!-- <CallToAction /> -->
-  <section class="min-h-screen py-8">
-    <div class="container">
-      <p>We’re always up to meet new people. Feel free to reach out to discuss your ambitions.</p>
-      <div class="content grid grid-cols-1 md:grid-cols-4">
+  
+    <div class="flex flex-col justify-between flex-grow py-12 ">
+      <h1>Narwal</h1>
+      <p class="text-7xl">We’re always up to meet new people. Feel free to reach out to discuss your ambitions.</p>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
         <Widget title="Join our Newsletter">
           <Newsletter />
         </Widget>
@@ -38,11 +39,25 @@ const currentYear = new Date().getFullYear()
           </ul>
         </Widget>
       </div>
-      <div class="legal">
+      
+    </div>
+  <div class="legal">
         <p>
           &copy; {currentYear} - Narwal Creative <a href="https://astro.build/">Terms & Conditions</a>
         </p>
       </div>
-    </div>
-  </section>
 </footer>
+
+<style>
+  * > * {
+    border: 1px solid red;
+
+  }
+
+
+
+  
+
+
+  
+</style>

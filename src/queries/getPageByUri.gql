@@ -16,7 +16,7 @@ query GetPageByUri($uri: String!) {
             __typename
             text {
               text
-              width
+              size
             }
           }
           ... on PageContentContentImageLayout {
@@ -25,6 +25,7 @@ query GetPageByUri($uri: String!) {
             image {
               node {
                 altText
+                title
                 sourceUrl
               }
             }
@@ -39,6 +40,7 @@ query GetPageByUri($uri: String!) {
             video {
               node {
                 altText
+                title
                 sourceUrl
               }
             }
@@ -67,6 +69,7 @@ query GetPageByUri($uri: String!) {
               image {
                 node {
                   altText
+                  title
                   sourceUrl
                 }
               }
@@ -82,6 +85,7 @@ query GetPageByUri($uri: String!) {
             gallery {
               nodes {
                 altText
+                title
                 sourceUrl
               }
             }

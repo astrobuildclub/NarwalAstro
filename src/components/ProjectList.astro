@@ -17,7 +17,7 @@ const projectCards = projects.map((project: any) => ({
 ---
 
 <section
-  class="my-32"
+  class="projects-wrapper"
   class:list={[
     {
       'layout-grid': layout === 'grid',
@@ -25,7 +25,7 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="project-list start grid gap-12">
+  <div class="grid gap-12 project-list start">
     {
       projectCards &&
         projectCards.map((item: any) => {
@@ -36,7 +36,7 @@ const projectCards = projects.map((project: any) => ({
 </section>
 
 <style is:global>
-  section {
+  .projects-wrapper {
     padding: var(--site-padding);
   }
 

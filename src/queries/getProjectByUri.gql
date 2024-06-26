@@ -18,6 +18,7 @@ query GetProjectByUri($uri: String!) {
             coverImage {
               node {
                 altText
+                title
                 sourceUrl
               }
             }
@@ -32,7 +33,7 @@ query GetProjectByUri($uri: String!) {
             __typename
             text {
               text
-              width
+              size
             }
           }
           ... on ProjectContentContentImageLayout {
@@ -41,6 +42,7 @@ query GetProjectByUri($uri: String!) {
             image {
               node {
                 altText
+                title
                 sourceUrl
               }
             }
@@ -55,6 +57,7 @@ query GetProjectByUri($uri: String!) {
             video {
               node {
                 altText
+                title
                 sourceUrl
               }
             }
@@ -65,6 +68,7 @@ query GetProjectByUri($uri: String!) {
             photo {
               node {
                 altText
+                title
                 sourceUrl
               }
             }
@@ -98,6 +102,7 @@ query GetProjectByUri($uri: String!) {
             gallery {
               nodes {
                 altText
+                title
                 sourceUrl
               }
             }

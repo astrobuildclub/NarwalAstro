@@ -30,6 +30,7 @@ query GetAllProjects {
           thumbnail {
             node {
               altText
+              title
               sourceUrl
             }
           }
