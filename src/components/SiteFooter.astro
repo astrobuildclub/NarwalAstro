@@ -5,7 +5,7 @@ import Newsletter from '../components/Newsletter.astro'
 const currentYear = new Date().getFullYear()
 ---
 
-<footer class="fixed bottom-0 flex flex-col min-h-screen -z-10">
+<footer class="bottom-0 flex flex-col min-h-screen md:fixed -z-10">
   <!-- <CallToAction /> -->
   
     <div class="flex flex-col justify-between flex-grow py-12 ">
@@ -54,6 +54,10 @@ const currentYear = new Date().getFullYear()
 
   }
 
+
+footer > div {
+    padding: var(--site-padding)
+  }
 
 
   
