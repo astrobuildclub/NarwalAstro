@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
 import mdx from '@astrojs/mdx';
 import tailwind from '@astrojs/tailwind';
 import compress from 'astro-compress';

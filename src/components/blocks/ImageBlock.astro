@@ -13,6 +13,8 @@ interface Props{
 // Define Vars
 const { sourceUrl, altText, titleText, size,  } = Astro.props;
 ---
+
+{sourceUrl && 
 <div class:list={['image-block', size]}>
   <Image 
     src={sourceUrl} 
@@ -25,3 +27,4 @@ const { sourceUrl, altText, titleText, size,  } = Astro.props;
     title={titleText || ""}
   />
 </div>
+}
