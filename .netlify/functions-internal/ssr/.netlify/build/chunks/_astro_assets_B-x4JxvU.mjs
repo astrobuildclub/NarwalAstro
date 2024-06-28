@@ -986,7 +986,7 @@ const $$Picture = createComponent(async ($$result, $$props, $$slots) => {
   })} <img${addAttribute(fallbackImage.src, "src")}${spreadAttributes(imgAdditionalAttributes)}${spreadAttributes(fallbackImage.attributes)}> </picture>`;
 }, "/Users/ronnywieckardt/Development/astrobuildclub/astro/sites/NarwalAstro/node_modules/astro/components/Picture.astro", void 0);
 
-const imageConfig = {"service":{"entrypoint":"astro/assets/services/sharp","config":{}},"domains":["astrobuild.site/narwal/"],"remotePatterns":[]};
+const imageConfig = {"service":{"entrypoint":"astro/assets/services/sharp","config":{}},"domains":[],"remotePatterns":[{"protocol":"https","hostname":"**.astrobuild.site"},{"protocol":"https","hostname":"**.netlify.app"},{"protocol":"https","hostname":"**.narwalcreative.com"}]};
 					const getImage = async (options) => await getImage$1(options, imageConfig);
 
 export { $$Image as $, getConfiguredImageService as g, imageConfig as i };

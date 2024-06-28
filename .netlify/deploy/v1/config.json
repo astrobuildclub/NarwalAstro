@@ -1,1 +1,1 @@
-{"images":{"remote_images":["https?://astrobuild\\.site/narwal//.*"]}}
+{"images":{"remote_images":["https://([a-z0-9]+\\.)*astrobuild\\.site(:[0-9]+)?(\\/[^?#]*)?([?][^#]*)?","https://([a-z0-9]+\\.)*netlify\\.app(:[0-9]+)?(\\/[^?#]*)?([?][^#]*)?","https://([a-z0-9]+\\.)*narwalcreative\\.com(:[0-9]+)?(\\/[^?#]*)?([?][^#]*)?"]}}

@@ -2,7 +2,7 @@ import { a as createComponent, b as renderTemplate, d as addAttribute, e as crea
 import 'kleur/colors';
 /* empty css                         */
 import 'clsx';
-import { $ as $$Image } from './_astro_assets_BktKzn2s.mjs';
+import { $ as $$Image } from './_astro_assets_B-x4JxvU.mjs';
 import '@astrojs/internal-helpers/path';
 
 const $$Astro$m = createAstro();

@@ -16,7 +16,16 @@ export default defineConfig({
   output: 'server',
   adapter: netlify(),
   image: {
-    domains: [IMAGE_DOMAIN]
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: IMAGE_DOMAIN,
+    },{
+      protocol: 'https',
+      hostname: '**.netlify.app',
+    },{
+      protocol: 'https',
+      hostname: '**.narwalcreative.com',
+    }],
   },
   compressHTML: true,
   integrations: [mdx(), icon(), tailwind({
