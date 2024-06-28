@@ -17,9 +17,11 @@ const { sourceUrl, altText, titleText, size,  } = Astro.props;
 {sourceUrl && 
 <div class:list={['image-block', size]}>
   <Image 
-    src={sourceUrl} 
-    inferSize
-    densities={[1.5, 2]}
+    src={sourceUrl}
+    width="10";
+    height="10";
+    widths={[540, 960, 1440, 1920]}
+    sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
     format='webp'
     alt={altText || ""} 
     title={titleText || ""}
