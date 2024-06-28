@@ -70,12 +70,15 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
       ) : (
         imgsrc && ( // if no video, show image
           <div class="project-image">
-            <Image
+            <Image 
               src={imgsrc}
-              alt={imgalt}
-              inferSize={true}
-              widths={[240, 540, 720]}
-              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px`}
+              width="10";
+              height="10";
+              widths={[540, 960, 1440, 1920]}
+              sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
+              format='webp'
+              alt={imgalt || ""}
+              title={title || ""}
               class="min-w-full"
             />
           </div>
