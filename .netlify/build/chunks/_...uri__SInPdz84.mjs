@@ -715,7 +715,7 @@ const $$ImageBlock = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$9, $$props, $$slots);
   Astro2.self = $$ImageBlock;
   const { sourceUrl, altText, titleText, size } = Astro2.props;
-  return renderTemplate`${sourceUrl && renderTemplate`${maybeRenderHead()}<div${addAttribute(["image-block", size], "class:list")}>${renderComponent($$result, "Image", $$Image, { "src": sourceUrl, "width": "10", ";": true, "height": "10", ";": true, "widths": [240, 540, 720], "sizes": `(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px`, "format": "webp", "alt": altText || "", "title": titleText || "" })}</div>`}`;
+  return renderTemplate`${sourceUrl && renderTemplate`${maybeRenderHead()}<div${addAttribute(["image-block", size], "class:list")}>${renderComponent($$result, "Image", $$Image, { "src": sourceUrl, "inferSize": true, "densities": [1.5, 2], "format": "webp", "alt": altText || "", "title": titleText || "" })}</div>`}`;
 }, "/Users/ronnywieckardt/Development/astrobuildclub/astro/sites/NarwalAstro/src/components/blocks/ImageBlock.astro", void 0);
 
 const $$Astro$8 = createAstro();
