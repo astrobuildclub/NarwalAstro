@@ -72,32 +72,7 @@ const getAllUrisQuery = `query GetAllUris {
       uri
     }
   }
-  posts(first: 100) {
-    nodes {
-      uri
-    }
-  }
   work(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  services(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  people(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  clients(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  careers(first: 100) {
     nodes {
       uri
     }

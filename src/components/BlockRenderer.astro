@@ -35,7 +35,6 @@ const { prefix, blocks } = Astro.props;
             return <VideoBlock type={block.option} url={block.embed} size={block.size}/>
           }
         case `${prefix}ContentColorModeLayout`: // Color Block
-          console.log(block);
           return <ColorBlock />
         case `${prefix}ContentTestimonialLayout`: // Testimonial Block
           return <TestimonialBlock />
