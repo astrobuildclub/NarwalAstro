@@ -1,84 +1,87 @@
-// @ts-nocheck
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-async function loadQuery(queryFile) {
-  try {
-    const filePath = join(__dirname, '../queries', queryFile);
-    return await readFile(filePath, 'utf8');
-  } catch (error) {
-    console.error(`Error reading query file ${queryFile}:`, error);
-    throw error;
-  }
-}
+//@ts-nocheck
 
 async function fetchGraphQL(query, variables = {}) {
-  try {
-    const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, variables }),
-    });
+  const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      query: query,
+      variables: variables
+    })
+  });
+  
+  const result = await response.json();
 
-    const result = await response.json();
-
-    if (result.errors) {
-      console.error('GraphQL errors:', result.errors);
-      throw new Error('Failed to fetch data from GraphQL API');
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error('Fetch GraphQL error:', error);
-    throw error;
+  if (result.errors) {
+    throw new Error(`GraphQL Error: ${result.errors.map(e => e.message).join(', ')}`);
   }
+
+  return result.data;
 }
 
-export async function getNodeByUri(uri) {
-  const typenameQuery = `
-    query GetNodeTypename($uri: String!) {
-      nodeByUri(uri: $uri) {
-        __typename
+const getAllProjectsQuery = `query GetAllProjects {
+  work {
+    nodes {
+      slug
+      projectHero {
+        details {
+          title
+          subtitle
+        }
+      }
+      projectMeta {
+        projectClient {
+          nodes {
+            ... on Client {
+              title
+            }
+          }
+        }
+        services {
+          nodes {
+            ... on Service {
+              title
+            }
+          }
+        }
+        thumbnailGroup {
+          size
+          aspectRatio
+          vimeo
+          thumbnail {
+            node {
+              altText
+              title
+              sourceUrl
+            }
+          }
+        }
       }
     }
-  `;
-
-  const typenameResult = await fetchGraphQL(typenameQuery, { uri });
-
-  if (!typenameResult.nodeByUri) {
-    throw new Error(`No node found for URI: ${uri}`);
   }
+}`;
 
-  const typename = typenameResult.nodeByUri.__typename;
-
-  let queryFile;
-
-  switch (typename) {
-    case 'Page':
-      queryFile = 'getPageByUri.gql';
-      break;
-    case 'Project':
-      queryFile = 'getProjectByUri.gql';
-      break;
-    case 'Post':
-      queryFile = 'getPostByUri.gql';
-      break;
-    default:
-      throw new Error(`Unsupported typename: ${typename}`);
-  }
-
-  const query = await loadQuery(queryFile);
-  return await fetchGraphQL(query, { uri });
+export async function getAllProjects() {
+  const result = await fetchGraphQL(getAllProjectsQuery);
+  return result;
 }
 
+const getAllUrisQuery = `query GetAllUris {
+  pages(first: 100) {
+    nodes {
+      uri
+    }
+  }
+  work(first: 100) {
+    nodes {
+      uri
+    }
+  }
+}`;
+
 export async function getAllUris() {
-  const query = await loadQuery('getAllUris.gql');
-  const data = await fetchGraphQL(query);
-  const uris = Object.values(data)
+  const result = await fetchGraphQL(getAllUrisQuery);
+  const uris = Object.values(result)
   .reduce((acc, currentValue) => acc.concat(currentValue.nodes), [])
   .filter(node => node.uri !== null)
   .map(node => {
@@ -93,127 +96,423 @@ export async function getAllUris() {
   return uris;
 }
 
-export async function getNavigation() {
-  const query = await loadQuery('getNavigation.gql');
-  return await fetchGraphQL(query);
-}
-
+const getHomeFieldsQuery = `query GetHomeFields {
+  pageBy(uri: "/") {
+    homeFields {
+      content {
+        intro
+        statement
+      }
+      featured {
+        nodes {
+          ... on Project {
+            slug
+            projectHero {
+              details {
+                title
+                subtitle
+              }
+            }
+            projectMeta {
+              projectClient {
+                nodes {
+                  ... on Client {
+                    title
+                  }
+                }
+              }
+              services {
+                nodes {
+                  ... on Service {
+                    title
+                  }
+                }
+              }
+              thumbnailGroup {
+                size
+                aspectRatio
+                vimeo
+                thumbnail {
+                  node {
+                    altText
+                    title
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
 
 export async function getHomeFields() {
-  const query = await loadQuery('getHomeFields.gql');
-  return await fetchGraphQL(query);
+  const result = await fetchGraphQL(getHomeFieldsQuery);
+  return result;
 }
 
+const getNavigationQuery = `query GetNavigation {
+  menus(where: { location: MAIN }) {
+    nodes {
+      name
+      menuItems {
+        nodes {
+          uri
+          url
+          order
+          label
+        }
+      }
+    }
+  }
+  generalSettings {
+    title
+    url
+    description
+  }
+}`;
+
+export async function getNavigation() {
+  const result = await fetchGraphQL(getNavigationQuery);
+  return result;
+}
+
+const getPageByUriQuery = `query GetPageByUri($uri: String!) {
+  nodeByUri(uri: $uri) {
+    __typename
+    ... on Page {
+      id
+      status
+      title
+      content
+      isFrontPage
+      template {
+        templateName
+      }
+      pageContent {
+        content {
+          ... on PageContentContentTextLayout {
+            __typename
+            text {
+              text
+              size
+            }
+          }
+          ... on PageContentContentImageLayout {
+            __typename
+            showCaption
+            image {
+              node {
+                altText
+                title
+                sourceUrl
+              }
+            }
+            size
+          }
+          ... on PageContentContentVideoLayout {
+            __typename
+            embed
+            embedCopy
+            option
+            size
+            video {
+              node {
+                altText
+                title
+                sourceUrl
+              }
+            }
+          }
+          ... on PageContentContentTestimonialLayout {
+            __typename
+            name
+            photo {
+              node {
+                altText
+                title
+                sourceUrl
+              }
+            }
+            roleCompany
+            testimonial
+          }
+          ... on PageContentContentMultiColsLayout {
+            __typename
+            col {
+              contentType
+              showText
+              text
+              title
+              verticalAlign
+              video
+              image {
+                node {
+                  altText
+                  title
+                  sourceUrl
+                }
+              }
+            }
+          }
+          ... on PageContentContentColorModeLayout {
+            __typename
+            colorMode
+            fieldGroupName
+          }
+          ... on PageContentContentGalleryLayout {
+            __typename
+            gallery {
+              nodes {
+                altText
+                title
+                sourceUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
+
+export async function getPageByUri(uri) {
+  const result = await fetchGraphQL(getPageByUriQuery, { uri });
+  return result;
+}
+
+const getPostByUriQuery = `query GetPostByUri($uri: String!) {
+  nodeByUri(uri: $uri) {
+    __typename
+    ... on Post {
+      id
+      title
+      excerpt
+      content
+      featuredImage {
+        node {
+          altText
+          title
+          sourceUrl
+        }
+      }
+      categories {
+        nodes {
+          name
+          uri
+        }
+      }
+    }
+  }
+}`;
+
+export async function getPostByUri(uri) {
+  const result = await fetchGraphQL(getPostByUriQuery, { uri });
+  return result;
+}
+
+const getProjectByUriQuery = `query GetProjectByUri($uri: String!) {
+  nodeByUri(uri: $uri) {
+    __typename
+    ... on Project {
+      id
+      status
+      seo {
+        title
+        metaDesc
+        canonical
+      }
+      projectHero {
+        details {
+          color
+          coverMedia
+          intro
+          media {
+            coverImage {
+              node {
+                altText
+                title
+                sourceUrl
+              }
+            }
+          }
+          subtitle
+          title
+        }
+      }
+      projectContent {
+        content {
+          ... on ProjectContentContentTextLayout {
+            __typename
+            text {
+              text
+              size
+            }
+          }
+          ... on ProjectContentContentImageLayout {
+            __typename
+            showCaption
+            image {
+              node {
+                altText
+                title
+                sourceUrl
+              }
+            }
+            size
+          }
+          ... on ProjectContentContentVideoLayout {
+            __typename
+            embed
+            embedCopy
+            option
+            size
+            video {
+              node {
+                altText
+                title
+                sourceUrl
+              }
+            }
+          }
+          ... on ProjectContentContentTestimonialLayout {
+            __typename
+            name
+            photo {
+              node {
+                altText
+                title
+                sourceUrl
+              }
+            }
+            roleCompany
+            testimonial
+          }
+          ... on ProjectContentContentMultiColsLayout {
+            __typename
+            col {
+              contentType
+              showText
+              text
+              title
+              verticalAlign
+              video
+              image {
+                node {
+                  altText
+                  title
+                  sourceUrl
+                }
+              }
+            }
+          }
+          ... on ProjectContentContentColorModeLayout {
+            __typename
+            colorMode
+            fieldGroupName
+          }
+          ... on ProjectContentContentGalleryLayout {
+            __typename
+            gallery {
+              nodes {
+                altText
+                title
+                sourceUrl
+              }
+            }
+          }
+        }
+      }
+      projectMeta {
+        credits
+        projectClient {
+          nodes {
+            ... on Client {
+              id
+              title
+            }
+          }
+        }
+        related {
+          nodes {
+            ... on Project {
+              id
+              title
+            }
+          }
+        }
+        services {
+          nodes {
+            ... on Service {
+              id
+              title
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
+
+export async function getProjectByUri(uri) {
+  const result = await fetchGraphQL(getProjectByUriQuery, { uri });
+  return result;
+}
+
+const getSlideFieldsQuery = `query GetSlideFields {
+  slides {
+    nodes {
+      status
+      slideFields {
+        slideTitle
+        videoUrl
+        slideSub
+        image {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        link {
+          url
+          title
+          target
+        }
+      }
+    }
+  }
+}`;
 
 export async function getSlideFields() {
-  const query = await loadQuery('getSlideFields.gql');
-  return await fetchGraphQL(query);
+  const result = await fetchGraphQL(getSlideFieldsQuery);
+  return result;
 }
 
-export async function getAllProjects() {
-  const query = await loadQuery('getAllProjects.gql');
-  return await fetchGraphQL(query);
+const getNodeByUriQuery = `query GetNodeTypename($uri: String!) {
+  nodeByUri(uri: $uri) {
+    __typename
+  }
+}`;
+
+export async function getNodeByUri(uri) {
+  const typenameResult = await fetchGraphQL(getNodeByUriQuery, { uri });
+
+  if (!typenameResult.nodeByUri) {
+    throw new Error(`No node found for URI: ${uri}`);
+  }
+
+  const typename = typenameResult.nodeByUri.__typename;
+
+  switch (typename) {
+    case 'Page':
+      return await getPageByUri(uri);
+    case 'Project':
+      return await getProjectByUri(uri);
+    case 'Post':
+      return await getPostByUri(uri);
+    default:
+      throw new Error(`Unsupported typename: ${typename}`);
+  }
 }
-
-
-
-
-
-
-// export async function getProjectDataByUri(uri){
-//   const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-//     method: "POST",
-//     headers: {
-//       "content-type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       query: `
-//         query getProjectDataByUri($uri: String!) {
-//           nodeByUri(uri: $uri) {
-//             ... on Project {
-//               id
-//               excerpt
-//               featuredImage {
-//                 node {
-//                   altText
-//                   sourceUrl
-//                 }
-//               }
-//               projectFields {
-//                 details {
-//                   color
-//                   coverMedia
-//                   intro
-//                   media {
-//                     coverImage {
-//                       node {
-//                         altText
-//                         sourceUrl
-//                       }
-//                     }
-//                   }
-//                   subtitle
-//                   title
-//                 }
-//               }
-//               title
-//             }
-//           }
-//         }`,
-//       variables: {
-//         uri: uri
-//       },
-//     }),
-//   });
-//   const { data } = await response.json();
-// return data;
-// }
-
-// export async function getContentFieldsByUri(uri){
-//   const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-//     method: "POST",
-//     headers: {
-//       "content-type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       query: `
-//         query getContentFieldsByUri($uri: String!) {
-//           nodeByUri(uri: $uri) {
-//             id
-//             uri
-//             ... on Project {
-//               __typename
-//               id
-//               contentFields {
-//                 content {
-//                   __typename
-//                   ... on ContentFieldsContentTextLayout {
-//                     text {
-//                       text
-//                       width
-//                     }
-//                   }
-//                   ... on ContentFieldsContentImageLayout {
-//                     showCaption
-//                     size
-//                     image {
-//                       node {
-//                         altText
-//                         sourceUrl
-//                       }
-//                     }
-//                   }
-//                 }
-//               }
-//             }
-//           }
-//         }`,
-//       variables: {
-//         uri: uri
-//       },
-//     }),
-//   });
-//   const { data } = await response.json();
-// return data;
-// }
-

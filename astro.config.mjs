@@ -5,6 +5,7 @@ import compress from 'astro-compress';
 import icon from 'astro-icon';
 import { loadEnv } from 'vite';
 import react from "@astrojs/react";
+import netlify from "@astrojs/netlify";
 const {
   IMAGE_DOMAIN
 } = loadEnv(process.env.NODE_ENV, process.cwd(), '');
@@ -12,8 +13,19 @@ const {
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: netlify(),
   image: {
-    domains: [IMAGE_DOMAIN]
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: IMAGE_DOMAIN,
+    },{
+      protocol: 'https',
+      hostname: '**.netlify.app',
+    },{
+      protocol: 'https',
+      hostname: '**.narwalcreative.com',
+    }],
   },
   compressHTML: true,
   integrations: [mdx(), icon(), tailwind({

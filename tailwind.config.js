@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const fluid = require('fluid-tailwind')
+import fluid from 'fluid-tailwind';
 const { extract } = fluid
 
 module.exports = {

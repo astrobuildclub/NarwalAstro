@@ -87,6 +87,7 @@ query GetProjectByUri($uri: String!) {
               image {
                 node {
                   altText
+                  title
                   sourceUrl
                 }
               }

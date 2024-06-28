@@ -1,7 +1,7 @@
 // types/contentblocks.ts
-
 export interface ImageNode {
   altText: string;
+  title: string;
   sourceUrl: string;
 }
 
@@ -18,7 +18,7 @@ export interface ContentFieldsContentImageLayout {
 
 export interface Text {
   text: string;
-  width: string[];
+  size: string[];
 }
 
 export interface ContentFieldsContentTextLayout {

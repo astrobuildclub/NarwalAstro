@@ -51,6 +51,7 @@ query GetPageByUri($uri: String!) {
             photo {
               node {
                 altText
+                title
                 sourceUrl
               }
             }

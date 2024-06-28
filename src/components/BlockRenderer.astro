@@ -1,5 +1,5 @@
 ---
-import type { ContentFields, ContentField } from 'src/types/contentblocks'
+// import type { ContentField } from '../types/contentblocks'
 // Import Content Block Components
 import TextBlock from './blocks/TextBlock.astro'
 import ImageBlock from './blocks/ImageBlock.astro'
@@ -11,21 +11,23 @@ import EmbedBlock from './blocks/EmbedBlock.astro'
 
 type Props = {
   prefix: string;
-  blocks: ContentField[];
+  blocks: any;
 }
 
 const { prefix, blocks } = Astro.props;
-
-
 ---
 <div class="content">
   {blocks &&
-    blocks.map((block) => {
+    blocks.map((block:any) => {
       switch (block.__typename) {
         case `${prefix}ContentTextLayout`: // Text Block
-          return <TextBlock content={block.text?.text || ''} width={block.text?.width} />
+          return <TextBlock content={block.text?.text || ''} size={block.text?.size} />
         case `${prefix}ContentImageLayout`: // Image block
-          return <ImageBlock sourceUrl={block.image?.node?.sourceUrl} altText={block.image?.node?.altText} size={block.size} />
+          return <ImageBlock 
+                    sourceUrl={block.image?.node?.sourceUrl} 
+                    altText={block.image?.node?.altText} 
+                    titleText={block.image?.node?.title} 
+                    size={block.size} />
         case `${prefix}ContentVideoLayout`: // Video Block
           if(block.option === "embed"){
             return <EmbedBlock code={block.embedCopy} size={block.size} />
@@ -33,7 +35,6 @@ const { prefix, blocks } = Astro.props;
             return <VideoBlock type={block.option} url={block.embed} size={block.size}/>
           }
         case `${prefix}ContentColorModeLayout`: // Color Block
-          console.log(block);
           return <ColorBlock />
         case `${prefix}ContentTestimonialLayout`: // Testimonial Block
           return <TestimonialBlock />

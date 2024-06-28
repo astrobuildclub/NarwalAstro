@@ -8,10 +8,11 @@ import SiteFooter from '../components/SiteFooter.astro'
 import { getNavigation } from '../lib/api'
 
 type Props = {
-  title: string
-  description: string
-  image: string
-  author: string
+  children?: any;
+  title: string;
+  description?: string;
+  image?: any;
+  author?: any; 
 }
 
 const { title, description, image = '/social-preview-image.png', author = 'AstroBuildClub™' } = Astro.props
@@ -28,7 +29,7 @@ const primaryMenu = menus.nodes[0]
 
     <SiteMeta
       title={title}
-      description={description.substring(0, 100)}
+      description={description?.substring(0, 100)}
       url={Astro.site
         ? `${Astro.site}/${title.toLowerCase().replaceAll(' ', '-')}`
         : `https://accessible-astro.dev/${title.toLowerCase().replaceAll(' ', '-')}`}

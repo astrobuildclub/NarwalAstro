@@ -1,6 +1,17 @@
 ---
+// Import Components & Scripts
 import {getAspectRatioFromEmbedString} from "../../lib/utils";
+
+// Define Types
+interface Props{
+  code?: string;
+  size?: string;
+}
+
+// Define vars
 const {code, size} = Astro.props;
+
+// Code Start
 const aspectRatio = getAspectRatioFromEmbedString(code);
 ---
 <div class:list={['embed-code', size]} set:html={code} />
