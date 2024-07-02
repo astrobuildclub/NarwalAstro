@@ -1,1 +1,1 @@
-{"images":{"remote_images":["https?://astrobuild\\.site/narwal//.*"]}}
+{"images":{"remote_images":["https?://**\\.astrobuild\\.site/.*"]}}
