@@ -72,32 +72,7 @@ const getAllUrisQuery = `query GetAllUris {
       uri
     }
   }
-  posts(first: 100) {
-    nodes {
-      uri
-    }
-  }
   work(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  services(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  people(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  clients(first: 100) {
-    nodes {
-      uri
-    }
-  }
-  careers(first: 100) {
     nodes {
       uri
     }
@@ -106,7 +81,19 @@ const getAllUrisQuery = `query GetAllUris {
 
 export async function getAllUris() {
   const result = await fetchGraphQL(getAllUrisQuery);
-  return result;
+  const uris = Object.values(result)
+  .reduce((acc, currentValue) => acc.concat(currentValue.nodes), [])
+  .filter(node => node.uri !== null)
+  .map(node => {
+    if (node.uri === "/") {
+      return { params: { uri: "/" } };
+    }
+    let trimmedURI = node.uri.substring(1);
+    trimmedURI = trimmedURI.substring(0, trimmedURI.length - 1);
+    return { params: { uri: trimmedURI } };
+  })
+  .filter(node => node.params.uri !== ''); 
+  return uris;
 }
 
 const getHomeFieldsQuery = `query GetHomeFields {

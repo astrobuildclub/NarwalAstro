@@ -3,7 +3,6 @@
 import TextBlock from '../blocks/TextBlock.astro'
 import ImageBlock from '../blocks/ImageBlock.astro'
 import VideoBlock from '../blocks/VideoBlock.astro'
-import { boolean } from 'astro/zod'
 
 // Define Types
 interface ImageNode {
@@ -29,8 +28,6 @@ type Props = {
 
 // Define Vars
 const { cols } = Astro.props
-
-console.log(cols);
 
 ---
 

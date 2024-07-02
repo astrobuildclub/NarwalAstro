@@ -2,7 +2,7 @@
 const {url, type, size} = Astro.props;
 ---
 
-<div class:list={['custom-video', size]}>
+<div class:list={['custom-video', size, type]}>
   <video
     preload="metadata"
     tabindex="-1"
