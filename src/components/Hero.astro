@@ -8,12 +8,22 @@ const { data } = Astro.props
 
 const isCover = data.coverMedia
 const heroTitle = data.title
+const heroSubtitle = data.subtitle
+const heroClients = data.clients
 const heroDescription = data.intro
 const heroBackgroundColor = data.color
 ---
 
 <section class:list={['hero', { is_cover: isCover }]}>
   <div class="full grid">
+    <p class="hero-clients">
+    {heroClients
+    && heroClients.map((client:any) => 
+    <span class="hero-client">
+      {client.title}
+    </span>
+    )}
+    </p>
     {heroTitle && <h1 class="hero-title text-xl4">{heroTitle}</h1>}
     {heroDescription && <p class="hero-description">{heroDescription}</p>}
   </div>
