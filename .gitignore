@@ -23,11 +23,10 @@ yarn-error.log*
 # webstorm settings and dictionaries
 .idea
 
-<<<<<<< HEAD
-# netlify
-=======
->>>>>>> 2f36dd9eba13763f168c0bf783fd1ca70f213a10
+# ignore build folders
 .netlify
+.github
+.astro
 
 # package lock
 package-lock.json
