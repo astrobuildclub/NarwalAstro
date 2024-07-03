@@ -9,10 +9,16 @@ type Props = {
 const { data } = Astro.props
 
 const projectHero = data.projectHero?.details
+const projectClients = data.projectMeta?.projectClient?.nodes;
 const projectContent = data.projectContent?.content
+
+const heroData = {
+    ...projectHero,
+    clients: projectClients
+}
 ---
 
-<Hero data={projectHero} />
+<Hero data={heroData} />
 
 {
   projectContent && (
