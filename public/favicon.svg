@@ -1,9 +1,12 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-<mask id="mask0_907_31" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
-<rect width="512" height="512" rx="80" fill="#161618"/>
-</mask>
-<g mask="url(#mask0_907_31)">
-<path d="M166.892 69.3845H390.357L226.065 315.018H2.6001L166.892 69.3845Z" fill="#42E0CE"/>
-<path d="M176.677 337.783L113.043 432.923H347.108L511.4 187.29H338.645L237.988 337.783H176.677Z" fill="#A14FD6"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
+    <path d="M0 0h32v32H0z"/>
+    <path d="M28.5 13.79V29h-8.159V15.738c0-4.196-1.272-5.395-4.042-5.395-2.77 0-4.64 1.948-4.64 5.844V29H3.5V3.6h8.159v2.997C13.679 4.274 16.449 3 19.369 3c5.239.075 9.131 2.697 9.131 10.79Z"/>
+    <style>
+        path:first-child { fill: #000; }
+        path:nth-child(2) { fill: #fff; }
+        @media (prefers-color-scheme: dark) {
+            path:first-child { fill: #fff; }
+            path:nth-child(2) { fill: #000; }
+        }
+    </style>
 </svg>

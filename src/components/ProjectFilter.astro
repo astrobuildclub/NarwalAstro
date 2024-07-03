@@ -3,30 +3,19 @@ import {slugify} from '../lib/utils.js';
 
 const {services} = Astro.props;
 ---
-<ul>
+<ul class="tag-filter">
   {services &&
     services.map((service:any) => (
     <li>
       <button class="tag-button" data-service={slugify(service)} >{service}</button>
     </li>
   ))}
+  <li class="tag-reset"></li>
 </ul>
 
 
 <script>
   //@ts-nocheck
-
-  // // Find all buttons with the `alert` class on the page.
-  // const buttons = document.querySelectorAll('.tag-button');
-
-  // // Handle clicks on each button.
-  // buttons.forEach((button) => {
-  //   button.addEventListener('click', () => {
-  //     let service = this.dataset.service;
-  //     filterProjects( service);
-  //   });
-  // });
-
   function filterProjects(service) {
     const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach(card => {
@@ -39,8 +28,6 @@ const {services} = Astro.props;
     });
   }
 
-
- 
 document.addEventListener( 'astro:page-load', function() {
     const serviceButtons = document.querySelectorAll('.tag-button');
     serviceButtons.forEach(button => {
@@ -52,12 +39,14 @@ document.addEventListener( 'astro:page-load', function() {
 
     // Add a button to show all projects
     const showAllButton = document.createElement('button');
-    showAllButton.textContent = 'All';
+    showAllButton.textContent = 'Reset';
     showAllButton.addEventListener('click', () => {
       filterProjects('all');
     });
-    document.querySelector('ul').prepend(showAllButton);
+    document.querySelector('.tag-reset').append(showAllButton);
 
+    // Reset when page loads
+    filterProjects('all');
 
 },{ once: false });
 
