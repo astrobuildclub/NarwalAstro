@@ -1,3 +1,9 @@
+/*---------------------*/
+/* TAILWIND            */
+/*---------------------*/
+
+/* Note: install PostCSS Language Support for VScode, to remove "Unknown at Rule" */
+/* Copy & Paste the following command in your browser: vscode:extension/csstools.postcss   */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

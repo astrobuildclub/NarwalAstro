@@ -7,15 +7,29 @@ type Props = {
 const { data } = Astro.props
 
 const isCover = data.coverMedia
+const heroClient = data.client
 const heroTitle = data.title
 const heroDescription = data.intro
 const heroBackgroundColor = data.color
+
+console.log(data)
 ---
 
 <section class:list={['hero', { is_cover: isCover }]}>
-  <div class="full grid">
-    {heroTitle && <h1 class="hero-title text-xl4">{heroTitle}</h1>}
-    {heroDescription && <p class="hero-description">{heroDescription}</p>}
+  <div class="grid grid-cols-16 full">
+    <div class="order-2 col-span-7 title ">
+      <h3>Title</h3>
+      {heroTitle && <h1 class="text-8xl hero-title">{heroTitle}</h1>}
+
+    </div>
+    <div class="order-1 col-span-3 client">
+       <h3>Client</h3>
+      {heroClient && <h2 class="text-xl hero-client">{heroClient}</h2>}
+    </div>
+    <div class="order-3 col-span-6 descritpion">
+       <h3>Description</h3>
+      {heroDescription && <p class="text-xl hero-description">{heroDescription}</p>}
+    </div>
   </div>
   <!-- hero cover media -->
 </section>
@@ -29,20 +43,22 @@ const heroBackgroundColor = data.color
     min-height: 60vh;
     text-wrap: balance;
     background-color: var(--heroBackgroundColor);
+    padding: var(--site-padding);
   }
   .is_cover {
-    background-color: red;
+    /* background-color: red;  */
+    /* wat was het idee ook alweer hier? */
   }
   .content {
     padding: 6rem 8rem;
   }
   .hero-title {
-    font-family: 'Times New Roman', Times, serif;
     letter-spacing: -0.075rem;
-    /* font-size: var(--fs-5xl); */
+    font-size: var(--fs-5xl); 
+    text-wrap: balance;
   }
   .hero-description {
-    font-size: clamp(1.5rem, 2vw, 4rem);
+    
     letter-spacing: -0.025rem;
     line-height: 1.2;
     text-wrap: balance;

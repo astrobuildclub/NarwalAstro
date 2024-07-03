@@ -51,3 +51,21 @@ document.addEventListener( 'astro:page-load', function() {
 },{ once: false });
 
 </script>
+
+<style>
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap:0 1rem;
+  }
+
+  li::after {
+    content: "/";
+    opacity: 0.2;
+  }
+
+  li:last-child::after {
+    content: "";
+  }
+
+</style>

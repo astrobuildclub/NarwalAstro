@@ -9,4 +9,5 @@ export interface Details {
   media: Media;
   subtitle: string | null;
   title: string;
+  client: string;
 }

@@ -8,10 +8,25 @@ const currentYear = new Date().getFullYear()
 <footer class="bottom-0 flex flex-col min-h-screen md:fixed -z-10">
   <!-- <CallToAction /> -->
   
-    <div class="flex flex-col justify-between flex-grow py-12 ">
-      <h1>Narwal</h1>
-      <p class="text-7xl">We’re always up to meet new people. Feel free to reach out to discuss your ambitions.</p>
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+    <div class="flex flex-col justify-between flex-grow ">
+       <a href="/">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="logo"
+        color="currentcolor"
+        width="140"
+        fill="none"
+        preserveAspectRatio="xMidYMin slice"
+        viewBox="0 0 151 40"
+        ><g fill="currentcolor" clip-path="url(#a)"
+          ><path
+            d="M25.358 23.849v15.32H17.13V25.812c0-4.226-1.283-5.434-4.075-5.434-2.792 0-4.68 1.963-4.68 5.887V39.17H.15V13.585h8.227v3.019c2.037-2.34 4.83-3.623 7.773-3.623 5.283.076 9.208 2.717 9.208 10.868ZM54.34 13.585v25.66h-7.698v-2.792h-.076c-1.66 2.113-4.075 3.245-7.094 3.245-7.094 0-12.076-5.358-12.076-13.283 0-7.849 5.057-13.358 11.774-13.358 2.792 0 5.208 1.132 7.094 3.245h.076v-2.717h8Zm-7.85 12.83c0-3.547-2.339-6.113-5.433-6.113-3.17 0-5.51 2.49-5.51 6.113s2.265 6.113 5.434 6.113c3.095-.075 5.51-2.49 5.51-6.113Zm27.246-13.358v8.83c-.754-.076-1.434-.076-1.886-.076-3.85 0-5.887 2.49-5.887 5.812V39.17h-8.227V13.585h8.227v3.472h.075c1.963-2.642 4.604-4 7.472-4h.226Zm40 .528-8.679 25.66h-6.792l-4-14.34h-.076l-3.849 14.34h-6.868l-8.679-25.66h8.15l4.227 13.736h.076l3.773-13.736h6.415l3.85 13.811h.075l4.226-13.811h8.151Zm25.433 0v25.66h-7.773v-2.792h-.076c-1.66 2.113-4.075 3.245-7.094 3.245-7.094 0-12.076-5.358-12.076-13.283 0-7.849 5.057-13.358 11.774-13.358 2.792 0 5.208 1.132 7.094 3.245h.076v-2.717h8.075Zm-7.924 12.83c0-3.547-2.34-6.113-5.434-6.113-3.17 0-5.51 2.49-5.51 6.113s2.264 6.113 5.434 6.113c3.095-.075 5.51-2.49 5.51-6.113ZM142.793.604h8.151V39.17h-8.151V.604Z"
+          ></path></g
+        ><defs><clipPath id="a"><path fill="currentcolor" d="M0 0h150.943v40H0z"></path></clipPath></defs></svg
+      >
+    </a>
+      <p class="font-bold text-7xl text-balance">We’re always up to meet new people.<br> <span class="opacity-40">Feel free to reach out to discuss your ambitions.</span></p>
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
         <Widget title="Join our Newsletter">
           <Newsletter />
         </Widget>
@@ -41,24 +56,35 @@ const currentYear = new Date().getFullYear()
       </div>
       
     </div>
-  <div class="legal">
-        <p>
-          &copy; {currentYear} - Narwal Creative <a href="https://astro.build/">Terms & Conditions</a>
+  <div class="flex justify-between text-xs legal">
+        <p class="">
+          &copy; {currentYear} - Narwal Creative 
         </p>
+        <a href="https://astro.build/">Terms & Conditions</a>
       </div>
 </footer>
 
 <style>
-  * > * {
+  /* * > * {
     border: 1px solid red;
 
+  } */
+
+  address {
+    font-style: normal;
   }
 
+  footer {
+    width: 100%;
+  }
 
 footer > div {
-    padding: var(--site-padding)
+    padding: 2rem var(--site-padding) 1rem var(--site-padding);
   }
 
+  footer .legal {
+    padding: var(--site-padding);
+  }
 
   
 
