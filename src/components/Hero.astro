@@ -9,6 +9,8 @@ const { data } = Astro.props
 const isCover = data.coverMedia
 const heroClient = data.client
 const heroTitle = data.title
+const heroSubtitle = data.subtitle
+const heroClients = data.clients
 const heroDescription = data.intro
 const heroBackgroundColor = data.color
 
@@ -16,20 +18,31 @@ console.log(data)
 ---
 
 <section class:list={['hero', { is_cover: isCover }]}>
-  <div class="grid gap-12 lg:grid-cols-16 md:gap-4 full">
-    <div class="order-2 col-span-7 title ">
+    <div class="grid gap-12 lg:grid-cols-16 md:gap-4 full">
+       <div class="order-2 col-span-7 title ">
       <h3>Title</h3>
       {heroTitle && <h1 class="text-8xl hero-title">{heroTitle}</h1>}
 
     </div>
-    <div class="order-1 col-span-3 client">
+
+     <div class="order-1 col-span-3 client">
        <h3>Client</h3>
-      {heroClient && <h2 class="text-xl hero-client">{heroClient}</h2>}
+       <div class="order-1 col-span-3 client">
+       {heroClients
+    && heroClients.map((client:any) => 
+    <span class="">
+      {client.title}
+    </span>
+    )}
     </div>
-    <div class="order-3 col-span-6 descritpion">
+    </div>
+
+      <div class="order-3 col-span-6 descritpion">
        <h3>Description</h3>
       {heroDescription && <p class="text-xl hero-description">{heroDescription}</p>}
     </div>
+    
+    {heroDescription && <p class="hero-description">{heroDescription}</p>}
   </div>
   <!-- hero cover media -->
 </section>

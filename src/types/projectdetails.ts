@@ -3,11 +3,11 @@ export interface Media {
 }
 
 export interface Details {
-  color: string | null;
-  coverMedia: boolean;
-  intro: string;
-  media: Media;
-  subtitle: string | null;
-  title: string;
-  client: string;
+  color?: string | null;
+  coverMedia?: boolean;
+  intro?: string;
+  media?: Media;
+  subtitle?: string | null;
+  title?: string;
+  clients?: any;
 }
