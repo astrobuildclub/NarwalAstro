@@ -26,7 +26,8 @@
   --text: var(--clr-black);
 
   /* Fonts */
-  --font-system: system-ui, sans-serif; /* use as fallback */
+  --font-system: system-ui, sans-serif;
+  /* use as fallback */
   --font-body: 'Helvetica Neue', Inter, Roboto, 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
@@ -47,8 +48,15 @@
   --fs-7xl: clamp(3.25rem, 6.07vi + 2.03rem, 9.31rem);
   --fs-8xl: clamp(3.65rem, 7.99vi + 2.06rem, 11.64rem);
 
-  --site-padding: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem);
-  --grid-gutter: --radius-default: clamp(1rem, 0.7692rem + 1.0256vw, 2rem);
+
+
+
+
+  /* --site-padding: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem); */
+  /* --grid-gutter: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem); */
+  --site-padding: var(--space-m);
+  --grid-gutter: var(--space-m);
+  --radius-default: clamp(1rem, 0.7692rem + 1.0256vw, 2rem);
 
   --easing-easeOutBack: cubic-bezier(0.34, 1.56, 0.64, 1);
   --easing-easeInOutQuart: cubic-bezier(0.76, 0, 0.24, 1);
@@ -70,6 +78,7 @@
 html {
   color-scheme: dark light;
 }
+
 /* CSS-only solution using :has()
    the JS version is commented out lower down */
 :root:has(#theme [value='☀️']:checked) {
@@ -97,6 +106,13 @@ body {
   background-color: var(--base);
   font-size: 1rem;
   text-rendering: optimizeLegibility;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+  line-height: 125%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 main {
@@ -110,20 +126,12 @@ main {
   --popout: minmax(0, calc(5rem + 10vw));
   --feature: minmax(0, calc(10rem + 10vw));
   --full: minmax(var(--gap), 1fr);
-
   display: grid;
-
   grid-template-columns:
-    [full-start] var(--full)
-    [feature-start] var(--feature)
-    [popout-start] var(--popout)
-    [content-start] var(--inline) [content-end]
-    var(--popout) [popout-end]
-    var(--feature) [feature-end]
-    var(--full) [full-end];
+    [full-start] var(--full) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--inline) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--full) [full-end];
 }
 
-.content > * {
+.content>* {
   grid-column: content;
 }
 

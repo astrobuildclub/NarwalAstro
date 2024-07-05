@@ -17,14 +17,14 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-fluid-type')({
-      // Jouw fluid type instellingen
+      
       settings: {
         fontSizeMin: 1.125, // 1.125rem === 18px
-        fontSizeMax: 1.25, // 1.25rem === 20px
+        fontSizeMax: 1.5, // 1.25rem === 20px
         ratioMin: 1.125, // Multiplicator Min
         ratioMax: 1.2, // Multiplicator Max
         screenMin: 20, // 20rem === 320px
-        screenMax: 160, // 96rem === 1536px
+        screenMax: 160, // 96rem === 1536px / 16rem == 2560px
         unit: 'rem', // default is rem but it's also possible to use 'px'
         prefix: '', // set a prefix to use it alongside the default font sizes
         extendValues: true, // When you set extendValues to true it will extend the default values. Set it to false to overwrite the values.
