@@ -1,0 +1,38 @@
+// | -------------------------------------------------------------
+// | Utopia
+// | -------------------------------------------------------------
+
+/* Space */
+@use 'node_modules/utopia-core-scss/src/utopia' as utopia;
+
+
+/* Font Sizes */
+/* @link https://utopia.fyi/type/calculator?c=320,18,1.125,1920,24,1.25,5,2,&s=0.75|0.5|0.5|0.1,1.5|2|2.5|3|4|5|6|7|7.5,xs-l&g=s,l,4xl,12 */
+
+:root {
+  @include utopia.generateTypeScale(("minWidth": 320,
+      "maxWidth": 1920,
+      "minFontSize": 18,
+      "maxFontSize": 24,
+      "minTypeScale": 1.125,
+      "maxTypeScale": 1.25,
+      "positiveSteps": 10,
+      "negativeSteps": 2,
+      "prefix": "fs-",
+    ));
+}
+
+/* Spacing */
+/* @link https://utopia.fyi/space/calculator?c=320,16,1.2,1920,24,1.25,5,2,&s=0.75|0.5|0.5|0.1,1.5|2|2.5|3|4|5|6|7|7.5,xs-l&g=s,l,xl,12 */
+
+:root {
+  @include utopia.generateSpaceScale(("minWidth": 320,
+      "maxWidth": 1920,
+      "minSize": 16,
+      "maxSize": 24,
+      "positiveSteps": (1.5, 2, 2.5, 3, 4, 5, 6, 7, 7.5),
+      "negativeSteps": (0.75, 0.5, 0.5, 0.1),
+      "customSizes": ("xs-l"),
+      "prefix": "space-",
+    ));
+}

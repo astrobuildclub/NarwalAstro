@@ -2,7 +2,7 @@
 const { menu } = Astro.props
 ---
 
-<nav class="flex flex-wrap items-center justify-between p-6 bg-gray-950">
+<nav class="flex flex-wrap items-center justify-between bg-gray-950">
   <div class="flex items-center flex-shrink-0 mr-6 text-white">
     <a href="/">
       <svg
@@ -36,6 +36,11 @@ const { menu } = Astro.props
   </div>
 </nav>
 <style>
+
+nav{
+  padding: var(--space-xs) var(--site-padding);
+}
+
   .logo {
     width: 140px;
     color: white;

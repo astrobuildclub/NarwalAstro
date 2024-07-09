@@ -1,5 +1,5 @@
 ---
-const {url, type, size} = Astro.props;
+const { url, type, size } = Astro.props;
 ---
 
 <div class:list={['custom-video', size, type]}>
@@ -9,9 +9,9 @@ const {url, type, size} = Astro.props;
     disablepictureinpicture
     playsinline
     loop
+    muted
     title=""
     src={url}
-    autoplay={true}
-    muted
+    autoplay
   />
 </div>

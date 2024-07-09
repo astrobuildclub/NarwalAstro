@@ -2,16 +2,95 @@
 ---
 <div class="newsletter">
   <form id="newsletter-form" name="newsletter-form" method="get" class="form-fields" aria-label="Newsletter Form">
-    <label for="name" class="field-label">Name</label>
-    <input class="field-input field_name" maxlength="256" name="name" placeholder="" type="text" id="name">
-    <label for="email" class="field-label">Email Address</label>
-    <input class="field-input field_email" maxlength="256" name="email" placeholder="" type="email" id="email" required="">
+    <label for="name" class="sr-only field-label">Name</label>
+    <input class=" field-input field_name" maxlength="256" name="name" placeholder="name" type="text" id="name">
+    <label for="email" class="sr-only field-label">Email Address</label>
+    <input class="field-input field_email" maxlength="256" name="email" placeholder="mail@domain.com" type="email" id="email" required="">
     <input type="submit" data-wait="Please wait..." class="field-submit" value="Submit">
   </form>
+  <div class="messages">
   <div class="form-success" tabindex="-1" role="region" aria-label="Newsletter Form success">
     <p>Thank you! Your submission has been received!</p>
   </div>
   <div class="form-error" tabindex="-1" role="region" aria-label="Newsletter Form failure">
     <p>Oops! Something went wrong while submitting the form.</p>
   </div>
+  </div>
 </div>
+
+<style>
+
+:root {
+  --color-bg: white;
+  --color-text: black;
+  --color-border: #ccc;
+  --color-bg-focus: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-text: white;
+    --color-border: #555;
+    --color-bg-focus: #333;
+  }
+}
+
+
+
+
+.field-label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.5rem 0.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-border);
+  background-color: var(--color-base);
+  color: var(--color-bg);
+  transition: all 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+.field-input:hover {
+  
+  
+  
+  
+  box-shadow: inset 0px -4px 12px rgba(0,0,0,0.125);
+   
+}
+
+.field-input:focus {
+  border-color: var(--color-bg-focus);
+  outline: none;
+  /* background-color: var(--color-bg-focus); */
+  background-color: #f4f4f4;
+   
+}
+
+.field-submit {
+  /* width: 100%; */
+  padding: 0.75rem 0;
+  border: none;
+  /* border-radius: 4px; */
+  
+  color: var(--color-bg);
+  font-weight:bold;
+  text-decoration: underline;
+  text-decoration-line: underline;
+  text-decoration-style: solid 2px black;
+  text-underline-offset: 20%;
+  cursor: pointer;
+}
+
+.field-submit:hover {
+  /* background-color: var(--color-bg-focus); */
+}
+
+.messages {
+  display: none;
+}
+
+</style>

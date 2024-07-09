@@ -2,11 +2,11 @@
 ---
 
 <section class="page-intro">
-  <div class="grid grid-cols-2 content-baseline gap-12">
-    <div class="col self-baseline text-lg/8 font-bold">
+  <div class="grid gap-12 md:grid-cols-2 content-baseline">
+    <div class="col-1 col self-baseline">
       <slot name="column-one" />
     </div>
-    <div class="col self-baseline text-4xl/tight font-bold">
+    <div class="col-2 col self-baseline">
       <slot name="column-two" />
     </div>
   </div>
@@ -14,10 +14,27 @@
 
 <style>
   section {
-    padding: var(--site-padding);
+    padding: 8rem var(--site-padding);
   }
 
-  section div:nth-child(2) {
-    /* color: Red; */
+  .col-1 {
+       font-size: var(--fs-0);
+       line-height:112.5%;
+    color: var(--text);
+    opacity: 0.7;
+    ;
   }
+
+  .col-2 {
+    font-size: calc(2* var(--fs-0));
+    line-height:112.5%;
+    font-weight:600;
+    letter-spacing: -0.0125em;
+  }
+
+  section div > div{
+    max-width: 70ch
+  }
+  
+  
 </style>

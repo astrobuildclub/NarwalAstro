@@ -81,9 +81,9 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
             <div role="group" class="swiper-slide">
               {slide.link ?
                 slide.link.map((l:any)=>( // slide
-                <a href={l.url} target={l.target}>
-                  <h3>{slide.subtitle}</h3>
-                  <h1>{slide.title}</h1>
+                <a class="slide-text" href={l.url} target={l.target}>
+                  <h3 class="text-1xl">{slide.subtitle}</h3>
+                  <h1 class="text-7xl md:text-9xl text-balance">{slide.title}</h1>
                 </a>
                 ))
               :
@@ -98,6 +98,12 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
     <!-- Carousel Controls -->
     <div class="controls swiper-controls">
       <div class="controls-wrapper">
+          <div class="control-indicator swiper-indicator">
+          <p class="swiper-counter">
+            <span class="swiper-number-current">00</span> &mdash;
+            <span class="swiper-number-total">00</span>
+          </p>
+        </div>
         <a href="#" class="control-button swiper-button-prev">
           <div class="control-button_icon is_reversed">
             <svg
@@ -130,12 +136,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
             >
           </div>
         </a>
-        <div class="control-indicator swiper-indicator">
-          <p class="swiper-counter">
-            <span class="swiper-number-current">00</span> &mdash;
-            <span class="swiper-number-total">00</span>
-          </p>
-        </div>
+      
       </div>
     </div>
   </div>
@@ -143,7 +144,12 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
 
 <script src="../lib/swiper.js"></script>
 
-<style>/* Algemene instellingen voor de carousel gallery */
+<style>
+
+   /* * > * {
+    border: 1px solid red;
+   } */
+/* Algemene instellingen voor de carousel gallery */
   .carousel-gallery {
     display: flex;
     flex-direction: column;  
@@ -220,7 +226,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
   .carousel-foreground .swiper-wrapper{
     width:100%;
     height: 100%;
-    padding: 20px;
+    padding: var(--site-padding);
   }
   .carousel-foreground .swiper-slide {
     display: flex;
@@ -233,14 +239,14 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
     min-width: 100%; /* Zorgt ervoor dat de slides 100% van de breedte innemen */
     padding: 0;
     margin: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   
   /* Control instellingen */
   .controls {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 2rem;
+    right: 2rem;
     z-index: 3; /* Boven beide carousels */
     display: flex;
     align-items: center;
@@ -266,7 +272,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
     bottom: 0%;
     left: 0%;
     right: 0%;
-    padding: 20px;
+    padding: var(--site-padding);
   }
   .controls-wrapper{
     grid-column-gap: .5rem;
@@ -326,5 +332,19 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .slide-text {
+
+  }
+  h1 {
+    max-width: 15ch;
+    
+    font-size: var(--fs-7xl);
+    font-weight: 600;
+    letter-spacing: -0.2rem;
+    text-wrap: balance;
+    line-height: 100%;
+    
   }
 </style>

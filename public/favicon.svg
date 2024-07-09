@@ -1,12 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
-    <path d="M0 0h32v32H0z"/>
-    <path d="M28.5 13.79V29h-8.159V15.738c0-4.196-1.272-5.395-4.042-5.395-2.77 0-4.64 1.948-4.64 5.844V29H3.5V3.6h8.159v2.997C13.679 4.274 16.449 3 19.369 3c5.239.075 9.131 2.697 9.131 10.79Z"/>
-    <style>
-        path:first-child { fill: #000; }
-        path:nth-child(2) { fill: #fff; }
-        @media (prefers-color-scheme: dark) {
-            path:first-child { fill: #fff; }
-            path:nth-child(2) { fill: #000; }
-        }
-    </style>
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    svg {
+      max-width: 100px;
+    }
+    path:first-child {
+      fill: #000;
+    }
+    path:nth-child(2) {
+      fill: #fff;
+    }
+    circle {
+      fill: #000;
+    }
+    @media (prefers-color-scheme: dark) {
+      circle {
+        fill: #fff;
+      }
+      path:first-child {
+        fill: #fff;
+      }
+      path:nth-child(2) {
+        fill: #000;
+      }
+    }
+   
+    @keyframes circle-animation {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    circle {
+      display: block;
+      animation: circle-animation 2s linear infinite;
+      transform-origin: 50% 50%;
+    }
+  </style>
+  <circle fill="currentColor" cx="50" cy="50" r="45" />
 </svg>
