@@ -34,28 +34,12 @@
 
   /* Font Sizes */
   /* https://www.fluid-type-scale.com/ / https://bit.ly/4b7CNn3 */
-  --fs-xs: clamp(0.89rem, -0.09vi + 0.91rem, 0.8rem);
-  --fs-sm: clamp(1rem, 0vi + 1rem, 1rem);
-  --fs-base: clamp(1.13rem, 0.13vi + 1.1rem, 1.25rem);
-  --fs-md: clamp(1.27rem, 0.3vi + 1.21rem, 1.56rem);
-  --fs-lg: clamp(1.42rem, 0.53vi + 1.32rem, 1.95rem);
-  --fs-xl: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem);
-  --fs-2xl: clamp(1.8rem, 1.25vi + 1.55rem, 3.05rem);
-  --fs-3xl: clamp(2.03rem, 1.79vi + 1.67rem, 3.81rem);
-  --fs-4xl: clamp(2.28rem, 2.49vi + 1.78rem, 4.77rem);
-  --fs-5xl: clamp(2.57rem, 3.39vi + 1.89rem, 5.96rem);
-  --fs-6xl: clamp(2.89rem, 4.56vi + 1.97rem, 7.45rem);
-  --fs-7xl: clamp(3.25rem, 6.07vi + 2.03rem, 9.31rem);
-  --fs-8xl: clamp(3.65rem, 7.99vi + 2.06rem, 11.64rem);
-
-
-
-
 
   /* --site-padding: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem); */
   /* --grid-gutter: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem); */
   --site-padding: var(--space-m);
   --grid-gutter: var(--space-m);
+
   --radius-default: clamp(1rem, 0.7692rem + 1.0256vw, 2rem);
 
   --easing-easeOutBack: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -127,11 +111,12 @@ main {
   --feature: minmax(0, calc(10rem + 10vw));
   --full: minmax(var(--gap), 1fr);
   display: grid;
-  grid-template-columns:
-    [full-start] var(--full) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--inline) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--full) [full-end];
+  grid-template-columns: [full-start] var(--full) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(
+      --inline
+    ) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--full) [full-end];
 }
 
-.content>* {
+.content > * {
   grid-column: content;
 }
 
