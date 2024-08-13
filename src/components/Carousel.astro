@@ -82,7 +82,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
               {slide.link ?
                 slide.link.map((l:any)=>( // slide
                 <a class="slide-text" href={l.url} target={l.target}>
-                  <h3 class="text-1xl">{slide.subtitle}</h3>
+                  <h3 class="text-xl">{slide.subtitle}</h3>
                   <h1 class="text-7xl md:text-9xl text-balance">{slide.title}</h1>
                 </a>
                 ))

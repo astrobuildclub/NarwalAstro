@@ -50,10 +50,10 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
 ---
 
 <div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
-  <div class="project-media overflow-hidden rounded-lg">
+  <div class="overflow-hidden rounded-lg project-media">
     {
       vidsrc ? ( // if vidsrc is set, show video with poster image
-        <div class="project-video w-full">
+        <div class="w-full project-video">
           <video
             preload="metadata"
             tabindex="-1"
@@ -88,14 +88,14 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
   </div>
 
   <div class="project-content">
-    <div class="project-meta flex justify-between pb-3 pt-6 align-baseline">
-      {clientname && <h3 class="project-client self-baseline text-xs font-bold text-neutral-400">{clientname}</h3>}
+    <div class="flex justify-between pt-6 pb-3 align-baseline project-meta">
+      {clientname && <h3 class="font-bold project-client self-baseline text-neutral-400">{clientname}</h3>}
       {services && <TagGroup tags={services} />}
     </div>
 
     {
       title && (
-        <h2 class="project-title text-4xl font-bold">
+        <h2 class="font-bold project-title">
           <a href={link} class="project-link">
             {title}
           </a>
@@ -105,12 +105,17 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
   </div>
 
   <style is:global>
-    .project-card {
+
+    .project-card {    
       position: relative;
-      overflow: hidden;
       transition: box-shadow 0.15s ease-in-out;
       color: var(--font-color);
       transition: transform 0.4s var(--easing-easeOutExpo);
+    }
+
+    h2 {
+      font-size: var(--fs-3);
+      line-height: 100%;
     }
 
     img,
@@ -119,7 +124,7 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
     }
 
     .project-title {
-      text-edge: cap alphabetic;
+      /* text-edge: cap alphabetic; */
     }
   </style>
 </div>
