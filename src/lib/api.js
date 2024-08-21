@@ -260,7 +260,6 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
           ... on PageContentContentColorModeLayout {
             __typename
             colorMode
-            fieldGroupName
           }
           ... on PageContentContentGalleryLayout {
             __typename
@@ -269,6 +268,55 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
                 altText
                 title
                 sourceUrl
+              }
+            }
+          }
+          ... on PageContentContentTextGridLayout {
+           __typename
+            title
+            image {
+              image
+            }
+            item {
+              text {
+                text
+                title
+              }
+            }
+          }
+          ... on PageContentContentTeamLayout {
+           __typename
+            title
+            team {
+              nodes {
+                ... on Person {
+                  id
+                  title
+                }
+              }
+            }
+          }
+          ... on PageContentContentServicesLayout {
+           __typename
+            title
+            services {
+              nodes {
+                ... on Service {
+                  id
+                  title
+                }
+              }
+            }
+          }
+          ... on PageContentContentClientsLayout {
+           __typename
+            title
+            clients {
+              nodes {
+                ... on Client {
+                  id
+                  title
+                }
               }
             }
           }
@@ -283,6 +331,7 @@ export async function getPageByUri(uri) {
   return result;
 }
 
+/* Hebben we dit nodig? */
 const getPostByUriQuery = `query GetPostByUri($uri: String!) {
   nodeByUri(uri: $uri) {
     __typename
