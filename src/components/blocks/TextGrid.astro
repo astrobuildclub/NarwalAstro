@@ -1,0 +1,22 @@
+---
+// Define Types
+interface Props{
+  title?: string;
+  image?: object;
+  items?: textItem[];
+}
+interface textItem {
+  title?: string;
+  text?: string;
+}
+
+// Define vars
+const {title, image, items} = Astro.props;
+---
+<h1 class="title">{title}</h1>
+
+{items &&
+  items.map((item:any) => (
+  <div class="title" set:html={item.text.title} />
+  <div class="text" set:html={item.text.text} />
+))}
