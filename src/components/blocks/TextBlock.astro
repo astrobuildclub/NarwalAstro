@@ -9,12 +9,12 @@ const { title, content, size } = Astro.props;
 let classes;
 
 if (size && size.at(0) == "full") {
-  classes = "w-full py-8 px-8 bg-black text-white";
+  classes = "";
 } else {
-  classes = "w-8/12 py-8 px-8";
+  classes = "";
 }
 ---
 {title &&
-  <h2 set:html={title} />
+  <h2 class="sectionTitle" set:html={title} />
 }
 <div set:html={content} class={classes} />

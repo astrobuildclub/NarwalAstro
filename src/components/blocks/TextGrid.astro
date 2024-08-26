@@ -24,17 +24,17 @@ interface imageItem {
 
 // Define vars
 const {title, media, items} = Astro.props;
-const imgObject = Object.values(media.image);
+const imgObject = media?.image ? Object.values(media.image) as imageItem[] : [];
 
-const imageUrl = imgObject[0]?.sourceUrl;
-const imageAlt = imgObject[0]?.altText;
+const imageUrl = imgObject.length > 0 ? imgObject[0]?.sourceUrl : "";
+const imageAlt = imgObject.length > 0 ? imgObject[0]?.altText : "";
 const imagePosition = media?.imgposition;
 ---
 
-<div class="full">
+<div class="grid grid-cols-1 full">
 <h1 class="title">{title}</h1>
-<div class="grid textgrid__content md:grid-cols-2">
-  <div class={`image__wrap img_align_${imagePosition}`}>
+<div class="grid textgrid__content lg:grid-cols-2">
+
     {imageUrl && (
       <Image 
           src={imageUrl}
@@ -45,11 +45,11 @@ const imagePosition = media?.imgposition;
           format='webp'
           alt={imageAlt || ""} 
           title={imageAlt || ""}
-          class="image"
+          class={`image__wrap img_align_${imagePosition}`}
         />
       )}
-    </div>
-  <div class="grid gap-4 items md:grid-cols-2">
+ 
+  <div class="grid gap-4 items lg:grid-cols-2">
     {items &&
       items.map((item:any) => (
         <div class="item">
@@ -67,19 +67,14 @@ const imagePosition = media?.imgposition;
   .title {
     font-size: var(--fs-6);
     line-height: 112.5%;
+    margin-bottom: var(--space-xl);
   }
 
   .textgrid__content {
     gap: var(--gap);
   }
   
-  .image__wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: red;
-    aspect-ratio: 1 / 1;
-  }
+
 
 
   .item__title, .item__text {
@@ -88,6 +83,7 @@ const imagePosition = media?.imgposition;
     line-height: 112.5%;
     letter-spacing: -0.0025em;
   }
+
 
   .item__text {
     opacity: 0.6;
@@ -98,6 +94,11 @@ const imagePosition = media?.imgposition;
   }
   .img_align_left{
     order:0;
+  }
+
+
+  img {
+    max-width: 100%;
   }
 
 

@@ -30,8 +30,8 @@ type Props = {
 const { cols } = Astro.props
 
 ---
-
-<div class="project-multicols full">
+<pre>MultiCols</pre>
+<div class="grid multicols full lg:grid-cols-2">
    {cols &&
     cols.map((col) => {
       switch (col.contentType) {
@@ -61,7 +61,7 @@ const { cols } = Astro.props
           }
         case 'text':  // Textblock
         default:
-          return <TextBlock title={col.title || ""} content={col.text || ""}  />
+          return  <div class="col"><TextBlock title={col.title || ""} content={col.text || ""}  /></div>
       }
     })
   }
@@ -69,8 +69,6 @@ const { cols } = Astro.props
 
 <style>
   .project-multicols {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: var(--grid-gutter);
+    
   }
 </style>
