@@ -28,9 +28,12 @@
   /* Fonts */
   --font-system: system-ui, sans-serif;
   /* use as fallback */
-  --font-body: 'Helvetica Neue', Inter, Roboto, 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-  --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+  --font-body: 'Helvetica Neue', Inter, Roboto, 'Arial Nova', 'Nimbus Sans',
+    Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
+  --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif',
+    'Sitka Small', serif;
 
   /* Font Sizes */
   /* https://www.fluid-type-scale.com/ / https://bit.ly/4b7CNn3 */
@@ -119,14 +122,22 @@ main {
 
 .content {
   --gap: clamp(1rem, 6vw, 3rem);
-  --inline: min(80ch, 100% - var(--gap) * 2);
-  --popout: minmax(0, calc(5rem + 10vw));
-  --feature: minmax(0, calc(10rem + 10vw));
   --full: minmax(var(--gap), 1fr);
-  display: grid;
+  --inline: min(80ch, 100% - var(--gap) * 2);
+  --content: min(80ch, 100% - var(--gap) * 2);
+  --popout: minmax(0, 2rem);
+  --feature: minmax(0, 5rem);
+
+  display: grid; /* the grid */
+
   grid-template-columns:
-    [full-start] var(--full) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--inline)
-    [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--full) [full-end];
+    [full-start] var(--full)
+    [feature-start] var(--feature)
+    [popout-start] var(--popout)
+    [content-start] var(--content) [content-end]
+    var(--popout) [popout-end]
+    var(--feature) [feature-end]
+    var(--full) [full-end];
 }
 
 .content > * {

@@ -40,7 +40,7 @@ const { prefix, blocks } = Astro.props;
         case `${prefix}ContentColorModeLayout`: // Color Block
           return <ColorBlock />
         case `${prefix}ContentTestimonialLayout`: // Testimonial Block
-          return <TestimonialBlock />
+          return <TestimonialBlock content={block}/>
         case `${prefix}ContentMultiColsLayout`: // Testimonial Block
           return <MultiCols cols={block.col} />
         case `${prefix}ContentTextGridLayout`: // Textgrid
@@ -59,7 +59,7 @@ const { prefix, blocks } = Astro.props;
 
   .content { 
     display: grid;
-    gap: var(--grid-gutter);
+
     grid-row-gap: var(--grid-gutter)
   
   }

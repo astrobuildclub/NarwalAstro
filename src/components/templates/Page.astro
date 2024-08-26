@@ -17,9 +17,9 @@ const pageContent = data.pageContent?.content;
 
 {pageHero ?
   <header>
-    <h1>{pageHeroTitle}</h1>
+    <h1 class="heroTitle">{pageHeroTitle}</h1>
   </header>
-  <PageIntro>
+  <PageIntro class="page">
     <Fragment slot="column-one" set:html={pageHeroColOne} />
     <Fragment slot="column-two" set:html={pageHeroColTwo} />
   </PageIntro>
@@ -46,5 +46,14 @@ const pageContent = data.pageContent?.content;
 <style>
   .page {
     padding: var(--site-padding);
+  }
+
+  header{
+          padding: 8rem var(--site-padding) 0 var(--site-padding);
+  
+  }
+  .heroTitle {
+    font-size: var(--fs-8);
+    margin-bottom: 1rem;
   }
 </style>
