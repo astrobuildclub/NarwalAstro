@@ -1,38 +1,52 @@
 ---
-
 import { Image } from 'astro:assets';
-
 
 // Define Types
 interface Props{
   title?: string;
-   image?: { url: string; alt: string; };
+   media?: { 
+    image?: imageItem[]; 
+    imgposition?: string; 
+  };
   items?: textItem[];
 }
+
 interface textItem {
   title?: string;
   text?: string;
 }
 
-// Define vars
-const {title, image, items} = Astro.props;
-
-
-if (image) {
-  console.log("Image URL:", image.url);
-  console.log("Image Alt:", image.alt);
+interface imageItem {
+  id?: string;
+  altText?: string;
+  sourceUrl?: string;
 }
 
+// Define vars
+const {title, media, items} = Astro.props;
+const imgObject = Object.values(media.image);
 
-
+const imageUrl = imgObject[0]?.sourceUrl;
+const imageAlt = imgObject[0]?.altText;
+const imagePosition = media?.imgposition;
 ---
 
 <div class="full">
 <h1 class="title">{title}</h1>
 <div class="grid textgrid__content md:grid-cols-2">
-  <div class="image__wrap">
-    {image && (
-        <img src={image.url} alt={image.alt} class="image" />
+  <div class={`image__wrap img_align_${imagePosition}`}>
+    {imageUrl && (
+      <Image 
+          src={imageUrl}
+          width="10";
+          height="10";
+          widths={[540, 960, 1440, 1920]}
+          sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
+          format='webp'
+          alt={imageAlt || ""} 
+          title={imageAlt || ""}
+          class="image"
+        />
       )}
     </div>
   <div class="grid gap-4 items md:grid-cols-2">
@@ -77,6 +91,13 @@ if (image) {
 
   .item__text {
     opacity: 0.6;
+  }
+
+  .img_align_right{
+    order:1;
+  }
+  .img_align_left{
+    order:0;
   }
 
 
