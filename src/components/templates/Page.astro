@@ -7,6 +7,13 @@ const pageTitle = data.title;
 const pageIntroduction = data.content;
 const pageContent = data.pageContent?.content;
 
+
+
+  console.log("pageTitle", data.content);
+  console.log("pageIntroduction", data.title);
+
+
+
 ---
 
 {pageTitle &&
@@ -21,4 +28,17 @@ const pageContent = data.pageContent?.content;
   }
 </PageIntro>
 
-<BlockRenderer prefix="PageContent" blocks={pageContent} />
+{
+  pageContent && (
+    <article class="page">
+      <BlockRenderer prefix="PageContent" blocks={pageContent} />
+    </article>
+  )
+}
+
+<style>
+  .page {
+    padding: var(--site-padding);
+    
+  }
+</style>
