@@ -12,8 +12,6 @@ const heroSubtitle = data.subtitle
 const heroClients = data.clients
 const heroDescription = data.intro
 const heroBackgroundColor = data.color
-
-console.log(data)
 ---
 
 <section class:list={['hero', { is_cover: isCover }]}>
@@ -33,8 +31,6 @@ console.log(data)
        <h3 class="hero-meta">Description</h3>
       {heroDescription && <p class="text-xl hero-description">{heroDescription}</p>}
       </div>
-    
-    
   </div>
   <!-- hero cover media -->
 </section>

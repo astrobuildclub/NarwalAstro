@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+
+interface member{
+  id?: string;
+  title?: string;
+  featuredImage?: any;
+}
+
+type Props = {
+  title: string;
+  members: member[];
+}
+
+const {title, members} = Astro.props;
+
+
+const teamMembers = members.map((member:any) =>({
+  name: member.title || "",
+  imgalt: member.featuredImage?.node?.altText || "",
+  imgsrc: member.featuredImage?.node?.sourceUrl || "",
+}));
+---
+
+<div>
+  <h2>{title}</h2>
+  {teamMembers &&
+    teamMembers.map((person:any)=>( // slide
+    <div class="member-image">
+        {person.imgsrc && (
+        <Image 
+            src={person.imgsrc}
+            width="10";
+            height="10";
+            widths={[540, 960, 1440, 1920]}
+            sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
+            format='webp'
+            alt={person.imgalt || ""} 
+            title={person.imgalt || ""}
+            class="image"
+          />
+        )}
+      </div>
+      <div class="member-name">{person.name}</div>
+    ))
+  }   
+</div>

@@ -4,29 +4,36 @@ import PageIntro from '../PageIntro.astro'
 
 const { data } = Astro.props;
 const pageTitle = data.title;
+
+const pageHero = data.pageHero;
+const pageHeroTitle = data.pageHero.title;
+const pageHeroColOne = data.pageHero.intro.col1;
+const pageHeroColTwo = data.pageHero.intro.col2;
+
 const pageIntroduction = data.content;
 const pageContent = data.pageContent?.content;
-
-
-
-  console.log("pageTitle", data.content);
-  console.log("pageIntroduction", data.title);
-
-
-
 ---
 
-{pageTitle &&
-<header>
-  <h1>{pageTitle}</h1>
-</header>
+
+{pageHero ?
+  <header>
+    <h1>{pageHeroTitle}</h1>
+  </header>
+  <PageIntro>
+    <Fragment slot="column-one" set:html={pageHeroColOne} />
+    <Fragment slot="column-two" set:html={pageHeroColTwo} />
+  </PageIntro>
+:
+  <header>
+    <h1>{pageTitle}</h1>
+  </header>
+  <PageIntro>
+    {pageIntroduction &&
+      <Fragment slot="column-one" set:html={pageIntroduction} />
+    }
+  </PageIntro>
 }
 
-<PageIntro>
-  {pageIntroduction &&
-    <Fragment slot="column-one" set:html={pageIntroduction} />
-  }
-</PageIntro>
 
 {
   pageContent && (
@@ -39,6 +46,5 @@ const pageContent = data.pageContent?.content;
 <style>
   .page {
     padding: var(--site-padding);
-    
   }
 </style>

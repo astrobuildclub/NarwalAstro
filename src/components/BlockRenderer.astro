@@ -9,6 +9,7 @@ import ColorBlock from './blocks/ColorBlock.astro'
 import TestimonialBlock from './blocks/TestimonialBlock.astro'
 import MultiCols from './blocks/MultiCols.astro'
 import EmbedBlock from './blocks/EmbedBlock.astro'
+import TeamBlock from './blocks/TeamBlock.astro'
 
 
 type Props = {
@@ -43,7 +44,9 @@ const { prefix, blocks } = Astro.props;
         case `${prefix}ContentMultiColsLayout`: // Testimonial Block
           return <MultiCols cols={block.col} />
         case `${prefix}ContentTextGridLayout`: // Textgrid
-          return <TextGrid title={block.title} image={block.image} items={block.item} />
+          return <TextGrid title={block.title} media={block.media} items={block.item} />
+        case `${prefix}ContentTeamLayout`: // Textgrid
+          return <TeamBlock title={block.title} members={block.team?.nodes} />
         default:
           null
       }

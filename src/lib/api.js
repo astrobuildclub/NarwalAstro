@@ -181,7 +181,7 @@ export async function getNavigation() {
 
 const getPageByUriQuery = `query GetPageByUri($uri: String!) {
   nodeByUri(uri: $uri) {
-    __typename
+      __typename
     ... on Page {
       id
       status
@@ -274,14 +274,21 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
           ... on PageContentContentTextGridLayout {
            __typename
             title
-            image {
-              image
-            }
             item {
               text {
                 text
                 title
               }
+            }
+            media {
+              image {
+                node {
+                  id
+                  altText
+                  sourceUrl
+                }
+              }
+              imgposition
             }
           }
           ... on PageContentContentTeamLayout {
@@ -292,6 +299,12 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
                 ... on Person {
                   id
                   title
+                  featuredImage {
+                    node {
+                      sourceUrl
+                      altText
+                    }
+                  }
                 }
               }
             }
@@ -321,6 +334,13 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
             }
           }
         }
+      }
+      pageHero {
+        intro {
+          col1
+          col2
+        }
+        title
       }
     }
   }
