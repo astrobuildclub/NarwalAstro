@@ -106,7 +106,7 @@ body {
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
   text-rendering: optimizeLegibility;
   font-synthesis: none;
-  line-height: 125%;
+  /* line-height: 125%; */
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
