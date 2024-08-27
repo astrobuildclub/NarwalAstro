@@ -27,30 +27,38 @@ const {services} = Astro.props;
       }
     });
   }
-
-document.addEventListener( 'astro:page-load', function() {
+  
+  document.addEventListener('astro:page-load', function() {
+    // Check of de benodigde elementen op de pagina aanwezig zijn
     const serviceButtons = document.querySelectorAll('.tag-button');
+    const tagReset = document.querySelector('.tag-reset');
+  
+    if (serviceButtons.length === 0 || !tagReset) {
+      // Stop als de elementen niet aanwezig zijn
+      return;
+    }
+  
     serviceButtons.forEach(button => {
       button.addEventListener('click', () => {
         const activeService = button.getAttribute('data-service');
         filterProjects(activeService);
       });
     });
-
-    // Add a button to show all projects
+  
+    // Voeg een knop toe om alle projecten te tonen
     const showAllButton = document.createElement('button');
     showAllButton.textContent = 'Reset';
     showAllButton.addEventListener('click', () => {
       filterProjects('all');
     });
-    document.querySelector('.tag-reset').append(showAllButton);
-
-    // Reset when page loads
+    tagReset.append(showAllButton);
+  
+    // Reset bij het laden van de pagina
     filterProjects('all');
-
-},{ once: false });
-
-</script>
+  
+  }, { once: false });
+  </script>
+  
 
 <style>
   ul {

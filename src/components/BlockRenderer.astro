@@ -2,14 +2,16 @@
 // import type { ContentField } from '../types/contentblocks'
 // Import Content Block Components
 import TextBlock from './blocks/TextBlock.astro'
-import TextGrid from './blocks/TextGrid.astro'
+import TextGridBlock from './blocks/TextGridBlock.astro'
 import ImageBlock from './blocks/ImageBlock.astro'
 import VideoBlock from './blocks/VideoBlock.astro'
 import ColorBlock from './blocks/ColorBlock.astro'
 import TestimonialBlock from './blocks/TestimonialBlock.astro'
-import MultiCols from './blocks/MultiCols.astro'
+import ColumnsBlock from './blocks/ColumnsBlock.astro'
 import EmbedBlock from './blocks/EmbedBlock.astro'
 import TeamBlock from './blocks/TeamBlock.astro'
+import ServicesBlock from './blocks/ServicesBlock.astro'
+import ClientsBlock from './blocks/ClientsBlock.astro'
 
 
 type Props = {
@@ -24,13 +26,16 @@ const { prefix, blocks } = Astro.props;
     blocks.map((block:any) => {
       switch (block.__typename) {
         case `${prefix}ContentTextLayout`: // Text Block
-          return <TextBlock content={block.text?.text || ''} size={block.text?.size} />
+          return <TextBlock content={block.text?.text || ''} size={block.text?.size.at(0)} />
         case `${prefix}ContentImageLayout`: // Image block
           return <ImageBlock 
                     sourceUrl={block.image?.node?.sourceUrl} 
+                    size={block.size}
                     altText={block.image?.node?.altText} 
                     titleText={block.image?.node?.title} 
-                    size={block.size} />
+                    showCaption={block.showCaption}
+                    captionText={block.image?.node?.caption} 
+                    />
         case `${prefix}ContentVideoLayout`: // Video Block
           if(block.option === "embed"){
             return <EmbedBlock code={block.embedCopy} size={block.size} />
@@ -40,13 +45,30 @@ const { prefix, blocks } = Astro.props;
         case `${prefix}ContentColorModeLayout`: // Color Block
           return <ColorBlock />
         case `${prefix}ContentTestimonialLayout`: // Testimonial Block
-          return <TestimonialBlock content={block}/>
+          return <TestimonialBlock 
+                    quote={block.testimonial}
+                    name={block.name}
+                    role={block.roleCompany}
+                    photoSourceUrl={block.photo?.node?.sourceUrl}
+                    photoAltText={block.photo?.node?.altText} 
+                    photoTitleText={block.photo?.node?.title}
+                    />
         case `${prefix}ContentMultiColsLayout`: // Testimonial Block
-          return <MultiCols cols={block.col} />
-        case `${prefix}ContentTextGridLayout`: // Textgrid
-          return <TextGrid title={block.title} media={block.media} items={block.item} />
-        case `${prefix}ContentTeamLayout`: // Textgrid
-          return <TeamBlock title={block.title} members={block.team?.nodes} />
+          return <ColumnsBlock cols={block.col} />
+        case `${prefix}ContentTextGridLayout`: // Textgrid Block
+          return <TextGridBlock title={block.title} media={block.media} items={block.item} />
+        case `${prefix}ContentTeamLayout`: // Team Block
+          return <TeamBlock 
+                    title={block.title} 
+                    members={block.team?.nodes} />
+        case `${prefix}ContentServicesLayout`: // Services Block
+          return <ServicesBlock 
+                    title={block.title} 
+                    services={block.services?.nodes} />
+        case `${prefix}ContentClientsLayout`: // Clients Block
+          return <ClientsBlock 
+                    title={block.title} 
+                    clients={block.clients?.nodes} />
         default:
           null
       }
@@ -56,11 +78,8 @@ const { prefix, blocks } = Astro.props;
 
 
 <style>
-
   .content { 
     display: grid;
-
     grid-row-gap: var(--grid-gutter)
-  
   }
 </style>

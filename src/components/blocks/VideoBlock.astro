@@ -1,8 +1,19 @@
 ---
+// Import Components & Scripts
+
+// Define Types
+interface Props{
+  url: string;
+  type?: string;
+  size?: "inline" | "popout" | "feature" | "full" | "inherit";
+}
+
+// Define Vars
 const { url, type, size } = Astro.props;
 ---
 
-<div class:list={['custom-video', size, type]}>
+<!--VideoBlock -->
+<div class:list={['videoblock', size, type]}>
   <video
     preload="metadata"
     tabindex="-1"
@@ -13,5 +24,6 @@ const { url, type, size } = Astro.props;
     title=""
     src={url}
     autoplay
+    class="videoblock-video"
   />
 </div>

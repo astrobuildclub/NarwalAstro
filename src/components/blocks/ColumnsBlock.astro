@@ -1,8 +1,8 @@
 ---
 // Import Components & Scripts
-import TextBlock from '../blocks/TextBlock.astro'
-import ImageBlock from '../blocks/ImageBlock.astro'
-import VideoBlock from '../blocks/VideoBlock.astro'
+import TextBlock from './TextBlock.astro'
+import ImageBlock from './ImageBlock.astro'
+// import VideoBlock from './VideoBlock.astro'
 
 // Define Types
 interface ImageNode {
@@ -28,9 +28,9 @@ type Props = {
 
 // Define Vars
 const { cols } = Astro.props
-
 ---
-<pre>MultiCols</pre>
+
+<!-- ColumnsBlock -->
 <div class="grid multicols full lg:grid-cols-2">
    {cols &&
     cols.map((col) => {
@@ -49,16 +49,16 @@ const { cols } = Astro.props
             )
           }
         case 'video': //Videoblock
-        if(!col.showText){
-            return <div class="col"><VideoBlock /></div>
-          }else{
-            return (
-              <div class="col">
-               <VideoBlock />
-                <TextBlock title={col.title || ""} content={col.text || ""}  />
-              </div>
-            )
-          }
+        // if(!col.showText){
+        //     return <div class="col"><VideoBlock /></div>
+        //   }else{
+        //     return (
+        //       <div class="col">
+        //        <VideoBlock />
+        //         <TextBlock title={col.title || ""} content={col.text || ""}  />
+        //       </div>
+        //     )
+        //   }
         case 'text':  // Textblock
         default:
           return  <div class="col"><TextBlock title={col.title || ""} content={col.text || ""}  /></div>
@@ -66,9 +66,3 @@ const { cols } = Astro.props
     })
   }
 </div>
-
-<style>
-  .project-multicols {
-    
-  }
-</style>
