@@ -1,0 +1,36 @@
+---
+// Import Components & Scripts
+
+// Define Types
+interface Props{
+  title: string;
+  services: any;
+}
+
+// Define Vars
+const {title, services} = Astro.props;
+---
+
+<!-- ServicesBlock -->
+<div class:list={['servicesblock','full']}>
+  <h2 class="servicesblock-title">{title}</h2>
+  
+  <div class="grid gap-8 md:grid-cols-2">
+    {services &&
+      services.map((service:any)=>( // service
+
+        <!-- Service -->
+        <div class="service">
+          <h3 class="service-name">{service.title}</h3>
+          <div class="service-desc" set:html={service.content} />
+        </div>
+      ))
+    } 
+  </div> 
+</div>
+
+<style>
+  h3{
+    font-weight: 700;
+  }
+</style>

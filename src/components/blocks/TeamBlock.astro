@@ -1,67 +1,38 @@
 ---
-import { Image } from 'astro:assets';
+// Import Components & Scripts
+import PersonCard from '../PersonCard.astro';
 
+// Define Types
 interface member{
   id?: string;
   title?: string;
-  featuredImage?: any;
+  roles?: [];
+  featuredImage?: object;
 }
-
-type Props = {
+interface Props{
   title: string;
   members: member[];
 }
 
+// Define Vars
 const {title, members} = Astro.props;
-
-
-const teamMembers = members.map((member:any) =>({
-  name: member.title || "",
-  imgalt: member.featuredImage?.node?.altText || "",
-  imgsrc: member.featuredImage?.node?.sourceUrl || "",
-}));
 ---
 
-<div class="full">
-  <h2 class="sectionTitle">{title}</h2>
+<!-- TeamBlock -->
+<div class:list={['teamblock','full']}>
+  <h2 class="teamblock-title">{title}</h2>
   <div class="grid gap-8 md:grid-cols-3">
-  {teamMembers &&
-    teamMembers.map((person:any)=>( // slide
-    <div class="member">
-      <div class="member-image">
-          {person.imgsrc && (
-          <Image 
-              src={person.imgsrc}
-              width="10";
-              height="10";
-              widths={[540, 960, 1440, 1920]}
-              sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
-              format='webp'
-              alt={person.imgalt || ""} 
-              title={person.imgalt || ""}
-              class="image"
-            />
-          )}
-        </div>
-        <div class="details">
-          <h3 class="member-name">{person.name}</h3>
-          <h4 class="member-role">Role</h4>
-        </div>
-      </div>
-    ))
-  }  
+    {members &&
+      members.map((member:any)=>( // member
+        <PersonCard 
+          name={member.title}
+          roles={member.roles?.nodes}
+          photoSourceUrl={member.featuredImage?.node.sourceUrl}
+          photoAltText={member.featuredImage?.node.altText}
+          photoTitleText={member.featuredImage?.node.titleText}
+        />
+      ))
+    } 
   </div> 
 </div>
 
-<style>
-  .member-name, .member-role {
-    font-size: var(--fs-0);
-    font-weight: 600;
-    line-height: 100%;
-  }
-
-  .member .details{
-    margin-top: var(--space-xs);
-  }
-
-</style>

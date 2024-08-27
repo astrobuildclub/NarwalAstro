@@ -1,0 +1,55 @@
+---
+// Import Components & Scripts
+import { Image } from 'astro:assets';
+
+// Define Types
+interface Props{
+  name?: string;
+  roles?: string[];
+  photoSourceUrl?: string;
+  photoAltText?: string;
+  photoTitleText?: string;
+}
+
+// Define Vars
+const {name, roles, photoSourceUrl, photoAltText, photoTitleText} = Astro.props;
+---
+
+<!-- Person -->
+<div class="person">
+  {photoSourceUrl &&
+    <div class="person-photo"></div>
+    <Image 
+        src={photoSourceUrl}
+        width="10";
+        height="10";
+        widths={[540, 960, 1440, 1920]}
+        sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
+        format='webp'
+        alt={photoAltText || photoTitleText || ""} 
+        title={photoTitleText || ""}
+        class="person-photo-img"
+    />
+    }
+     <div class="person-details">
+        <h3 class="person-name">{name}</h3>
+        {roles &&
+            roles.map((role:any)=>( // slide
+              <h4 class="person-roles">{role.name}</h4>
+            ))
+          }  
+    </div>
+</div>
+
+
+<style>
+  .person-name, .person-roles {
+    font-size: var(--fs-0);
+    font-weight: 600;
+    line-height: 100%;
+  }
+
+  .person-details{
+    margin-top: var(--space-xs);
+  }
+</style>

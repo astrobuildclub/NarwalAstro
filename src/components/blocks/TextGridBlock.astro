@@ -1,0 +1,90 @@
+---
+// Import Components & Scripts
+import { Image } from 'astro:assets';
+
+// Define Types
+interface textItem {
+  title?: string;
+  text?: string;
+}
+interface imageItem {
+  id?: string;
+  altText?: string;
+  sourceUrl?: string;
+}
+interface Props{
+  title?: string;
+   media?: { 
+    image?: imageItem[]; 
+    imgposition?: string; 
+  };
+  items?: textItem[];
+}
+
+// Define vars
+const {title, media, items} = Astro.props;
+const imgObject = media?.image ? Object.values(media.image) as imageItem[] : [];
+
+const imageUrl = imgObject.length > 0 ? imgObject[0]?.sourceUrl : "";
+const imageAlt = imgObject.length > 0 ? imgObject[0]?.altText : "";
+const imagePosition = media?.imgposition;
+---
+
+<!--TextGridBlock-->
+<div class="textgridblock grid grid-cols-1 full">
+  <h1 class="textgridblock-title">{title}</h1>
+  <div class="textgridblock-content grid lg:grid-cols-2">
+
+      {imageUrl && (
+        <Image 
+            src={imageUrl}
+            width="10";
+            height="10";
+            widths={[540, 960, 1440, 1920]}
+            sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
+            format='webp'
+            alt={imageAlt || ""} 
+            title={imageAlt || ""}
+            class={`content-image image-wrap img-align-${imagePosition}`}
+          />
+        )}
+  
+    <div class="grid gap-4 items lg:grid-cols-2">
+      {items &&
+        items.map((item:any) => (
+          <div class="content-item">
+            <div class="content-item-title" set:html={item.text.title} />
+            <div class="content-item-text" set:html={item.text.text} />
+          </div>
+        ))    
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .textgridblock-title {
+    font-size: var(--fs-6);
+    line-height: 112.5%;
+    margin-bottom: var(--space-xl);
+  }
+
+  .textgridblock-content {
+    gap: var(--gap);
+  }
+  .content-item-title, .content-item-text{
+    font-size:var(--fs-0);
+    font-weight: 600;
+    line-height: 112.5%;
+    letter-spacing: -0.0025em;
+  }
+  .content-item-text {
+    opacity: 0.6;
+  }
+  .img-align-right{
+    order:1;
+  }
+  .img-align-left{
+    order:0;
+  }
+</style>
