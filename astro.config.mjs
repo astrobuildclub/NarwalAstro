@@ -13,7 +13,7 @@ const {
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'hybrid',
+  output: 'server',
   adapter: netlify(),
   image: {
     remotePatterns: [{
