@@ -1,16 +1,12 @@
 ---
-const isPreviewMode = import.meta.env.PREVIEW_MODE === 'true';
-export const prerender = !isPreviewMode;  // Dynamische rendering in preview mode
-
 import DefaultLayout from "../layouts/DefaultLayout.astro";
 import { getAllUris } from "../lib/api";
 import { getNodeData, getTemplateByRoute } from "../lib/routes";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
-  if (isPreviewMode) {
-    return []; // Geen statische paden in preview mode
-  }
-  return await getAllUris();
+    return await getAllUris();
 }
 
 // Dynamische parameter ophalen
@@ -19,7 +15,6 @@ const slug = uri ? `/${uri}/` : "/";
 
 let node = await getNodeData(slug);
 const Template = getTemplateByRoute(node);
-
 ---
 
 <DefaultLayout
