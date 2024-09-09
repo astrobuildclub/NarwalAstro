@@ -1,46 +1,60 @@
 ---
-type Props = {
-  content: any;
+// Import Components & Scripts
+import { Image } from 'astro:assets'
+
+// Define Types
+interface Props{
+    quote?: string;
+    name?: string;
+    role?: string;
+    photoSourceUrl?: string;
+    photoAltText?: string;
+    photoTitleText?: string;
 }
-
 // Define Vars
-const { content } = Astro.props
-
-const { title, roleCompany, testimonial, img } = content
-const { sourceUrl } = content.photo.node
-
+const { quote, name, role, photoSourceUrl, photoAltText, photoTitleText } = Astro.props;
 ---
-
-<div>
-    <!-- <pre>TestimonialBlock</pre> -->
-   <p>{content.testimonial}</p>
-    <div class="details">
-         <img src={sourceUrl} alt="Testimonial Image" />
-         <div class="person">
-    <h3>{content.name}</h3>
-    <h4>{content.roleCompany}</h4>
+<!--TestimonialBlock-->
+<div class:list={['testimonialblock']}>
+   <blockquote class="testimonialblock-quote">{quote}</blockquote>
+    <div class="testimonialblock-details">
+        {photoSourceUrl &&
+        <Image 
+            src={photoSourceUrl}
+            width="10";
+            height="10";
+            widths={[540, 960, 1440, 1920]}
+            sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
+            format='webp'
+            alt={photoAltText || photoTitleText || ""} 
+            title={photoTitleText || ""}
+            class="testimonialblock-img"
+        />
+        }
+         <div class="testimonialblock-person">
+            <h3 class="testimonialblock-name">{name}</h3>
+            <h4 class="testimonialblock-role">{role}</h4>
+        </div>
     </div>
-    </div>
-    
 </div>
 
-
 <style>
-    .details {
+    .testimonialblock-details {
         display: flex;
         align-items: center;
         gap: 1rem;
     }
+    .testimonialblock-person {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
     img {
         width: 100px;
         height: 100px;
         border-radius: 50%;
         object-fit: cover;
-    }
-    .person {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
     }
 
     h3, h4 {

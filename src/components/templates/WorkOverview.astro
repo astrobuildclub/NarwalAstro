@@ -1,10 +1,11 @@
 ---
+import PageTitle from '../PageTitle.astro';
 import PageIntro from '../PageIntro.astro'
 import ProjectList from '../ProjectList.astro'
 import ProjectFilter from '../ProjectFilter.astro';
 
 const { data } = Astro.props;
-const pageTitle = data.title;
+const pageTitle = data.title || "";
 const pageIntroduction = data.content;
 const projectData = data.work.nodes;
 
@@ -15,12 +16,7 @@ const allServices = projectData.flatMap((project:any) =>
 const uniqueServices = [...new Set(allServices)];
 ---
 
-{pageTitle &&
-<header>
-  <h1>{pageTitle}</h1>
-</header>
-}
-
+<PageTitle title={pageTitle} />
 <PageIntro>
   {pageIntroduction &&
     <Fragment slot="column-one" set:html={pageIntroduction} />

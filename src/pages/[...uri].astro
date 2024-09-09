@@ -1,11 +1,12 @@
 ---
-export const prerender = true;
 import DefaultLayout from "../layouts/DefaultLayout.astro";
 import { getAllUris } from "../lib/api";
 import { getNodeData, getTemplateByRoute } from "../lib/routes";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
-  return await getAllUris();
+    return await getAllUris();
 }
 
 // Dynamische parameter ophalen
@@ -14,7 +15,6 @@ const slug = uri ? `/${uri}/` : "/";
 
 let node = await getNodeData(slug);
 const Template = getTemplateByRoute(node);
-
 ---
 
 <DefaultLayout

@@ -1,6 +1,7 @@
 ---
 import BlockRenderer from '../BlockRenderer.astro';
 import PageIntro from '../PageIntro.astro'
+import PageTitle from '../PageTitle.astro';
 
 const { data } = Astro.props;
 const pageTitle = data.title;
@@ -16,17 +17,13 @@ const pageContent = data.pageContent?.content;
 
 
 {pageHero ?
-  <header>
-    <h1 class="heroTitle">{pageHeroTitle}</h1>
-  </header>
+  <PageTitle title={pageHeroTitle} />
   <PageIntro class="page">
     <Fragment slot="column-one" set:html={pageHeroColOne} />
     <Fragment slot="column-two" set:html={pageHeroColTwo} />
   </PageIntro>
 :
-  <header>
-    <h1>{pageTitle}</h1>
-  </header>
+  <PageTitle title={pageTitle} />
   <PageIntro>
     {pageIntroduction &&
       <Fragment slot="column-one" set:html={pageIntroduction} />
@@ -34,9 +31,7 @@ const pageContent = data.pageContent?.content;
   </PageIntro>
 }
 
-
-{
-  pageContent && (
+{pageContent && (
     <article class="page">
       <BlockRenderer prefix="PageContent" blocks={pageContent} />
     </article>
@@ -46,14 +41,5 @@ const pageContent = data.pageContent?.content;
 <style>
   .page {
     padding: var(--site-padding);
-  }
-
-  header{
-          padding: 8rem var(--site-padding) 0 var(--site-padding);
-  
-  }
-  .heroTitle {
-    font-size: var(--fs-8);
-    margin-bottom: 1rem;
   }
 </style>

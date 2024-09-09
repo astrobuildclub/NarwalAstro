@@ -1,20 +1,21 @@
 ---
-type Props = {
-  title?:string;
+// Import Components & Scripts
+
+// Define Types
+interface Props{
+  title?: string;
   content?: string;
-  size?: string[];
-};
-
-const { title, content, size } = Astro.props;
-let classes;
-
-if (size && size.at(0) == "full") {
-  classes = "";
-} else {
-  classes = "";
+  size?: "inline" | "popout" | "feature" | "full" | "inherit";
 }
+
+// Define Vars
+const { title = "", content = "", size = "" } = Astro.props;
 ---
-{title &&
-  <h2 class="sectionTitle" set:html={title} />
-}
-<div set:html={content} class={classes} />
+
+<!--TextBlock -->
+<div class:list={['textblock',size]}>
+  {title &&
+    <h2 class="textblock-title" set:html={title} />
+  }
+  <div class="textblock-content" set:html={content}  />
+</div>

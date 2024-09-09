@@ -208,6 +208,7 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
                 altText
                 title
                 sourceUrl
+                caption(format: RENDERED)
               }
             }
             size
@@ -299,6 +300,11 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
                 ... on Person {
                   id
                   title
+                  roles {
+                    nodes {
+                      name
+                    }
+                  }
                   featuredImage {
                     node {
                       sourceUrl
@@ -310,13 +316,14 @@ const getPageByUriQuery = `query GetPageByUri($uri: String!) {
             }
           }
           ... on PageContentContentServicesLayout {
-           __typename
+            __typename
             title
             services {
               nodes {
                 ... on Service {
                   id
                   title
+                  content(format: RENDERED)
                 }
               }
             }
@@ -428,6 +435,7 @@ const getProjectByUriQuery = `query GetProjectByUri($uri: String!) {
                 altText
                 title
                 sourceUrl
+                caption(format: RENDERED)
               }
             }
             size

@@ -1,0 +1,16 @@
+---
+const {title} = Astro.props;
+---
+<header>
+  <h1 class="heroTitle">{title}</h1>
+</header>
+
+<style>
+  header{
+    padding: 8rem var(--site-padding) 0 var(--site-padding);
+  }
+  .heroTitle {
+    font-size: var(--fs-8);
+    margin-bottom: 1rem;
+  }
+</style>

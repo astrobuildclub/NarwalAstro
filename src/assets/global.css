@@ -120,6 +120,10 @@ main {
   z-index: 5;
 }
 
+img {
+  max-width: 100%;
+}
+
 .content {
   --gap: clamp(1rem, 6vw, 3rem);
   --full: minmax(var(--gap), 1fr);

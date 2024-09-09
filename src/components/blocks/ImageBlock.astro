@@ -5,17 +5,20 @@ import { Image } from 'astro:assets'
 // Define Types
 interface Props{
   sourceUrl: string;
+  size?: "inline" | "popout" | "feature" | "full" | "inherit";
   altText?: string;
   titleText?: string;
-  size?: "inline" | "popout" | "feature" | "full" | "inherit";
+  showCaption?: boolean;
+  captionText?: string;
 }
 
 // Define Vars
-const { sourceUrl, altText, titleText, size,  } = Astro.props;
+const { sourceUrl, size, altText, titleText, showCaption, captionText } = Astro.props;
 ---
 
+<!--ImageBlock -->
 {sourceUrl && 
-<div class:list={['image-block', size]}>
+<div class:list={['imageblock',size]}>
   <Image 
     src={sourceUrl}
     width="10";
@@ -23,14 +26,12 @@ const { sourceUrl, altText, titleText, size,  } = Astro.props;
     widths={[540, 960, 1440, 1920]}
     sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
     format='webp'
-    alt={altText || ""} 
+    alt={altText || titleText || ""} 
     title={titleText || ""}
+    class="imageblock-img"
   />
+  {showCaption &&
+    <p class="imageblock-caption" set:html={captionText} />
+  }
 </div>
 }
-
-<style>
-  img {
-    max-width: 100%;
-  }
-</style>
