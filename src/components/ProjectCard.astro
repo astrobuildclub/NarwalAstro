@@ -50,7 +50,7 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
 ---
 
 <div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
-  <div class="overflow-hidden rounded-lg project-media">
+  <div class="overflow-hidden rounded-2xl project-media">
     {
       vidsrc ? ( // if vidsrc is set, show video with poster image
         <div class="w-full project-video">
@@ -88,8 +88,8 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
   </div>
 
   <div class="project-content">
-    <div class="flex justify-between pt-6 pb-3 align-baseline project-meta">
-      {clientname && <h3 class="font-bold project-client self-baseline text-neutral-400">{clientname}</h3>}
+    <div class="flex justify-between pt-6 pb-1 align-baseline project-meta">
+      {clientname && <h3 class="font-medium project-client self-baseline opacity-60">{clientname}</h3>}
       {services && <TagGroup tags={services} />}
     </div>
 
@@ -114,7 +114,8 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
     }
 
     h2 {
-      font-size: var(--fs-3);
+      font-size: var(--fs-1);
+      letter-spacing: -0.0125em;
       line-height: 100%;
     }
 

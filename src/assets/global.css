@@ -16,7 +16,7 @@
   /* Colors */
   --clr-white: #fff;
   --clr-brand: #ff0051;
-  --clr-black: #111;
+  --clr-black: rgba(12, 12, 12);
   --clr-rgb-dark: 10, 10, 10;
   --clr-rgb-light: 240, 240, 240;
   --clr-tag: rgba(var(--clr-rgb-light), 0.5);
@@ -28,8 +28,8 @@
   /* Fonts */
   --font-system: system-ui, sans-serif;
   /* use as fallback */
-  --font-body: 'Helvetica Neue', Inter, Roboto, 'Arial Nova', 'Nimbus Sans',
-    Arial, sans-serif;
+  --font-body: 'Helvetica Neue', Helvetica, Inter, Roboto, 'Arial Nova',
+    'Nimbus Sans', Arial, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
     'DejaVu Sans Mono', monospace;
   --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif',
@@ -53,7 +53,7 @@
 
   /* --site-padding: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem); */
   /* --grid-gutter: clamp(1.6rem, 0.84vi + 1.43rem, 2.44rem); */
-  --site-padding: var(--space-m);
+  --site-padding: var(--space-l);
   --grid-gutter: var(--space-m);
 
   --radius-default: clamp(1rem, 0.7692rem + 1.0256vw, 2rem);
@@ -72,6 +72,7 @@
     --base: var(--clr-black);
     --text: var(--clr-white);
     --clr-tag: rgba(var(--clr-rgb-light), 0.1);
+    --clr-tag-text: rgba(var(--clr-rgb-light), 0.5);
   }
 }
 
@@ -85,14 +86,16 @@ html {
   color-scheme: light;
   --base: var(--clr-white);
   --text: var(--clr-black);
-  --clr-tag: rgba(var(--clr-rgb-dark), 0.5);
+  --clr-tag: rgba(var(--clr-rgb-dark), 0.1);
+  --clr-tag-text: rgba(var(--clr-rgb-dark), 0.5);
 }
 
 :root:has(#theme [value='🌑']:checked) {
   color-scheme: dark;
   --base: var(--clr-black);
   --text: var(--clr-white);
-  --clr-tag: rgba(var(--clr-rgb-light), 0.2);
+  --clr-tag: rgba(var(--clr-rgb-light), 0.1);
+  --clr-tag-text: rgba(var(--clr-rgb-light), 0.5);
 }
 
 html,
@@ -104,14 +107,15 @@ body {
 body {
   color: var(--text);
   background-color: var(--base);
+  font-family: var(--font-body);
   font-size: 1rem;
   text-rendering: optimizeLegibility;
-  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
-  text-rendering: optimizeLegibility;
+  /* text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px; */
   font-synthesis: none;
   /* line-height: 125%; */
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
+
   -webkit-font-smoothing: antialiased;
 }
 
@@ -122,6 +126,11 @@ main {
 
 img {
   max-width: 100%;
+}
+
+.logo {
+  width: 6rem;
+  color: white;
 }
 
 .content {

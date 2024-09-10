@@ -5,7 +5,7 @@ import Newsletter from '../components/Newsletter.astro'
 const currentYear = new Date().getFullYear()
 ---
 
-<footer class="bottom-0 flex flex-col min-h-screen md:fixed -z-10">
+<footer class="bottom-0 flex flex-col h-screen md:fixed -z-10">
   <!-- <CallToAction /> -->
   
     <div class="flex flex-col justify-between flex-grow ">
@@ -13,8 +13,9 @@ const currentYear = new Date().getFullYear()
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="logo"
+       
         color="currentcolor"
-        width="140"
+        width="auto"
         fill="none"
         preserveAspectRatio="xMidYMin slice"
         viewBox="0 0 151 40"
@@ -25,8 +26,9 @@ const currentYear = new Date().getFullYear()
         ><defs><clipPath id="a"><path fill="currentcolor" d="M0 0h150.943v40H0z"></path></clipPath></defs></svg
       >
     </a>
-      <p class="font-bold text-7xl text-balance">We’re always up to meet new people.<br> <span class="opacity-40">Feel free to reach out to discuss your ambitions.</span></p>
-      <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
+      <p class="font-bold tracking-tighter text-8xl text-balance">We're always up for conversation
+<br> <span class="opacity-40">Let's connect</span></p>
+      <div class="grid grid-cols-1 gap-12 lg:gap-24 md:grid-cols-4">
         <Widget title="Join our Newsletter">
           <Newsletter />
         </Widget>
@@ -56,11 +58,11 @@ const currentYear = new Date().getFullYear()
       </div>
       
     </div>
-  <div class="flex justify-between text-xs legal">
+  <div class="flex justify-between text-xs text-2xs legal">
         <p class="">
           &copy; {currentYear} - Narwal Creative 
         </p>
-        <a href="https://astro.build/">Terms & Conditions</a>
+        <a class="" href="https://astro.build/">Terms & Conditions</a>
       </div>
 </footer>
 
@@ -77,14 +79,31 @@ const currentYear = new Date().getFullYear()
   footer {
     width: 100%;
     position: fixed;
+    min-height: 960px;
   }
+
+
+
 
 footer > div {
     padding: 2rem var(--site-padding) 1rem var(--site-padding);
+    font-weight: 00;
+  
   }
+
+  ul li {
+    margin-block: 0.0125em;
+    font-weight: 500;
+    font-size: var(--fs--1);
+  }
+
+    ul li a {
+      opacity: 0.8;
+    }
 
   footer .legal {
     padding: var(--site-padding);
+    font-size: var(--fs--3);
   }
 
   

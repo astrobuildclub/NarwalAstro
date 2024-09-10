@@ -2,8 +2,8 @@
 const { menu } = Astro.props
 ---
 
-<nav class="flex flex-wrap items-center justify-between bg-gray-950">
-  <div class="flex items-center flex-shrink-0 mr-6 text-white">
+<nav class="fixed z-10 w-full ">
+  <div class="flex flex-wrap items-center justify-between w-full inner"><div class="flex items-center flex-shrink-0 mr-6 text-white">
     <a href="/">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -22,33 +22,60 @@ const { menu } = Astro.props
     </a>
   </div>
   <div class="block w-full lg:flex lg:w-auto lg:items-center">
-    <ul class="text-sm lg:flex-grow">
+    <ul class="flex gap-1 text-sm lg:flex-grow">
       {
         menu.menuItems.nodes.map((menuItem: any) => {
           return (
-            <li class="block mt-4 mr-4 text-teal-200 hover:text-white lg:mt-0 lg:inline-block">
+            <li class="block hover:text-white lg:mt-0 lg:inline-block">
               <a href={menuItem.uri || '/'}>{menuItem.label}</a>
             </li>
           )
         })
       }
     </ul>
-  </div>
+  </div></div>
+  
 </nav>
 <style>
 
 nav{
   padding: var(--space-xs) var(--site-padding);
+  z-index: 999;
+  mix-blend-mode: exclusion;
 }
 
-  .logo {
-    width: 140px;
-    color: white;
-  }
+nav .inner{
+  position: relative;
+  z-index: 2;
+}
+
+nav::after{
+  position: absolute;
+  content: '';
+  display: block;
+  inset: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, 0));
+  
+  z-index: 1;
+}
+
+
 
   ul a {
+    
     font-family: var(--font-body);
-    font-weight: bold;
+    font-size: var(--fs--1);
+    font-weight: 500;
     color: var(--clr-white);
+    opacity: 0.8;
+    padding: var(--space-2xs) var(--space-xs);
+    border-radius: 100vw;
+    background-color: rgba(255, 255, 255, 0);
+    transition: all 0.4s var(--easing-easeOutExpo);
+  }
+
+  ul a:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.05);
   }
 </style>
