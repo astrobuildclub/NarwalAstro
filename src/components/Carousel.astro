@@ -8,18 +8,20 @@ const {slides} = Astro.props;
 // Replace links and add them back to slides
 const processedSlides = slides.map((slide:any)=> {
 
- 
-
   const linkObj = slide.slideFields.link;
+
+  const updatedTitle = (linkObj) ? linkObj.title : "";
   const updatedUrl = (linkObj) ? replaceUrls(linkObj.url, `${import.meta.env.DEV_SITE_URL}`) : "";
+  const updatedTarget = (linkObj) ? linkObj.target : "";
+  
   return{
     ...slide,
     slideFields: {
       ...slide.slideFields,
       link:{
-        title: linkObj.title,
+        title: updatedTitle,
         url: updatedUrl,
-        target: linkObj.target
+        target: updatedTarget
       }
     }
   }
