@@ -24,7 +24,7 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="grid gap-12 project-list start">
+  <div class="grid gap-16 gap-y-32 project-list start">
     {
       projectCards &&
         projectCards.map((item: any) => {
@@ -37,6 +37,7 @@ const projectCards = projects.map((project: any) => ({
 <style is:global>
   .projects-wrapper {
     padding: var(--site-padding);
+    padding-bottom: var(--space-6xl);
     min-height: 80vh;
   }
 
@@ -45,7 +46,8 @@ const projectCards = projects.map((project: any) => ({
   }
 
   .layout-grid .project-list {
-    align-items: center;
+    
+    align-items: flex-start;
   }
 
   .layout-list {
@@ -67,9 +69,9 @@ const projectCards = projects.map((project: any) => ({
 
   .project-card img,
   .project-card video {
-    transform: scale(1.15);
+    transform: scale(1.025);
     transition: all 1.4s var(--easing-easeOutExpo);
-    opacity: 0.85;
+    opacity: 0.90;
   }
 
   .project-card:hover img,
@@ -78,7 +80,7 @@ const projectCards = projects.map((project: any) => ({
     opacity: 1;
   }
   .project-card:hover {
-    transform: scale(0.98);
+    transform: scale(0.985);
   }
 
   .project-content a {
@@ -103,12 +105,12 @@ const projectCards = projects.map((project: any) => ({
     opacity: 1;
   }
   .project-card:hover ~ .project-card {
-    opacity: 0.5;
+    opacity: 0.75;
   }
   .project-list:hover .project-card:not(:hover) {
     opacity: 0.1;
   }
   .project-list:hover .project-card:not(:hover) {
-    opacity: 0.5;
+    opacity: 0.75;
   }
 </style>

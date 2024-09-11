@@ -2,20 +2,25 @@
 const { label } = Astro.props
 ---
 
-<li class="tag rounded-full px-3 py-0.5 text-xs font-medium leading-none tracking-tighter">
+<li class="text-xs font-medium leading-none tracking-tighter rounded-full tag">
   {label}  
 </li>
 
 <style>
   .tag {
-    font-size: var(--fs--3);
+    padding: calc(var(--space-2xs) / 3) calc(var(--space-2xs) /1);
+    font-size: calc(var(--fs--3) - 0.125rem);
     letter-spacing: -0.025em;
     background: var(--clr-tag);
     leading-trim: both;
     text-edge: cap alphabetic;
+    color: var(--clr-tag-text);
+  
   }
 
   .tag a {
     text-decoration: none;
+    
+
   }
 </style>
