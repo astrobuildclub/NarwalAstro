@@ -31,9 +31,9 @@ const imagePosition = media?.imgposition;
 ---
 
 <!--TextGridBlock-->
-<div class="textgridblock grid grid-cols-1 full">
-  <h1 class="textgridblock-title">{title}</h1>
-  <div class="textgridblock-content grid lg:grid-cols-2">
+<div class="grid grid-cols-1 textgridblock full">
+  <h2 class="textgridblock-title">{title}</h2>
+  <div class="grid textgridblock-content lg:grid-cols-2">
 
       {imageUrl && (
         <Image 
@@ -49,12 +49,13 @@ const imagePosition = media?.imgposition;
           />
         )}
   
-    <div class="grid gap-4 items lg:grid-cols-2">
+    <div class="grid gap-8 items lg:grid-cols-2">
       {items &&
         items.map((item:any) => (
-          <div class="content-item">
-            <div class="content-item-title" set:html={item.text.title} />
-            <div class="content-item-text" set:html={item.text.text} />
+          <div class="flex flex-col content-item gap:2 md:gap-2">
+            <h3 class="content-item-title" set:html={item.text.title} />
+            <div class="content-item-desc" set:html={item.text.text} />
+
           </div>
         ))    
       }
@@ -67,19 +68,23 @@ const imagePosition = media?.imgposition;
     font-size: var(--fs-6);
     line-height: 112.5%;
     margin-bottom: var(--space-xl);
+    font-weight: 500;
   }
 
   .textgridblock-content {
     gap: var(--gap);
   }
+
   .content-item-title, .content-item-text{
-    font-size:var(--fs-0);
-    font-weight: 600;
+    font-size: var(--fs-0);
+    font-weight: 500;
     line-height: 112.5%;
-    letter-spacing: -0.0025em;
   }
-  .content-item-text {
-    opacity: 0.6;
+  .content-item-desc {
+    font-size: var(--fs--1);
+    opacity: 0.7;
+    font-weight: 400;
+    line-height: 112.5%;
   }
   .img-align-right{
     order:1;
@@ -87,4 +92,7 @@ const imagePosition = media?.imgposition;
   .img-align-left{
     order:0;
   }
+
+
+  
 </style>

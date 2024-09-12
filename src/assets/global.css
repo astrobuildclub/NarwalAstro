@@ -73,6 +73,7 @@
     --text: var(--clr-white);
     --clr-tag: rgba(var(--clr-rgb-light), 0.1);
     --clr-tag-text: rgba(var(--clr-rgb-light), 0.5);
+    --clr-front-rgb: 255, 255, 255;
   }
 }
 
@@ -88,6 +89,7 @@ html {
   --text: var(--clr-black);
   --clr-tag: rgba(var(--clr-rgb-dark), 0.1);
   --clr-tag-text: rgba(var(--clr-rgb-dark), 0.5);
+  --clr-front-rgb: 0, 0, 0;
 }
 
 :root:has(#theme [value='🌑']:checked) {
@@ -96,6 +98,7 @@ html {
   --text: var(--clr-white);
   --clr-tag: rgba(var(--clr-rgb-light), 0.1);
   --clr-tag-text: rgba(var(--clr-rgb-light), 0.5);
+  --clr-front-rgb: 255, 255, 255;
 }
 
 html,
@@ -169,6 +172,11 @@ img {
   grid-column: full;
 }
 
+.imageblock p {
+  font-size: var(--fs--2);
+  opacity: 0.4;
+  margin: 0.5rem 0 0 0;
+}
 footer {
   background: var(--text);
   color: var(--base);

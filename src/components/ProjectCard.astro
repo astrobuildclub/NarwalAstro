@@ -88,7 +88,7 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
   </div>
 
   <div class="project-content">
-    <div class="flex justify-between pt-6 pb-1 align-baseline project-meta">
+    <div class="flex justify-between pt-6 mb-2 align-baseline project-meta">
       {clientname && <h3 class="font-medium project-client self-baseline opacity-60">{clientname}</h3>}
       {services && <TagGroup tags={services} />}
     </div>
@@ -108,15 +108,22 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
 
     .project-card {    
       position: relative;
-      transition: box-shadow 0.15s ease-in-out;
+      
       color: var(--font-color);
       transition: transform 0.4s var(--easing-easeOutExpo);
     }
 
-    h2 {
+    .project-client {
+      font-size: var(--fs--1);
+      line-height: 112.5%;
+    }
+
+    .project-title {
       font-size: var(--fs-1);
       letter-spacing: -0.0125em;
       line-height: 100%;
+      margin:0;
+      padding:0;
     }
 
     img,

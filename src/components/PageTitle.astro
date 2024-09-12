@@ -7,10 +7,19 @@ const {title} = Astro.props;
 
 <style>
   header{
-    padding: 8rem var(--site-padding) 0 var(--site-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 4rem var(--site-padding) 0 var(--site-padding);
+    min-height:20rem;
+    height:30vh;
   }
   .heroTitle {
-    font-size: var(--fs-8);
+    font-size: var(--fs-6);
+    font-weight: 400;
+    letter-spacing: -0.0125em;
+    line-height: 112.5%;
     margin-bottom: 1rem;
   }
 </style>
