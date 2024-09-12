@@ -33,11 +33,13 @@ const {name, roles, photoSourceUrl, photoAltText, photoTitleText} = Astro.props;
     }
      <div class="person-details">
         <h3 class="person-name">{name}</h3>
+        <div class="roles">
         {roles &&
             roles.map((role:any)=>( // slide
               <h4 class="person-roles">{role.name}</h4>
             ))
-          }  
+          }
+          </div>  
     </div>
 </div>
 
@@ -51,5 +53,19 @@ const {name, roles, photoSourceUrl, photoAltText, photoTitleText} = Astro.props;
 
   .person-details{
     margin-top: var(--space-xs);
+  }
+
+  .roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    
+  }
+
+  .roles > * {
+    font-size: var(--fs--2);
+    font-weight: 400;
+    opacity: 0.7;
+    line-height: 112.5%;
   }
 </style>

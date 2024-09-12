@@ -7,7 +7,7 @@ const {services} = Astro.props;
   {services &&
     services.map((service:any) => (
     <li>
-      <button class="tag-button" data-service={slugify(service)} >{service}</button>
+      <a class="tag-button" data-service={slugify(service)} >{service}</a>
     </li>
   ))}
   <li class="tag-reset"></li>
@@ -46,7 +46,7 @@ const {services} = Astro.props;
     });
   
     // Voeg een knop toe om alle projecten te tonen
-    const showAllButton = document.createElement('button');
+    const showAllButton = document.createElement('a');
     showAllButton.textContent = 'Reset';
     showAllButton.addEventListener('click', () => {
       filterProjects('all');
@@ -64,16 +64,28 @@ const {services} = Astro.props;
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap:0 1rem;
+    gap:0.25em 0.5em;
+    font-size: var(--fs--1);
+  }
+
+  li {
+    line-height: 1;
   }
 
   li::after {
     content: "/";
     opacity: 0.2;
+    padding:0 0 0 0.25em;
   }
 
   li:last-child::after {
     content: "";
+  }
+  a {
+    text-decoration: none!important;
+    padding:0;
+    cursor: pointer;
+    
   }
 
 </style>

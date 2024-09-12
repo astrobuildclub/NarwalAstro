@@ -3,7 +3,8 @@ const { menu } = Astro.props
 ---
 
 <nav class="fixed z-10 w-full ">
-  <div class="flex flex-wrap items-center justify-between w-full inner"><div class="flex items-center flex-shrink-0 mr-6 text-white">
+  <div class="flex items-center justify-between w-full inner">
+    <div class="flex items-center mr-6 text-white">
     <a href="/">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -21,8 +22,8 @@ const { menu } = Astro.props
       >
     </a>
   </div>
-  <div class="block w-full lg:flex lg:w-auto lg:items-center">
-    <ul class="flex gap-1 text-sm lg:flex-grow">
+  <div class="flex items-center w-auto ">
+    <ul class="flex flex-grow gap-1 text-sm">
       {
         menu.menuItems.nodes.map((menuItem: any) => {
           return (
@@ -71,7 +72,8 @@ nav::after{
     padding: var(--space-2xs) var(--space-xs);
     border-radius: 100vw;
     background-color: rgba(255, 255, 255, 0);
-    transition: all 0.4s var(--easing-easeOutExpo);
+    transition: background-color color 0.4s var(--easing-easeOutExpo);
+    text-decoration: none;
   }
 
   ul a:hover {

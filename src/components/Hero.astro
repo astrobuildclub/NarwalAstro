@@ -28,7 +28,7 @@ const heroBackgroundColor = data.color
      </div>
 }
       <div class="order-3 col-span-6 descritpion">
-       <h3 class="hero-meta">Description</h3>
+       <p class="hero-meta">Description</p>
       {heroDescription && <p class="text-xl hero-description">{heroDescription}</p>}
       </div>
   </div>
@@ -38,7 +38,7 @@ const heroBackgroundColor = data.color
 <style define:vars={{ heroBackgroundColor }}>
   .hero {
     display: flex;
-    align-items: center;
+    align-items:end;
     justify-content: center;
     width: 100%;
     min-height: 60vh;
@@ -64,14 +64,15 @@ const heroBackgroundColor = data.color
 
   .hero-title {
     font-size: var(--fs-6);
+    font-weight: 500;
     line-height: 1;
     letter-spacing: -0.05rem;
     text-wrap: balance;
   }
   
   .hero-client, .hero-description {
-    font-size: calc(var(--fs-6)/2);
-    line-height: 1;
+    font-size: var(--fs-0);
+    line-height: 112.5%;
     letter-spacing: -0.025rem;
     
     text-wrap: balance;
