@@ -21,8 +21,7 @@ const { quote, name, role, photoSourceUrl, photoAltText, photoTitleText } = Astr
         {photoSourceUrl &&
         <Image 
             src={photoSourceUrl}
-            width="10";
-            height="10";
+            inferSize
             widths={[540, 960, 1440, 1920]}
             sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
             format='webp'
