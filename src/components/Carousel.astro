@@ -49,7 +49,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
       <div role="list" class="swiper-wrapper">
         {backgroundSlides &&
           backgroundSlides.map((slide:any)=>( // slide
-            <div role="group" class="swiper-slide">
+            <div role="listitem" class="swiper-slide">
               {slide.vidsrc && // video
                 <div class="video-wrapper">
                   <div class="video-overlay">
@@ -81,7 +81,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
         <div role="list" class="swiper-wrapper">
           {foregroundSlides && 
             foregroundSlides.map((slide:any)=>( // slide
-            <div role="group" class="swiper-slide">
+            <div role="listitem" class="swiper-slide">
               {slide.link ?
                 slide.link.map((l:any)=>( // slide
                 <a class="slide-text" href={l.url} target={l.target}>
