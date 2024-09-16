@@ -9,7 +9,7 @@ const currentYear = new Date().getFullYear()
   <!-- <CallToAction /> -->
   
     <div class="flex flex-col justify-between flex-grow ">
-       <a href="/">
+       <a href="/" aria-label="Homepage">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="logo"
@@ -44,25 +44,25 @@ const currentYear = new Date().getFullYear()
         </Widget>
         <Widget title="Socialize">
           <ul role="list">
-            <li><a href="https://www.instagram.com/narwalcreative/"  target="_blank">Instagram</a></li>
-            <li><a href="https://www.behance.net/jelmerscheffer" target="_blank">Behance</a></li>
-            <li><a href="https://www.linkedin.com/company/narwal-creative" target="_blank">Linkedin</a></li>
+            <li><a href="https://www.instagram.com/narwalcreative/" aria-label="Follow us on instagram" target="_blank">Instagram</a></li>
+            <li><a href="https://www.behance.net/jelmerscheffer" aria-label="Follow us on behance" target="_blank">Behance</a></li>
+            <li><a href="https://www.linkedin.com/company/narwal-creative" aria-label="Follow us on linkedin" target="_blank">Linkedin</a></li>
           </ul>
         </Widget>
         <Widget title="Get in touch">
           <ul role="list">
-            <li><a href="tel:+31302270459">+31 (0)30 227 04 59</a></li>
-            <li><a href="mailto:info@narwalcreative.com?subject=Hello!">info@narwalcreative.com</a></li>
+            <li><a href="tel:+31302270459" aria-label="Call us" >+31 (0)30 227 04 59</a></li>
+            <li><a href="mailto:info@narwalcreative.com?subject=Hello!"  aria-label="E-mail us" >info@narwalcreative.com</a></li>
           </ul>
         </Widget>
       </div>
       
     </div>
   <div class="flex justify-between text-xs text-2xs legal">
-        <p class="">
+        <p>
           &copy; {currentYear} - Narwal Creative 
         </p>
-        <a class="" href="https://astro.build/">Terms & Conditions</a>
+        <a href="https://astro.build/" aria-label="Read our legal Terms & Conditions" >Terms & Conditions</a>
       </div>
 </footer>
 

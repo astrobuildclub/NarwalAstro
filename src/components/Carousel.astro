@@ -84,7 +84,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
             <div role="listitem" class="swiper-slide">
               {slide.link ?
                 slide.link.map((l:any)=>( // slide
-                <a class="slide-text" href={l.url} target={l.target}>
+                <a class="slide-text" href={l.url} target={l.target} aria-label={`View the ${slide.title} project`}>
                   <h3 class="font-medium text-l opacity-80">{slide.subtitle}</h3>
                   <h1 class="font-bold text-7xl md:text-9xl text-balance">{slide.title}</h1>
                 </a>
@@ -107,7 +107,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
             <span class="swiper-number-total">00</span>
           </p>
         </div>
-        <a href="#" class="control-button swiper-button-prev">
+        <a href="#" class="control-button swiper-button-prev" aria-label="Show previous slide">
           <div class="control-button_icon is_reversed">
             <svg
               width="24px"
@@ -123,7 +123,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
             >
           </div>
         </a>
-        <a href="#" class="control-button swiper-button-next">
+        <a href="#" class="control-button swiper-button-next" aria-label="Show next slide">
           <div class="control-button_icon">
             <svg
               width="24px"
