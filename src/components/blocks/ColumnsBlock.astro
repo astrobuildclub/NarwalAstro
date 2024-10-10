@@ -31,7 +31,7 @@ const { cols } = Astro.props
 ---
 
 <!-- ColumnsBlock -->
-<div class="grid multicols full lg:grid-cols-2">
+<div class="grid gap-6 multicols full  lg:grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))]">
    {cols &&
     cols.map((col) => {
       switch (col.contentType) {
