@@ -64,7 +64,7 @@ const theImage:any = imgsrc? await getImage({
 ---
 
 <div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
-  <div class="overflow-hidden rounded-2xl project-media">
+  <div class="overflow-hidden rounded-md project-media">
     {
       vidsrc ? ( // if vidsrc is set, show video with poster image
         <div class="w-full project-video">
@@ -101,14 +101,14 @@ const theImage:any = imgsrc? await getImage({
   </div>
 
   <div class="project-content">
-    <div class="flex justify-between pt-6 mb-2 align-baseline project-meta">
-      {clientname && <h3 class="font-medium project-client self-baseline opacity-60">{clientname}</h3>}
+    <div class="flex justify-between pt-6 mb-0 align-middle project-meta">
+      {clientname && <h3 class="font-medium project-client self-baseline opacity-80">{clientname}</h3>}
       {services && <TagGroup tags={services} />}
     </div>
 
     {
       title && (
-        <h2 class="font-bold project-title">
+        <h2 class="font-bold leading-4 project-title">
           <a href={link} class="project-link">
             {title}
           </a>

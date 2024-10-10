@@ -24,7 +24,7 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="grid gap-16 gap-y-32 project-list start">
+  <div class="grid gap-8 gap-y-32 project-list start">
     {
       projectCards &&
         projectCards.map((item: any) => {
@@ -69,18 +69,18 @@ const projectCards = projects.map((project: any) => ({
 
   .project-card img,
   .project-card video {
-    transform: scale(1.0125);
+    /* transform: scale(1.0125); */
     transition: all 1.4s var(--easing-easeOutExpo);
     opacity: 0.90;
   }
 
   .project-card:hover img,
   .project-card:hover video {
-    transform: scale(1);
+    /* transform: scale(1); */
     opacity: 1;
   }
   .project-card:hover {
-    transform: scale(0.985);
+    /* transform: scale(0.985); */
   }
 
   .project-content a {
