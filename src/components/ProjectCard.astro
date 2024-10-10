@@ -1,6 +1,8 @@
 ---
 // Import Components
-import Image from 'astro/components/Image.astro'
+import { Image, getImage } from 'astro:assets';
+
+// import Image from 'astro/components/Image.astro'
 import TagGroup from '../components/TagGroup.astro'
 import {slugify} from '../lib/utils.js';
 
@@ -47,6 +49,18 @@ if (fitCards !== true) {
 
 const serviceTitles = services?.map(service => slugify(service.title)).join(' ') || '';
 
+
+const theImage:any = imgsrc? await getImage({
+    src: imgsrc, 
+    inferSize: true, 
+    widths: [540, 960, 1440, 1920],
+    sizes: "(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px",
+    alt: imgalt || "",
+    title: title || "",
+    format: 'webp'
+  }) : "";
+
+//console.log("the image:", theImage.src);
 ---
 
 <div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
@@ -62,7 +76,7 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
             loop
             title={title}
             src={vidsrc}
-            poster={imgsrc}
+            poster={theImage.src}
             autoplay={true}
             muted
           />
@@ -72,8 +86,7 @@ const serviceTitles = services?.map(service => slugify(service.title)).join(' ')
           <div class="project-image">
             <Image 
               src={imgsrc}
-              width="10";
-              height="10";
+              inferSize
               widths={[540, 960, 1440, 1920]}
               sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
               format='webp'
