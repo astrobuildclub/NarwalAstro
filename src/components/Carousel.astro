@@ -36,7 +36,7 @@ const backgroundSlides = processedSlides.map((slide:any) =>({
 const foregroundSlides = processedSlides.map((slide:any) =>({
   title: slide.slideFields?.slideTitle || "",
   subtitle: slide.slideFields?.slideSub || "",
-  link: [slide.slideFields?.link ]|| [],
+  link: Array.isArray(slide.slideFields?.link) ? slide.slideFields.link : [],
 }));
 
 ---
