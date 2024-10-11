@@ -13,6 +13,9 @@ const projectCards = projects.map((project: any) => ({
   services: project.projectMeta?.services?.nodes || [],
   link: `/project/${project.slug}/`,
 }))
+
+console.log('projectCards:', projectCards)
+
 ---
 
 <section
@@ -24,11 +27,12 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="grid gap-8 gap-y-32 project-list start">
+  <div class="grid gap-8 gap-y-8 md:gap-y-12 lg:gap-y-24 project-list start">
     {
       projectCards &&
         projectCards.map((item: any) => {
           return <ProjectCard {...item} {fitCards} />
+          
         })
     }
   </div>
@@ -41,23 +45,32 @@ const projectCards = projects.map((project: any) => ({
     min-height: 80vh;
   }
 
-  .layout-grid {
+  .layout-grid  {
     /* background-color: aqua; */
   }
 
-  .layout-grid .project-list {
-    
-    align-items: flex-start;
-  }
+
 
   .layout-list {
     /* background: yellow; */
   }
 
-  .layout-list .project-list {
-    grid-template-columns: repeat(6, 1fr);
+  
+   .layout-grid .project-list {
+    /* homepage grid */
+    /* background-color: blue; */
+    /* grid-template-columns: repeat(12, minmax(0, 1fr)); */
     align-items: start;
   }
+
+  .layout-list .project-list {
+    /* overview grid */
+    /* background-color: red; */
+     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    align-items: start;
+  }
+
+  
 
   .project-card:hover,
   .project-card:focus-within {
@@ -113,4 +126,11 @@ const projectCards = projects.map((project: any) => ({
   .project-list:hover .project-card:not(:hover) {
     opacity: 0.75;
   }
+
+
+  @media (min-width: 1024px) {
+  .layout-list .project-list {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
 </style>

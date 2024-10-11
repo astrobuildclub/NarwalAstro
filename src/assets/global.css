@@ -182,3 +182,8 @@ footer {
   background: var(--text);
   color: var(--base);
 }
+
+.page p,
+.col p {
+  margin-bottom: 2em;
+}
