@@ -12,7 +12,7 @@ const processedSlides = slides.map((slide:any)=> {
 
   const updatedTitle = (linkObj) ? linkObj.title : "";
   const updatedUrl = (linkObj) ? replaceUrls(linkObj.url, `${import.meta.env.DEV_SITE_URL}`) : "";
-  const updatedTarget = (linkObj) ? linkObj.target : "";
+  const updatedTarget = (linkObj && linkObj.target !== "") ? linkObj.target : "_top";
   
   return{
     ...slide,
@@ -36,7 +36,7 @@ const backgroundSlides = processedSlides.map((slide:any) =>({
 const foregroundSlides = processedSlides.map((slide:any) =>({
   title: slide.slideFields?.slideTitle || "",
   subtitle: slide.slideFields?.slideSub || "",
-  link: Array.isArray(slide.slideFields?.link) ? slide.slideFields.link : [],
+  link: slide.slideFields?.link,
 }));
 
 ---
@@ -67,7 +67,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
                   inferSize
                   widths={[540, 960, 1440, 1920]}
                   sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
-                  format='webp'
+                  format='avif'
                   alt={slide.imgalt || ""}
                 />
               }
@@ -83,15 +83,13 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
             foregroundSlides.map((slide:any)=>( // slide
             <div role="listitem" class="swiper-slide">
               {slide.link ?
-                slide.link.map((l:any)=>( // slide
-                <a class="slide-text" href={l.url} target={l.target} aria-label={`View the ${slide.title} project`}>
+                <a class="slide-text" href={slide.link.url} target={slide.link.target} aria-label={`View the ${slide.link.title} project`}>
                   <h3 class="font-medium text-l opacity-80">{slide.subtitle}</h3>
                   <h1 class="font-bold text-7xl md:text-9xl text-balance">{slide.title}</h1>
                 </a>
-                ))
               :
-                <h3>{slide.subtitle}</h3>
-                <h1>{slide.title}</h1>
+                <h3 class="font-medium text-l opacity-80">{slide.subtitle}</h3>
+                <h1 class="font-bold text-7xl md:text-9xl text-balance">{slide.title}</h1>
               }
             </div>
           ))

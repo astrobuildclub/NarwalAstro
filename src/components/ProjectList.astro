@@ -13,9 +13,6 @@ const projectCards = projects.map((project: any) => ({
   services: project.projectMeta?.services?.nodes || [],
   link: `/project/${project.slug}/`,
 }))
-
-console.log('projectCards:', projectCards)
-
 ---
 
 <section
