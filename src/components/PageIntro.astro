@@ -3,7 +3,7 @@ const { class: customClass } = Astro.props;
 ---
 
 <section class={`page-intro ${customClass}`}>
-  <div class="grid gap-12 md:grid-cols-2 content-baseline">
+  <div class="grid gap-4 md:gap-12 md:grid-cols-2 content-baseline">
     <div class="col-1 col self-baseline">
       <slot name="column-one" />
     </div>
@@ -15,7 +15,7 @@ const { class: customClass } = Astro.props;
 
 <style>
   section {
-    padding: 4rem var(--site-padding);
+    padding: 3rem var(--site-padding);
   }
 
   .col-1 {
@@ -50,5 +50,12 @@ const { class: customClass } = Astro.props;
 
   section div > div{
     max-width: 70ch
+  }
+
+  @media (max-width: 768px) {
+    section {
+      padding: 1rem var(--site-padding);
+      
+    }
   }
 </style>
