@@ -10,12 +10,14 @@ const { data } = Astro.props
 
 const projectHero = data.projectHero?.details
 const projectClients = data.projectMeta?.projectClient?.nodes;
+const projectCredits = data.projectMeta?.credits;
 const projectContent = data.projectContent?.content
 
 const heroData = {
     ...projectHero,
     clients: projectClients
 }
+
 ---
 
 <Hero data={heroData} />
@@ -27,6 +29,9 @@ const heroData = {
     </article>
   )
 }
+
+<!-- Credits, hier moet nog een block of astro file voor komen en worden opgemaakt -->
+<div class="credits" set:html={projectCredits} />
 
 <style>
   
