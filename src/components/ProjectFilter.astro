@@ -1,26 +1,30 @@
 ---
 import {slugify} from '../lib/utils.js';
 
-const {services} = Astro.props;
+const {filteritems} = Astro.props;
 ---
-<ul class="tag-filter">
-  {services &&
-    services.map((service:any) => (
+<ul class="project-filter">
+  {filteritems &&
+    filteritems.map((item:any) => (
     <li>
-      <a class="tag-button" data-service={slugify(service)} >{service}</a>
+      <a class="filter-button" data-query={slugify(item)} >{item}</a>
     </li>
   ))}
-  <li class="tag-reset"></li>
+  <li class="filter-reset"></li>
 </ul>
 
 
 <script>
   //@ts-nocheck
-  function filterProjects(service) {
+  function filterProjects(filter) {
+
     const projectCards = document.querySelectorAll('.project-card');
+
     projectCards.forEach(card => {
-      const services = card.getAttribute('data-services').split(' ');
-      if (services.includes(service) || service === 'all') {
+
+      const query = card.getAttribute('data-query').split(' ');
+      
+      if (query.includes(filter) || filter === 'all') {
         card.style.display = 'block';
       } else {
         card.style.display = 'none';
@@ -30,18 +34,18 @@ const {services} = Astro.props;
   
   document.addEventListener('astro:page-load', function() {
     // Check of de benodigde elementen op de pagina aanwezig zijn
-    const serviceButtons = document.querySelectorAll('.tag-button');
-    const tagReset = document.querySelector('.tag-reset');
+    const filterButtons = document.querySelectorAll('.filter-button');
+    const filterReset = document.querySelector('.filter-reset');
   
-    if (serviceButtons.length === 0 || !tagReset) {
+    if (filterButtons.length === 0 || !filterReset) {
       // Stop als de elementen niet aanwezig zijn
       return;
     }
   
-    serviceButtons.forEach(button => {
+    filterButtons.forEach(button => {
       button.addEventListener('click', () => {
-        const activeService = button.getAttribute('data-service');
-        filterProjects(activeService);
+        const activeFilter = button.getAttribute('data-query');
+        filterProjects(activeFilter);
       });
     });
   
@@ -51,7 +55,7 @@ const {services} = Astro.props;
     showAllButton.addEventListener('click', () => {
       filterProjects('all');
     });
-    tagReset.append(showAllButton);
+    filterReset.append(showAllButton);
   
     // Reset bij het laden van de pagina
     filterProjects('all');

@@ -11,6 +11,11 @@ type Services = {
   title: string
 }
 
+type Categories = {
+  name: string;
+  slug: string;
+}
+
 type ProjectProps = {
   clientname?: string
   title?: string
@@ -20,11 +25,12 @@ type ProjectProps = {
   link?: string
   size?: string
   services?: Services[]
+  categories?: Categories[]
   fitCards?: boolean
 }
 
 // Defaults
-const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards } = Astro.props as ProjectProps
+const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards, categories } = Astro.props as ProjectProps
 let cardclasses = ''
 
 if (fitCards !== true) {
@@ -47,7 +53,8 @@ if (fitCards !== true) {
   cardclasses = 'lg:col-span-2'
 }
 
-const serviceTitles = services?.map(service => slugify(service.title)).join(' ') || '';
+// const filterItems = services?.map(service => slugify(service.title)).join(' ') || ''; // filter on tags
+const filterItems = categories?.map(category => slugify(category.name)).join(' ') || ''; // filter on categories
 
 
 const theImage:any = imgsrc? await getImage({
@@ -61,7 +68,7 @@ const theImage:any = imgsrc? await getImage({
   }) : "";
 ---
 
-<div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
+<div class={`project-card ${cardclasses}`} data-query={filterItems}>
   <div class="overflow-hidden project-media">
     {
       vidsrc ? ( // if vidsrc is set, show video with poster image

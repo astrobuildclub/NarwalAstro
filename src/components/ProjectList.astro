@@ -3,6 +3,7 @@ import ProjectCard from '../components/ProjectCard.astro'
 
 const { projects, layout, fitCards } = Astro.props
 
+
 const projectCards = projects.map((project: any) => ({
   title: project.projectHero?.details?.title || '',
   clientname: project.projectMeta?.projectClient?.nodes[0].title || '',
@@ -11,6 +12,7 @@ const projectCards = projects.map((project: any) => ({
   imgalt: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.altText || '',
   vidsrc: project.projectMeta?.thumbnailGroup?.vimeo || '',
   services: project.projectMeta?.services?.nodes || [],
+  categories: project.projectMeta?.category?.nodes || [],
   link: `/project/${project.slug}/`,
 }))
 ---

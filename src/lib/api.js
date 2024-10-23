@@ -30,6 +30,12 @@ const getAllProjectsQuery = `query GetAllProjects {
         }
       }
       projectMeta {
+        category {
+          nodes {
+            slug
+            name
+          }
+        }
         projectClient {
           nodes {
             ... on Client {

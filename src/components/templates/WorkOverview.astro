@@ -3,6 +3,7 @@ import PageTitle from '../PageTitle.astro';
 import PageIntro from '../PageIntro.astro'
 import ProjectList from '../ProjectList.astro'
 import ProjectFilter from '../ProjectFilter.astro';
+import { set } from 'astro:schema';
 
 const { data } = Astro.props;
 const pageTitle = data.title || "";
@@ -13,7 +14,15 @@ const allServices = projectData.flatMap((project:any) =>
   project.projectMeta?.services?.nodes?.map((service:any) => service.title) || []
 ).filter(Boolean);
 
-const uniqueServices = [...new Set(allServices)];
+const allCategories = projectData.flatMap((project:any) =>
+  project.projectMeta?.category?.nodes?.map((category:any) => category.name) || []
+).filter(Boolean);
+
+
+
+const uniqueServices = [...new Set(allServices)]; // list tags
+const uniqueCategories = [...new Set(allCategories)]; // categories
+
 ---
 
 <PageTitle title={pageTitle} />
@@ -21,7 +30,7 @@ const uniqueServices = [...new Set(allServices)];
   {pageIntroduction &&
     <Fragment slot="column-one" set:html={pageIntroduction} />
   }
-  <ProjectFilter services={uniqueServices} slot="column-two" />
+  <ProjectFilter filteritems={uniqueCategories} slot="column-two" />
 </PageIntro>
 
 <ProjectList projects={projectData} layout="list" fitCards={true} />
