@@ -84,12 +84,12 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
             <div role="listitem" class="swiper-slide">
               {slide.link ?
                 <a class="slide-text" href={slide.link.url} target={slide.link.target} aria-label={`View the ${slide.link.title} project`}>
-                  <h3 class="font-medium text-l opacity-80">{slide.subtitle}</h3>
-                  <h1 class="font-bold text-7xl md:text-9xl text-balance">{slide.title}</h1>
+                  <h3 class=" opacity-80">{slide.subtitle}</h3>
+                  <h1 class=" md:text-9xl text-balance">{slide.title}</h1>
                 </a>
               :
-                <h3 class="font-medium text-l opacity-80">{slide.subtitle}</h3>
-                <h1 class="font-bold text-7xl md:text-9xl text-balance">{slide.title}</h1>
+                <h3 class=" opacity-80">{slide.subtitle}</h3>
+                <h1 class=" md:text-9xl text-balance">{slide.title}</h1>
               }
             </div>
           ))
@@ -293,8 +293,8 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
     flex: none;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     transition:
       background-color 0.2s,
       color 0.2s;
@@ -307,7 +307,15 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
   .control-button_icon {
     flex: none;
     align-self: center;
+    
   }
+
+  .control-button_icon svg {
+   transform: scale(0.75)
+  } 
+
+
+
   .control-indicator {
     color: white;
   }
@@ -342,7 +350,7 @@ const foregroundSlides = processedSlides.map((slide:any) =>({
     max-width: 16ch;
     
     font-size: var(--fs-8);
-    font-weight:700;
+    font-weight:500;
     letter-spacing: -0.035em;
     text-wrap: balance;
     line-height: 90%;

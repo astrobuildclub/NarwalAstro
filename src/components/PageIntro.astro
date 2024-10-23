@@ -7,7 +7,7 @@ const { class: customClass } = Astro.props;
     <div class="col-1 col self-baseline">
       <slot name="column-one" />
     </div>
-    <div class="col-2 col self-baseline">
+    <div class="self-auto col-2 col ">
       <slot name="column-two" />
     </div>
   </div>
@@ -15,13 +15,14 @@ const { class: customClass } = Astro.props;
 
 <style>
   section {
-    padding: 3rem var(--site-padding);
+    padding: calc(1.5*var(--site-padding)) var(--site-padding);
+    
   }
 
   .col-1 {
     font-size: var(--fs-1);
     line-height:112.5%;
-    color: var(--text);
+    color: var(--text); 
     opacity: 0.7;
   }
 
@@ -30,6 +31,7 @@ const { class: customClass } = Astro.props;
     line-height:112.5%;
     font-weight:600;
     letter-spacing: -0.0125em;
+    opacity: 0.7;
   }
 
   .page .col-1 {
@@ -38,24 +40,31 @@ const { class: customClass } = Astro.props;
     font-weight:600;
     letter-spacing: -0.0125em;
     color: var(--text);
-    opacity: 1;
+    
   }
   .page .col-2 {
     font-size: var(--fs-0);
     line-height:112.5%;
     color: var(--text);
-    opacity: 0.7;
+    
     font-weight: 400;
   }
 
   section div > div{
     max-width: 70ch
   }
+:global(.home .col p:first-child) {
+  margin-bottom: 2rem;
+  font-size: var(--fs-3xl);
+  line-height: 95%;
+  font-weight: 400;
+  color: var(--text);
+}
 
+  
   @media (max-width: 768px) {
     section {
-      padding: 1rem var(--site-padding);
-      
+      padding: var(--site-padding);
     }
   }
 </style>

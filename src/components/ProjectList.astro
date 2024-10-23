@@ -24,7 +24,7 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="grid gap-8 gap-y-8 md:gap-y-12 lg:gap-y-24 project-list start">
+  <div class="grid gap-12 gap-y-8 md:gap-y-12 lg:gap-y-24 project-list start">
     {
       projectCards &&
         projectCards.map((item: any) => {
@@ -37,7 +37,8 @@ const projectCards = projects.map((project: any) => ({
 
 <style is:global>
   .projects-wrapper {
-    padding: var(--site-padding);
+    padding:  var(--site-padding);
+    padding-top:0;
     padding-bottom: var(--space-6xl);
     min-height: 80vh;
   }
@@ -63,7 +64,7 @@ const projectCards = projects.map((project: any) => ({
   .layout-list .project-list {
     /* overview grid */
     /* background-color: red; */
-     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     align-items: start;
   }
 
@@ -131,3 +132,56 @@ const projectCards = projects.map((project: any) => ({
   }
 }
 </style>
+
+
+<script>
+  import { inView, animate } from "motion"
+
+  inView(".project-card .project-media", ({ target }) => {
+    target.classList.add("in-view")
+  })
+
+  inView(".project-card .project-media",  (info) => {
+    const controls = animate(
+      info.target, 
+      { 
+      opacity: [0, 0.75], 
+      transform: ["translateY(3rem)", "translateY(0px)"] 
+      }, 
+      {
+        delay: 0.2,
+        duration: 0.9,
+        easing: [0.16, 1, 0.3, 1],
+      }
+    )
+    // This will fire when the element leaves the viewport
+    return (leaveInfo) => {
+      controls.stop()
+      animate(info.target, { opacity: 0, transform: ["translateY(0px)", "translateY(20px)"] }, { duration: 0.6 })
+    }
+  })
+
+  inView(".project-card .project-content", ({ target }) => {
+    target.classList.add("in-view")
+  })
+
+  inView(".project-card .project-content",  (info) => {
+    const controls = animate(
+      info.target, 
+      { 
+      opacity: [0, 1], 
+      transform: ["translateY(2rem)", "translateY(0px)"] 
+      }, 
+      {
+        delay: 0.1,
+        duration: 0.4,
+        easing: [0.16, 1, 0.3, 1],
+      }
+    )
+    // This will fire when the element leaves the viewport
+    return (leaveInfo) => {
+      controls.stop()
+      animate(info.target, { opacity: 0, transform: ["translateY(0px)", "translateY(20px)"] }, { duration: 0.6 })
+    }
+  })
+</script>
