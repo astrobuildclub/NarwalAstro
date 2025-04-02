@@ -41,7 +41,13 @@ const {services} = Astro.props;
     serviceButtons.forEach(button => {
       button.addEventListener('click', () => {
         const activeService = button.getAttribute('data-service');
-        filterProjects(activeService);
+         // Verwijder de actieve klasse van alle knoppen
+      serviceButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Voeg de actieve klasse toe aan de geklikte knop
+      button.classList.add('active');
+      
+      filterProjects(activeService);
       });
     });
   
@@ -50,6 +56,9 @@ const {services} = Astro.props;
     showAllButton.textContent = 'Reset';
     showAllButton.addEventListener('click', () => {
       filterProjects('all');
+
+       // Verwijder de actieve klasse van alle knoppen
+    serviceButtons.forEach(btn => btn.classList.remove('active'));
     });
     tagReset.append(showAllButton);
   
@@ -95,5 +104,13 @@ const {services} = Astro.props;
     cursor: pointer;
     
   }
+
+  .tag-button.active {
+    
+  
+  color: var(--text);
+
+  text-decoration: underline;
+}
 
 </style>

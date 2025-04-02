@@ -34,25 +34,24 @@ const {name, roles, photoSourceUrl, photoAltText, photoTitleText} = Astro.props;
      <div class="person-details">
         <h3 class="person-name">{name}</h3>
         <div class="roles">
-        {roles &&
-            roles.map((role:any)=>( // slide
-              <h4 class="person-roles">{role.name}</h4>
-            ))
-          }
-          </div>  
-    </div>
+          {roles && roles.length > 0 && (
+            <h4 class="person-roles">
+              {roles.map((role: any) => role.name).join(', ')}
+            </h4>
+          )}
+        </div>
 </div>
 
 
 <style>
-  .person-name, .person-roles {
-    font-size: var(--fs-0);
+  h3.person-name, .person-roles {
+    font-size: var(--fs--2);
     font-weight: 600;
-    line-height: 100%;
+    line-height: 133%;
   }
 
   .person-details{
-    margin-top: var(--space-xs);
+    margin-top: var(--space-2xs);
   }
 
   .roles {
@@ -63,8 +62,8 @@ const {name, roles, photoSourceUrl, photoAltText, photoTitleText} = Astro.props;
   }
 
   .roles > * {
-    font-size: var(--fs--2);
-    font-weight: 400;
+    
+    
     opacity: 0.7;
     line-height: 112.5%;
   }
