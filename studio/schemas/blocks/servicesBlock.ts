@@ -52,7 +52,7 @@ export default defineType({
       return {
         title: title || 'Services Block',
         subtitle: `${services?.length || 0} services`,
-        media: '⚙️',
+        media: 'Services',
       };
     },
   },

@@ -4,12 +4,32 @@ export default defineType({
   name: 'work',
   title: 'Projects',
   type: 'document',
+  groups: [
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+    {
+      name: 'hero',
+      title: 'Hero & Media',
+    },
+    {
+      name: 'meta',
+      title: 'Project Details',
+    },
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
       type: 'string',
       title: 'Project Title',
       validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'slug',
@@ -17,12 +37,14 @@ export default defineType({
       title: 'Slug',
       options: { source: 'title' },
       validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'excerpt',
       type: 'text',
       title: 'Excerpt',
       description: 'Short description of the project',
+      group: 'content',
     }),
     defineField({
       name: 'hero',
@@ -84,6 +106,7 @@ export default defineType({
           ],
         }),
       ],
+      group: 'hero',
     }),
     defineField({
       name: 'content',
@@ -100,6 +123,7 @@ export default defineType({
         { type: 'galleryBlock' },
         { type: 'textGridBlock' },
       ],
+      group: 'content',
     }),
     defineField({
       name: 'meta',
@@ -188,6 +212,7 @@ export default defineType({
           ],
         }),
       ],
+      group: 'meta',
     }),
     defineField({
       name: 'seo',
@@ -232,6 +257,7 @@ export default defineType({
           description: 'Canonical URL for this project',
         }),
       ],
+      group: 'seo',
     }),
   ],
   preview: {

@@ -4,12 +4,28 @@ export default defineType({
   name: 'page',
   title: 'Pages',
   type: 'document',
+  groups: [
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+    {
+      name: 'homepage',
+      title: 'Homepage Settings',
+    },
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
       type: 'string',
       title: 'Page Title',
       validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'slug',
@@ -17,6 +33,7 @@ export default defineType({
       title: 'Slug',
       options: { source: 'title' },
       validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'pageType',
@@ -34,6 +51,7 @@ export default defineType({
       },
       initialValue: 'default',
       validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'introCols',
@@ -97,7 +115,8 @@ export default defineType({
             prepare({ content }) {
               const text = content?.[0]?.children?.[0]?.text || 'Empty column';
               return {
-                title: text?.substring(0, 50) + (text?.length > 50 ? '...' : ''),
+                title:
+                  text?.substring(0, 50) + (text?.length > 50 ? '...' : ''),
                 subtitle: 'Intro Column',
               };
             },
@@ -105,6 +124,7 @@ export default defineType({
         },
       ],
       validation: (Rule) => Rule.max(2),
+      group: 'content',
     }),
     defineField({
       name: 'slides',
@@ -114,6 +134,7 @@ export default defineType({
       hidden: ({ document }) => document?.pageType !== 'homepage',
       of: [{ type: 'slide' }],
       validation: (Rule) => Rule.max(10),
+      group: 'homepage',
     }),
     defineField({
       name: 'featuredProjects',
@@ -123,6 +144,7 @@ export default defineType({
       hidden: ({ document }) => document?.pageType !== 'homepage',
       of: [{ type: 'reference', to: [{ type: 'work' }] }],
       validation: (Rule) => Rule.max(6),
+      group: 'homepage',
     }),
     defineField({
       name: 'content',
@@ -142,6 +164,7 @@ export default defineType({
         { type: 'servicesBlock' },
         { type: 'clientsBlock' },
       ],
+      group: 'content',
     }),
     defineField({
       name: 'seo',
@@ -186,6 +209,7 @@ export default defineType({
           description: 'Canonical URL for this page',
         }),
       ],
+      group: 'seo',
     }),
   ],
   preview: {

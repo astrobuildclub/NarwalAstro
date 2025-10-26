@@ -78,7 +78,7 @@ export default defineType({
       return {
         title: title || 'Untitled Service',
         subtitle: category,
-        media: icon || '⚙️',
+        media: icon || 'Service',
       };
     },
   },

@@ -90,7 +90,7 @@ export default defineType({
       return {
         title: 'Color Block',
         subtitle: `${colorMode} mode`,
-        media: '🎨',
+        media: 'Color',
       };
     },
   },
