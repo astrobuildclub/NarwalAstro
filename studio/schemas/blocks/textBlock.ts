@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField } from 'sanity';
 
 export default defineType({
   name: 'textBlock',
@@ -9,7 +9,7 @@ export default defineType({
       name: 'text',
       type: 'text',
       title: 'Text Content',
-      validation: Rule => Rule.required()
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'size',
@@ -19,19 +19,19 @@ export default defineType({
         list: [
           { title: 'Small', value: 'small' },
           { title: 'Medium', value: 'medium' },
-          { title: 'Large', value: 'large' }
-        ]
+          { title: 'Large', value: 'large' },
+        ],
       },
-      initialValue: 'medium'
-    })
+      initialValue: 'medium',
+    }),
   ],
   preview: {
     select: { text: 'text', size: 'size' },
     prepare({ text, size }) {
       return {
         title: text?.substring(0, 50) + '...',
-        subtitle: `Text Block (${size})`
-      }
-    }
-  }
-})
+        subtitle: `Text Block (${size})`,
+      };
+    },
+  },
+});

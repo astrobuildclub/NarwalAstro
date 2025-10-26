@@ -10,7 +10,12 @@ export default defineConfig({
   title: 'Narwal Creative',
   projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_DATASET!,
-  plugins: [structureTool(), visionTool(), linkField(), seoMetaFields()],
+  plugins: [
+    structureTool(), 
+    visionTool(), 
+    linkField(), 
+    seoMetaFields()
+  ],
   schema: {
     types: schemaTypes,
   },

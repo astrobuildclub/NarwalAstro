@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField } from 'sanity';
 
 export default defineType({
   name: 'page',
@@ -9,20 +9,20 @@ export default defineType({
       name: 'title',
       type: 'string',
       title: 'Page Title',
-      validation: Rule => Rule.required()
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: Rule => Rule.required()
-    })
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: {
     select: {
       title: 'title',
-      subtitle: 'slug.current'
-    }
-  }
-})
+      subtitle: 'slug.current',
+    },
+  },
+});
