@@ -20,19 +20,23 @@ export default defineType({
     }),
     defineField({
       name: 'backgroundColor',
-      type: 'color',
+      type: 'string',
       title: 'Background Color',
-      options: {
-        disableAlpha: true,
-      },
+      description: 'Hex color code (e.g., #ffffff)',
+      validation: (Rule) => Rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
+        name: 'hex color',
+        invert: false
+      }),
     }),
     defineField({
       name: 'textColor',
-      type: 'color',
+      type: 'string',
       title: 'Text Color',
-      options: {
-        disableAlpha: true,
-      },
+      description: 'Hex color code (e.g., #000000)',
+      validation: (Rule) => Rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
+        name: 'hex color',
+        invert: false
+      }),
     }),
     defineField({
       name: 'content',

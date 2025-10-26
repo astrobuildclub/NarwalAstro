@@ -1,5 +1,4 @@
 import { defineType, defineField } from 'sanity';
-import { seo } from 'sanity-plugin-seo';
 
 export default defineType({
   name: 'work',
@@ -203,7 +202,44 @@ export default defineType({
         }),
       ],
     }),
-    ...seo({ name: 'seo' }),
+    defineField({
+      name: 'seo',
+      type: 'object',
+      title: 'SEO',
+      fields: [
+        defineField({
+          name: 'title',
+          type: 'string',
+          title: 'SEO Title',
+        }),
+        defineField({
+          name: 'description',
+          type: 'text',
+          title: 'Meta Description',
+        }),
+        defineField({
+          name: 'keywords',
+          type: 'array',
+          title: 'Keywords',
+          of: [{ type: 'string' }],
+          options: {
+            layout: 'tags',
+          },
+        }),
+        defineField({
+          name: 'image',
+          type: 'image',
+          title: 'Social Media Image',
+          options: { hotspot: true },
+          fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
+        }),
+        defineField({
+          name: 'canonical',
+          type: 'url',
+          title: 'Canonical URL',
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {
