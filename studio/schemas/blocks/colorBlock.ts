@@ -23,20 +23,22 @@ export default defineType({
       type: 'string',
       title: 'Background Color',
       description: 'Hex color code (e.g., #ffffff)',
-      validation: (Rule) => Rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
-        name: 'hex color',
-        invert: false
-      }),
+      validation: (Rule) =>
+        Rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
+          name: 'hex color',
+          invert: false,
+        }),
     }),
     defineField({
       name: 'textColor',
       type: 'string',
       title: 'Text Color',
       description: 'Hex color code (e.g., #000000)',
-      validation: (Rule) => Rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
-        name: 'hex color',
-        invert: false
-      }),
+      validation: (Rule) =>
+        Rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
+          name: 'hex color',
+          invert: false,
+        }),
     }),
     defineField({
       name: 'content',

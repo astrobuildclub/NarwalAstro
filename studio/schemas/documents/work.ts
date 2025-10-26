@@ -6,13 +6,13 @@ export default defineType({
   type: 'document',
   groups: [
     {
-      name: 'content',
-      title: 'Content',
+      name: 'hero',
+      title: 'Hero',
       default: true,
     },
     {
-      name: 'hero',
-      title: 'Hero & Media',
+      name: 'content',
+      title: 'Content',
     },
     {
       name: 'meta',
@@ -40,70 +40,43 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'excerpt',
-      type: 'text',
-      title: 'Excerpt',
-      description: 'Short description of the project',
-      group: 'content',
-    }),
-    defineField({
       name: 'hero',
       type: 'object',
-      title: 'Project Hero',
+      title: 'Hero',
       fields: [
         defineField({
-          name: 'details',
-          type: 'object',
-          title: 'Hero Details',
+          name: 'title',
+          type: 'string',
+          title: 'Hero Title',
+        }),
+        defineField({
+          name: 'subtitle',
+          type: 'string',
+          title: 'Hero Subtitle',
+        }),
+        defineField({
+          name: 'intro',
+          type: 'text',
+          title: 'Hero Intro',
+        }),
+        defineField({
+          name: 'coverMedia',
+          type: 'image',
+          title: 'Cover Media',
+          options: { hotspot: true },
           fields: [
             defineField({
-              name: 'title',
+              name: 'alt',
               type: 'string',
-              title: 'Hero Title',
-            }),
-            defineField({
-              name: 'subtitle',
-              type: 'string',
-              title: 'Hero Subtitle',
-            }),
-            defineField({
-              name: 'intro',
-              type: 'text',
-              title: 'Hero Intro',
-            }),
-            defineField({
-              name: 'color',
-              type: 'string',
-              title: 'Hero Color',
-              description: 'Hex color code for hero background',
-            }),
-            defineField({
-              name: 'coverMedia',
-              type: 'boolean',
-              title: 'Cover Media',
-              description: 'Whether to use media as cover',
-            }),
-            defineField({
-              name: 'media',
-              type: 'object',
-              title: 'Hero Media',
-              fields: [
-                defineField({
-                  name: 'coverImage',
-                  type: 'image',
-                  title: 'Cover Image',
-                  options: { hotspot: true },
-                  fields: [
-                    defineField({
-                      name: 'alt',
-                      type: 'string',
-                      title: 'Alt Text',
-                    }),
-                  ],
-                }),
-              ],
+              title: 'Alt Text',
             }),
           ],
+        }),
+        defineField({
+          name: 'color',
+          type: 'string',
+          title: 'Color',
+          description: 'Hex color code (e.g., #ff0000)',
         }),
       ],
       group: 'hero',
@@ -126,92 +99,107 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'meta',
+      name: 'credits',
+      type: 'array',
+      title: 'Credits',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'H3', value: 'h3' },
+            { title: 'H4', value: 'h4' },
+          ],
+          lists: [
+            { title: 'Bullet', value: 'bullet' },
+            { title: 'Numbered', value: 'number' },
+          ],
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+            ],
+          },
+        },
+      ],
+      group: 'content',
+    }),
+    defineField({
+      name: 'services',
+      type: 'array',
+      title: 'Services',
+      of: [{ type: 'reference', to: [{ type: 'service' }] }],
+      group: 'meta',
+    }),
+    defineField({
+      name: 'tags',
+      type: 'array',
+      title: 'Tags',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+      },
+      group: 'meta',
+    }),
+    defineField({
+      name: 'thumbnail',
       type: 'object',
-      title: 'Project Meta',
+      title: 'Thumbnail',
       fields: [
         defineField({
-          name: 'credits',
-          type: 'text',
-          title: 'Credits',
-        }),
-        defineField({
-          name: 'client',
-          type: 'reference',
-          title: 'Client',
-          to: [{ type: 'client' }],
-        }),
-        defineField({
-          name: 'services',
-          type: 'array',
-          title: 'Services',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'service' }],
-            },
-          ],
-        }),
-        defineField({
-          name: 'related',
-          type: 'array',
-          title: 'Related Projects',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'work' }],
-            },
-          ],
-        }),
-        defineField({
-          name: 'thumbnailGroup',
-          type: 'object',
-          title: 'Thumbnail Group',
+          name: 'image',
+          type: 'image',
+          title: 'Thumbnail Image',
+          options: { hotspot: true },
           fields: [
             defineField({
-              name: 'size',
+              name: 'alt',
               type: 'string',
-              title: 'Thumbnail Size',
-              options: {
-                list: [
-                  { title: 'Small', value: 'small' },
-                  { title: 'Medium', value: 'medium' },
-                  { title: 'Large', value: 'large' },
-                ],
-              },
-            }),
-            defineField({
-              name: 'aspectRatio',
-              type: 'string',
-              title: 'Aspect Ratio',
-              description: 'e.g., 16/9, 4/3, 1/1',
-            }),
-            defineField({
-              name: 'vimeo',
-              type: 'url',
-              title: 'Vimeo URL',
-            }),
-            defineField({
-              name: 'thumbnail',
-              type: 'image',
-              title: 'Thumbnail Image',
-              options: { hotspot: true },
-              fields: [
-                defineField({
-                  name: 'alt',
-                  type: 'string',
-                  title: 'Alt Text',
-                }),
-                defineField({
-                  name: 'title',
-                  type: 'string',
-                  title: 'Title',
-                }),
-              ],
+              title: 'Alt Text',
             }),
           ],
         }),
+        defineField({
+          name: 'size',
+          type: 'string',
+          title: 'Size',
+          options: {
+            list: [
+              { title: 'Small', value: 'small' },
+              { title: 'Default', value: 'default' },
+              { title: 'Large', value: 'large' },
+            ],
+          },
+          initialValue: 'default',
+        }),
+        defineField({
+          name: 'video',
+          type: 'url',
+          title: 'Video URL',
+          description: 'Optional video URL for thumbnail',
+        }),
+        defineField({
+          name: 'aspectRatio',
+          type: 'string',
+          title: 'Aspect Ratio',
+          description: 'e.g., 16:9, 4:3, 1:1',
+        }),
       ],
+      group: 'meta',
+    }),
+    defineField({
+      name: 'client',
+      type: 'reference',
+      title: 'Client',
+      to: [{ type: 'client' }],
+      group: 'meta',
+    }),
+    defineField({
+      name: 'relatedProjects',
+      type: 'array',
+      title: 'Related Projects',
+      of: [{ type: 'reference', to: [{ type: 'work' }] }],
+      validation: (Rule) => Rule.max(3),
       group: 'meta',
     }),
     defineField({
@@ -263,11 +251,13 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      media: 'hero.details.media.coverImage',
+      subtitle: 'client.title',
+      media: 'thumbnail.image',
     },
-    prepare({ title, media }) {
+    prepare({ title, subtitle, media }) {
       return {
         title: title || 'Untitled Project',
+        subtitle: subtitle,
         media: media,
       };
     },
