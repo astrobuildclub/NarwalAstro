@@ -1,0 +1,59 @@
+import { defineType, defineField } from 'sanity';
+
+export default defineType({
+  name: 'servicesBlock',
+  title: 'Services Block',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'title',
+      type: 'string',
+      title: 'Block Title',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'services',
+      type: 'array',
+      title: 'Services',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'service' }],
+        },
+      ],
+      validation: (Rule) => Rule.min(1),
+    }),
+    defineField({
+      name: 'layout',
+      type: 'string',
+      title: 'Layout',
+      options: {
+        list: [
+          { title: 'List', value: 'list' },
+          { title: 'Grid', value: 'grid' },
+          { title: 'Cards', value: 'cards' },
+        ],
+      },
+      initialValue: 'list',
+    }),
+    defineField({
+      name: 'showDescriptions',
+      type: 'boolean',
+      title: 'Show Descriptions',
+      initialValue: true,
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      services: 'services',
+    },
+    prepare({ title, services }) {
+      return {
+        title: title || 'Services Block',
+        subtitle: `${services?.length || 0} services`,
+        media: '⚙️',
+      };
+    },
+  },
+});
