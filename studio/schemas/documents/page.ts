@@ -2,7 +2,7 @@ import { defineType, defineField } from 'sanity';
 
 export default defineType({
   name: 'page',
-  title: 'Page',
+  title: 'Pages',
   type: 'document',
   fields: [
     defineField({
@@ -19,25 +19,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'status',
-      type: 'string',
-      title: 'Status',
-      options: {
-        list: [
-          { title: 'Published', value: 'published' },
-          { title: 'Draft', value: 'draft' },
-        ],
-      },
-      initialValue: 'draft',
-    }),
-    defineField({
-      name: 'isFrontPage',
-      type: 'boolean',
-      title: 'Is Homepage',
-      description: 'Only one page can be the homepage',
-      initialValue: false,
-    }),
-    defineField({
       name: 'template',
       type: 'string',
       title: 'Page Template',
@@ -51,6 +32,38 @@ export default defineType({
         ],
       },
       initialValue: 'default',
+    }),
+    defineField({
+      name: 'homepageContent',
+      type: 'object',
+      title: 'Homepage Content',
+      hidden: ({ document }) => document?.template !== 'homepage',
+      fields: [
+        defineField({
+          name: 'intro',
+          type: 'text',
+          title: 'Homepage Intro (Column 1)',
+        }),
+        defineField({
+          name: 'statement',
+          type: 'text',
+          title: 'Homepage Statement (Column 2)',
+        }),
+        defineField({
+          name: 'slides',
+          type: 'array',
+          title: 'Homepage Carousel Slides',
+          of: [{ type: 'slide' }],
+          validation: (Rule) => Rule.max(10),
+        }),
+        defineField({
+          name: 'featuredProjects',
+          type: 'array',
+          title: 'Featured Projects',
+          of: [{ type: 'reference', to: [{ type: 'work' }] }],
+          validation: (Rule) => Rule.max(6),
+        }),
+      ],
     }),
     defineField({
       name: 'content',
@@ -113,13 +126,12 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      status: 'status',
       template: 'template',
     },
-    prepare({ title, status, template }) {
+    prepare({ title, template }) {
       return {
         title: title || 'Untitled Page',
-        subtitle: `${template} • ${status}`,
+        subtitle: template,
       };
     },
   },

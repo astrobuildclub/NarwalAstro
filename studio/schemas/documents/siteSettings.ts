@@ -5,13 +5,6 @@ export default defineType({
   title: 'Site Settings',
   type: 'document',
   // Singleton - only one instance allowed
-  __experimental_actions: [
-    // 'create',
-    'update',
-    // 'delete',
-    'publish',
-    'unpublish',
-  ],
   fields: [
     defineField({
       name: 'title',
@@ -86,60 +79,6 @@ export default defineType({
               },
             },
           ],
-        }),
-      ],
-    }),
-    defineField({
-      name: 'homepage',
-      type: 'object',
-      title: 'Homepage Settings',
-      fields: [
-        defineField({
-          name: 'content',
-          type: 'object',
-          title: 'Homepage Content',
-          fields: [
-            defineField({
-              name: 'intro',
-              type: 'text',
-              title: 'Homepage Intro',
-            }),
-            defineField({
-              name: 'statement',
-              type: 'text',
-              title: 'Homepage Statement',
-            }),
-          ],
-        }),
-        defineField({
-          name: 'featured',
-          type: 'object',
-          title: 'Featured Projects',
-          fields: [
-            defineField({
-              name: 'projects',
-              type: 'array',
-              title: 'Featured Projects',
-              of: [
-                {
-                  type: 'reference',
-                  to: [{ type: 'work' }],
-                },
-              ],
-              validation: (Rule) => Rule.max(6),
-            }),
-          ],
-        }),
-        defineField({
-          name: 'slides',
-          type: 'array',
-          title: 'Homepage Carousel Slides',
-          of: [
-            {
-              type: 'slide',
-            },
-          ],
-          validation: (Rule) => Rule.max(10),
         }),
       ],
     }),
@@ -260,7 +199,7 @@ export default defineType({
       return {
         title: title || 'Site Settings',
         subtitle: subtitle || 'Configure your site settings',
-        media: '⚙️',
+        media: 'Settings',
       };
     },
   },

@@ -2,7 +2,7 @@ import { defineType, defineField } from 'sanity';
 
 export default defineType({
   name: 'work',
-  title: 'Work (Project)',
+  title: 'Projects',
   type: 'document',
   fields: [
     defineField({
@@ -17,19 +17,6 @@ export default defineType({
       title: 'Slug',
       options: { source: 'title' },
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'status',
-      type: 'string',
-      title: 'Status',
-      options: {
-        list: [
-          { title: 'Published', value: 'published' },
-          { title: 'Draft', value: 'draft' },
-          { title: 'Archived', value: 'archived' },
-        ],
-      },
-      initialValue: 'draft',
     }),
     defineField({
       name: 'excerpt',
@@ -244,13 +231,11 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      status: 'status',
       media: 'hero.details.media.coverImage',
     },
-    prepare({ title, status, media }) {
+    prepare({ title, media }) {
       return {
         title: title || 'Untitled Project',
-        subtitle: status,
         media: media,
       };
     },
