@@ -1,4 +1,5 @@
 import { defineType, defineField } from 'sanity';
+import { seo } from 'sanity-plugin-seo';
 
 export default defineType({
   name: 'siteSettings',
@@ -217,29 +218,7 @@ export default defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'seo',
-      type: 'object',
-      title: 'Default SEO Settings',
-      fields: [
-        defineField({
-          name: 'defaultTitle',
-          type: 'string',
-          title: 'Default SEO Title',
-        }),
-        defineField({
-          name: 'defaultDescription',
-          type: 'text',
-          title: 'Default Meta Description',
-        }),
-        defineField({
-          name: 'defaultImage',
-          type: 'image',
-          title: 'Default Social Image',
-          options: { hotspot: true },
-        }),
-      ],
-    }),
+    ...seo({ name: 'defaultSeo' }),
   ],
   preview: {
     select: {

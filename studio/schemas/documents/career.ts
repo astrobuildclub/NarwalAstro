@@ -1,4 +1,5 @@
 import { defineType, defineField } from 'sanity';
+import { seo } from 'sanity-plugin-seo';
 
 export default defineType({
   name: 'career',
@@ -162,6 +163,7 @@ export default defineType({
       type: 'datetime',
       title: 'Application Deadline',
     }),
+    ...seo({ name: 'seo' }),
   ],
   preview: {
     select: {

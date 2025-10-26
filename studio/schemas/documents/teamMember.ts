@@ -107,7 +107,8 @@ export default defineType({
       media: 'featuredImage',
     },
     prepare({ title, roles, media }) {
-      const roleNames = roles?.map((role: any) => role.name).join(', ') || 'No roles';
+      const roleNames =
+        roles?.map((role: any) => role.name).join(', ') || 'No roles';
       return {
         title: title || 'Untitled Team Member',
         subtitle: roleNames,

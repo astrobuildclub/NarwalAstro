@@ -1,4 +1,5 @@
 import { defineType, defineField } from 'sanity';
+import { seo } from 'sanity-plugin-seo';
 
 export default defineType({
   name: 'page',
@@ -71,28 +72,7 @@ export default defineType({
         { type: 'clientsBlock' },
       ],
     }),
-    defineField({
-      name: 'seo',
-      type: 'object',
-      title: 'SEO',
-      fields: [
-        defineField({
-          name: 'title',
-          type: 'string',
-          title: 'SEO Title',
-        }),
-        defineField({
-          name: 'metaDesc',
-          type: 'text',
-          title: 'Meta Description',
-        }),
-        defineField({
-          name: 'canonical',
-          type: 'url',
-          title: 'Canonical URL',
-        }),
-      ],
-    }),
+    ...seo({ name: 'seo' }),
   ],
   preview: {
     select: {
