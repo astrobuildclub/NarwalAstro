@@ -8,14 +8,9 @@ import { schemaTypes } from './schemas';
 export default defineConfig({
   name: 'narwal-creative',
   title: 'Narwal Creative',
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
-  dataset: process.env.SANITY_STUDIO_DATASET!,
-  plugins: [
-    structureTool(), 
-    visionTool(), 
-    linkField(), 
-    seoMetaFields()
-  ],
+  projectId: 'q178y836',
+  dataset: 'production',
+  plugins: [structureTool(), visionTool(), linkField(), seoMetaFields()],
   schema: {
     types: schemaTypes,
   },

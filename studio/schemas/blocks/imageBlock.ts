@@ -11,7 +11,12 @@ export default defineType({
       title: 'Image',
       options: { hotspot: true },
       fields: [
-        { name: 'alt', type: 'string', title: 'Alt Text', validation: (Rule) => Rule.required() },
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
+          validation: (Rule) => Rule.required(),
+        },
         { name: 'caption', type: 'string', title: 'Caption' },
       ],
       validation: (Rule) => Rule.required(),
