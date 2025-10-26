@@ -198,11 +198,15 @@ export default defineType({
           name: 'title',
           type: 'string',
           title: 'SEO Title',
+          description:
+            'Title for search engines (leave empty to use project title)',
         }),
         defineField({
           name: 'description',
           type: 'text',
           title: 'Meta Description',
+          description: 'Description for search engines',
+          rows: 3,
         }),
         defineField({
           name: 'keywords',
@@ -217,6 +221,7 @@ export default defineType({
           name: 'image',
           type: 'image',
           title: 'Social Media Image',
+          description: 'Image for social media sharing',
           options: { hotspot: true },
           fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
         }),
@@ -224,6 +229,7 @@ export default defineType({
           name: 'canonical',
           type: 'url',
           title: 'Canonical URL',
+          description: 'Canonical URL for this project',
         }),
       ],
     }),

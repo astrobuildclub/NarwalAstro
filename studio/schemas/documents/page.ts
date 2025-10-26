@@ -19,51 +19,110 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'template',
+      name: 'pageType',
       type: 'string',
-      title: 'Page Template',
+      title: 'Page Type',
       options: {
         list: [
           { title: 'Homepage', value: 'homepage' },
           { title: 'Default', value: 'default' },
           { title: 'About', value: 'about' },
-          { title: 'Contact', value: 'contact' },
           { title: 'Services', value: 'services' },
+          { title: 'Contact', value: 'contact' },
+          { title: 'Work Overview', value: 'work' },
         ],
       },
       initialValue: 'default',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'homepageContent',
-      type: 'object',
-      title: 'Homepage Content',
-      hidden: ({ document }) => document?.template !== 'homepage',
-      fields: [
-        defineField({
-          name: 'intro',
-          type: 'text',
-          title: 'Homepage Intro (Column 1)',
-        }),
-        defineField({
-          name: 'statement',
-          type: 'text',
-          title: 'Homepage Statement (Column 2)',
-        }),
-        defineField({
-          name: 'slides',
-          type: 'array',
-          title: 'Homepage Carousel Slides',
-          of: [{ type: 'slide' }],
-          validation: (Rule) => Rule.max(10),
-        }),
-        defineField({
-          name: 'featuredProjects',
-          type: 'array',
-          title: 'Featured Projects',
-          of: [{ type: 'reference', to: [{ type: 'work' }] }],
-          validation: (Rule) => Rule.max(6),
-        }),
+      name: 'introCols',
+      type: 'array',
+      title: 'Intro Columns',
+      description: 'Maximum 2 columns for intro text',
+      of: [
+        {
+          type: 'object',
+          name: 'introColumn',
+          title: 'Intro Column',
+          fields: [
+            defineField({
+              name: 'content',
+              type: 'array',
+              title: 'Column Content',
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    { title: 'Normal', value: 'normal' },
+                    { title: 'H3', value: 'h3' },
+                    { title: 'H4', value: 'h4' },
+                  ],
+                  marks: {
+                    decorators: [
+                      { title: 'Strong', value: 'strong' },
+                      { title: 'Emphasis', value: 'em' },
+                    ],
+                    annotations: [
+                      {
+                        name: 'link',
+                        type: 'object',
+                        title: 'Link',
+                        fields: [
+                          {
+                            name: 'href',
+                            type: 'url',
+                            title: 'URL',
+                            validation: (Rule) => Rule.required(),
+                          },
+                          {
+                            name: 'blank',
+                            type: 'boolean',
+                            title: 'Open in new tab',
+                            initialValue: false,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              ],
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              content: 'content',
+            },
+            prepare({ content }) {
+              const text = content?.[0]?.children?.[0]?.text || 'Empty column';
+              return {
+                title: text?.substring(0, 50) + (text?.length > 50 ? '...' : ''),
+                subtitle: 'Intro Column',
+              };
+            },
+          },
+        },
       ],
+      validation: (Rule) => Rule.max(2),
+    }),
+    defineField({
+      name: 'slides',
+      type: 'array',
+      title: 'Homepage Carousel Slides',
+      description: 'Only visible on homepage',
+      hidden: ({ document }) => document?.pageType !== 'homepage',
+      of: [{ type: 'slide' }],
+      validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
+      name: 'featuredProjects',
+      type: 'array',
+      title: 'Featured Projects',
+      description: 'Only visible on homepage',
+      hidden: ({ document }) => document?.pageType !== 'homepage',
+      of: [{ type: 'reference', to: [{ type: 'work' }] }],
+      validation: (Rule) => Rule.max(6),
     }),
     defineField({
       name: 'content',
@@ -93,11 +152,15 @@ export default defineType({
           name: 'title',
           type: 'string',
           title: 'SEO Title',
+          description:
+            'Title for search engines (leave empty to use page title)',
         }),
         defineField({
           name: 'description',
           type: 'text',
           title: 'Meta Description',
+          description: 'Description for search engines',
+          rows: 3,
         }),
         defineField({
           name: 'keywords',
@@ -112,6 +175,7 @@ export default defineType({
           name: 'image',
           type: 'image',
           title: 'Social Media Image',
+          description: 'Image for social media sharing',
           options: { hotspot: true },
           fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
         }),
@@ -119,6 +183,7 @@ export default defineType({
           name: 'canonical',
           type: 'url',
           title: 'Canonical URL',
+          description: 'Canonical URL for this page',
         }),
       ],
     }),
@@ -126,12 +191,12 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      template: 'template',
+      pageType: 'pageType',
     },
-    prepare({ title, template }) {
+    prepare({ title, pageType }) {
       return {
         title: title || 'Untitled Page',
-        subtitle: template,
+        subtitle: pageType,
       };
     },
   },

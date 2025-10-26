@@ -165,11 +165,14 @@ export default defineType({
           name: 'title',
           type: 'string',
           title: 'Default SEO Title',
+          description: 'Default title for search engines',
         }),
         defineField({
           name: 'description',
           type: 'text',
           title: 'Default Meta Description',
+          description: 'Default description for search engines',
+          rows: 3,
         }),
         defineField({
           name: 'keywords',
@@ -184,6 +187,7 @@ export default defineType({
           name: 'image',
           type: 'image',
           title: 'Default Social Media Image',
+          description: 'Default image for social media sharing',
           options: { hotspot: true },
           fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
         }),
