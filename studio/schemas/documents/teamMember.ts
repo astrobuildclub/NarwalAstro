@@ -123,16 +123,14 @@ export default defineType({
       title: 'title',
       roles: 'roles',
       media: 'featuredImage',
-      featured: 'featured',
-      email: 'email',
     },
-    prepare({ title, roles, media, featured, email }) {
-      const roleNames = roles?.map((role: any) => role.name).join(', ') || 'No roles';
-      const featuredBadge = featured ? '⭐ ' : '';
+    prepare({ title, roles, media }) {
+      const roleNames =
+        roles?.map((role: any) => role.name).join(', ') || 'No roles';
       return {
-        title: `${featuredBadge}${title || 'Untitled Team Member'}`,
-        subtitle: `${roleNames}${email ? ` • ${email}` : ''}`,
-        media: media || '👤',
+        title: title || 'Untitled Team Member',
+        subtitle: roleNames,
+        media: media,
       };
     },
   },

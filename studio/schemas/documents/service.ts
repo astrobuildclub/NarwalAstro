@@ -18,13 +18,14 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required().custom((slug) => {
-        if (!slug?.current) return 'Slug is required';
-        if (!/^[a-z0-9-]+$/.test(slug.current)) {
-          return 'Slug can only contain lowercase letters, numbers, and hyphens';
-        }
-        return true;
-      }),
+      validation: (Rule) =>
+        Rule.required().custom((slug) => {
+          if (!slug?.current) return 'Slug is required';
+          if (!/^[a-z0-9-]+$/.test(slug.current)) {
+            return 'Slug can only contain lowercase letters, numbers, and hyphens';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'content',
@@ -63,15 +64,12 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      slug: 'slug.current',
       categories: 'categories',
     },
-    prepare({ title, slug, categories }) {
-      const categoryList = categories?.slice(0, 2).join(', ') || 'No categories';
+    prepare({ title, categories }) {
       return {
         title: title || 'Untitled Service',
-        subtitle: `/${slug || 'no-slug'} • ${categoryList}`,
-        media: '⚙️',
+        subtitle: categories?.join(', ') || 'No categories',
       };
     },
   },

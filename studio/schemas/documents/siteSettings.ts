@@ -203,14 +203,12 @@ export default defineType({
     select: {
       title: 'title',
       subtitle: 'description',
-      url: 'url',
-      logo: 'logo',
     },
-    prepare({ title, subtitle, url, logo }) {
+    prepare({ title, subtitle }) {
       return {
         title: title || 'Site Settings',
-        subtitle: `${subtitle || 'Configure your site settings'} • ${url || 'No URL'}`,
-        media: logo || '⚙️',
+        subtitle: subtitle || 'Configure your site settings',
+        media: 'Settings',
       };
     },
   },

@@ -34,13 +34,14 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required().custom((slug) => {
-        if (!slug?.current) return 'Slug is required';
-        if (!/^[a-z0-9-]+$/.test(slug.current)) {
-          return 'Slug can only contain lowercase letters, numbers, and hyphens';
-        }
-        return true;
-      }),
+      validation: (Rule) =>
+        Rule.required().custom((slug) => {
+          if (!slug?.current) return 'Slug is required';
+          if (!/^[a-z0-9-]+$/.test(slug.current)) {
+            return 'Slug can only contain lowercase letters, numbers, and hyphens';
+          }
+          return true;
+        }),
       group: 'content',
     }),
     defineField({
@@ -192,7 +193,10 @@ export default defineType({
           title: 'Meta Description',
           description: 'Description for search engines',
           rows: 3,
-          validation: (Rule) => Rule.max(160).warning('Meta descriptions should be under 160 characters'),
+          validation: (Rule) =>
+            Rule.max(160).warning(
+              'Meta descriptions should be under 160 characters',
+            ),
         }),
         defineField({
           name: 'keywords',
@@ -225,14 +229,11 @@ export default defineType({
     select: {
       title: 'title',
       pageType: 'pageType',
-      slug: 'slug.current',
-      media: 'slides.0.image',
     },
-    prepare({ title, pageType, slug, media }) {
+    prepare({ title, pageType }) {
       return {
         title: title || 'Untitled Page',
-        subtitle: `${pageType} • /${slug || 'no-slug'}`,
-        media: media,
+        subtitle: pageType,
       };
     },
   },

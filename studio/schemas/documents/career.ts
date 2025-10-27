@@ -222,17 +222,11 @@ export default defineType({
       title: 'title',
       department: 'department',
       location: 'location',
-      employmentType: 'employmentType',
-      experienceLevel: 'experienceLevel',
-      publishedAt: 'publishedAt',
-      deadline: 'deadline',
     },
-    prepare({ title, department, location, employmentType, experienceLevel, publishedAt, deadline }) {
-      const status = publishedAt ? '📅 Published' : '📝 Draft';
-      const urgency = deadline && new Date(deadline) < new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) ? '⚠️ ' : '';
+    prepare({ title, department, location }) {
       return {
-        title: `${urgency}${title || 'Untitled Position'}`,
-        subtitle: `${department || 'No dept'} • ${location || 'No location'} • ${employmentType || 'No type'} • ${experienceLevel || 'No level'}`,
+        title: title || 'Untitled Position',
+        subtitle: `${department} • ${location}`,
         media: '💼',
       };
     },

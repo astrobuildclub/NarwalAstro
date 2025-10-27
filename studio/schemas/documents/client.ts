@@ -18,13 +18,14 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required().custom((slug) => {
-        if (!slug?.current) return 'Slug is required';
-        if (!/^[a-z0-9-]+$/.test(slug.current)) {
-          return 'Slug can only contain lowercase letters, numbers, and hyphens';
-        }
-        return true;
-      }),
+      validation: (Rule) =>
+        Rule.required().custom((slug) => {
+          if (!slug?.current) return 'Slug is required';
+          if (!/^[a-z0-9-]+$/.test(slug.current)) {
+            return 'Slug can only contain lowercase letters, numbers, and hyphens';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'logo',
@@ -44,14 +45,12 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      slug: 'slug.current',
       media: 'logo',
     },
-    prepare({ title, slug, media }) {
+    prepare({ title, media }) {
       return {
         title: title || 'Untitled Client',
-        subtitle: `/${slug || 'no-slug'}`,
-        media: media || '🏢',
+        media: media,
       };
     },
   },

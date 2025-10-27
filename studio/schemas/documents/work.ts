@@ -38,13 +38,14 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required().custom((slug) => {
-        if (!slug?.current) return 'Slug is required';
-        if (!/^[a-z0-9-]+$/.test(slug.current)) {
-          return 'Slug can only contain lowercase letters, numbers, and hyphens';
-        }
-        return true;
-      }),
+      validation: (Rule) =>
+        Rule.required().custom((slug) => {
+          if (!slug?.current) return 'Slug is required';
+          if (!/^[a-z0-9-]+$/.test(slug.current)) {
+            return 'Slug can only contain lowercase letters, numbers, and hyphens';
+          }
+          return true;
+        }),
       group: 'content',
     }),
     defineField({
@@ -85,13 +86,14 @@ export default defineType({
           type: 'string',
           title: 'Color',
           description: 'Hex color code (e.g., #ff0000)',
-          validation: (Rule) => Rule.custom((color) => {
-            if (!color) return true; // Optional field
-            if (!/^#[0-9A-Fa-f]{6}$/.test(color)) {
-              return 'Please enter a valid hex color code (e.g., #ff0000)';
-            }
-            return true;
-          }),
+          validation: (Rule) =>
+            Rule.custom((color) => {
+              if (!color) return true; // Optional field
+              if (!/^#[0-9A-Fa-f]{6}$/.test(color)) {
+                return 'Please enter a valid hex color code (e.g., #ff0000)';
+              }
+              return true;
+            }),
         }),
       ],
       group: 'hero',
@@ -235,7 +237,10 @@ export default defineType({
           title: 'Meta Description',
           description: 'Description for search engines',
           rows: 3,
-          validation: (Rule) => Rule.max(160).warning('Meta descriptions should be under 160 characters'),
+          validation: (Rule) =>
+            Rule.max(160).warning(
+              'Meta descriptions should be under 160 characters',
+            ),
         }),
         defineField({
           name: 'keywords',
@@ -267,18 +272,14 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      client: 'client.title',
-      tags: 'tags',
+      subtitle: 'client.title',
       media: 'thumbnail.image',
-      heroColor: 'hero.color',
     },
-    prepare({ title, client, tags, media, heroColor }) {
-      const tagList = tags?.slice(0, 2).join(', ') || '';
+    prepare({ title, subtitle, media }) {
       return {
         title: title || 'Untitled Project',
-        subtitle: `${client || 'No client'}${tagList ? ` • ${tagList}` : ''}`,
+        subtitle: subtitle,
         media: media,
-        mediaColor: heroColor,
       };
     },
   },
