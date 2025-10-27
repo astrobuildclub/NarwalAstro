@@ -151,9 +151,18 @@ export default defineType({
       title: 'Featured Projects',
       description: 'Only visible on homepage',
       hidden: ({ document }) => document?.pageType !== 'homepage',
-      of: [{ type: 'reference', to: [{ type: 'work' }] }],
+      of: [{ 
+        type: 'reference', 
+        to: [{ type: 'work' }],
+        options: {
+          disableNew: true,
+        }
+      }],
       validation: (Rule) => Rule.max(6),
       group: 'homepage',
+      options: {
+        sortable: true,
+      },
     }),
     defineField({
       name: 'content',

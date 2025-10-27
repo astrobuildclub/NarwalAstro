@@ -272,13 +272,13 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'client.title',
+      size: 'thumbnail.size',
       media: 'thumbnail.image',
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, size, media }) {
       return {
         title: title || 'Untitled Project',
-        subtitle: subtitle,
+        subtitle: size ? `Size: ${size}` : 'No size set',
         media: media,
       };
     },
