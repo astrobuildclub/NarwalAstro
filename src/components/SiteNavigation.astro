@@ -66,20 +66,10 @@ if (import.meta.env.DEV) {
             // Check voor internal link (ook als linkType null is maar internalLink bestaat)
             else if (menuItem.link.internalLink) {
               const slug = menuItem.link.internalLink.slug;
-              const pageType = menuItem.link.internalLink.pageType;
               
               if (slug) {
-                // Speciale handling voor verschillende page types
-                if (pageType === 'work') {
-                  // Work overview pagina
-                  href = '/our-work';
-                } else if (pageType === 'homepage') {
-                  // Homepage
-                  href = '/';
-                } else {
-                  // Gewone pagina's
-                  href = `/${slug}`;
-                }
+                // Gebruik de slug direct als URL
+                href = `/${slug}`;
               }
             }
           }
