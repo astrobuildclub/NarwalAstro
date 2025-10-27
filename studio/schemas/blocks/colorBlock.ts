@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { ColorWheelIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'colorBlock',
   title: 'Color Block',
   type: 'object',
+  icon: ColorWheelIcon,
   fields: [
     defineField({
       name: 'colorMode',

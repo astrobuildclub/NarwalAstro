@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { ImageIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'slide',
   type: 'object',
   title: 'Carousel Slide',
+  icon: ImageIcon,
   fields: [
     defineField({
       name: 'title',

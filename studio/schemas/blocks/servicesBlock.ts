@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { CogIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'servicesBlock',
   title: 'Services Block',
   type: 'object',
+  icon: CogIcon,
   fields: [
     defineField({
       name: 'title',

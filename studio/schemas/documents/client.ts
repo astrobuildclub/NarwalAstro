@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { UsersIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'client',
   title: 'Clients',
   type: 'document',
+  icon: UsersIcon,
   fields: [
     defineField({
       name: 'title',
@@ -19,14 +21,10 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'description',
-      type: 'text',
-      title: 'Client Description',
-    }),
-    defineField({
       name: 'logo',
       type: 'image',
       title: 'Client Logo',
+      description: 'Upload SVG or other image format',
       options: { hotspot: true },
       fields: [
         defineField({
@@ -36,49 +34,15 @@ export default defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'website',
-      type: 'url',
-      title: 'Client Website',
-    }),
-    defineField({
-      name: 'industry',
-      type: 'string',
-      title: 'Industry',
-    }),
-    defineField({
-      name: 'location',
-      type: 'string',
-      title: 'Location',
-    }),
-    defineField({
-      name: 'featured',
-      type: 'boolean',
-      title: 'Featured Client',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'projects',
-      type: 'array',
-      title: 'Related Projects',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'work' }],
-        },
-      ],
-    }),
   ],
   preview: {
     select: {
       title: 'title',
-      industry: 'industry',
       media: 'logo',
     },
-    prepare({ title, industry, media }) {
+    prepare({ title, media }) {
       return {
         title: title || 'Untitled Client',
-        subtitle: industry,
         media: media,
       };
     },

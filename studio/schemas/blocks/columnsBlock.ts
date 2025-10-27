@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { ThListIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'columnsBlock',
   title: 'Columns Block',
   type: 'object',
+  icon: ThListIcon,
   fields: [
     defineField({
       name: 'title',

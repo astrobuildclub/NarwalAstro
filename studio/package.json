@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@sanity/icons": "^3.7.4",
     "@sanity/vision": "^4.11.0",
     "sanity": "^4.11.0",
     "sanity-plugin-link-field": "^1.4.2",

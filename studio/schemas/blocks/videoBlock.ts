@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { PlayIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'videoBlock',
   title: 'Video Block',
   type: 'object',
+  icon: PlayIcon,
   fields: [
     defineField({
       name: 'title',
@@ -73,7 +75,7 @@ export default defineType({
       return {
         title: title || 'Video Block',
         subtitle: `${type} - ${url}`,
-        media: '🎥',
+        media: 'Video',
       };
     },
   },

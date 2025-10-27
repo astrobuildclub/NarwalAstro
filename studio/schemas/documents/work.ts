@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { ProjectsIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'work',
   title: 'Projects',
   type: 'document',
+  icon: ProjectsIcon,
   groups: [
     {
       name: 'hero',
@@ -47,17 +49,17 @@ export default defineType({
         defineField({
           name: 'title',
           type: 'string',
-          title: 'Hero Title',
+          title: 'Title',
         }),
         defineField({
           name: 'subtitle',
           type: 'string',
-          title: 'Hero Subtitle',
+          title: 'Subtitle',
         }),
         defineField({
           name: 'intro',
           type: 'text',
-          title: 'Hero Intro',
+          title: 'Intro',
         }),
         defineField({
           name: 'coverMedia',
@@ -107,8 +109,8 @@ export default defineType({
           type: 'block',
           styles: [
             { title: 'Normal', value: 'normal' },
-            { title: 'H3', value: 'h3' },
-            { title: 'H4', value: 'h4' },
+            { title: 'Title', value: 'h3' },
+            { title: 'Subtitle', value: 'h4' },
           ],
           lists: [
             { title: 'Bullet', value: 'bullet' },

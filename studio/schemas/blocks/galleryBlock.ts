@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { ImagesIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'galleryBlock',
   title: 'Gallery Block',
   type: 'object',
+  icon: ImagesIcon,
   fields: [
     defineField({
       name: 'title',
@@ -72,7 +74,7 @@ export default defineType({
       return {
         title: title || 'Gallery Block',
         subtitle: `${gallery?.length || 0} images - ${layout} layout`,
-        media: '🖼️',
+        media: 'Gallery',
       };
     },
   },

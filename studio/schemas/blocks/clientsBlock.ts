@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { UsersIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'clientsBlock',
   title: 'Clients Block',
   type: 'object',
+  icon: UsersIcon,
   fields: [
     defineField({
       name: 'title',
@@ -52,7 +54,7 @@ export default defineType({
       return {
         title: title || 'Clients Block',
         subtitle: `${clients?.length || 0} clients`,
-        media: '🏢',
+        media: 'Clients',
       };
     },
   },

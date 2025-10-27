@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { CommentIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'testimonialBlock',
   title: 'Testimonial Block',
   type: 'object',
+  icon: CommentIcon,
   fields: [
     defineField({
       name: 'quote',

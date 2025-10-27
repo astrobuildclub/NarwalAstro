@@ -1,14 +1,16 @@
 import { defineType, defineField } from 'sanity';
+import { CogIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'service',
   title: 'Services',
   type: 'document',
+  icon: CogIcon,
   fields: [
     defineField({
       name: 'title',
       type: 'string',
-      title: 'Service Name',
+      title: 'Title',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -20,65 +22,47 @@ export default defineType({
     }),
     defineField({
       name: 'content',
-      type: 'text',
-      title: 'Service Description',
+      type: 'array',
+      title: 'Description',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'H3', value: 'h3' },
+            { title: 'H4', value: 'h4' },
+          ],
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+            ],
+          },
+        },
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'icon',
-      type: 'string',
-      title: 'Service Icon',
-      description: 'Icon name or emoji',
-    }),
-    defineField({
-      name: 'category',
-      type: 'string',
-      title: 'Service Category',
-      options: {
-        list: [
-          { title: 'Design', value: 'design' },
-          { title: 'Development', value: 'development' },
-          { title: 'Strategy', value: 'strategy' },
-          { title: 'Marketing', value: 'marketing' },
-          { title: 'Consulting', value: 'consulting' },
-        ],
-      },
-    }),
-    defineField({
-      name: 'featured',
-      type: 'boolean',
-      title: 'Featured Service',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'order',
-      type: 'number',
-      title: 'Display Order',
-      initialValue: 0,
-    }),
-    defineField({
-      name: 'projects',
+      name: 'categories',
       type: 'array',
-      title: 'Related Projects',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'work' }],
-        },
-      ],
+      title: 'Categories',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+        // This enables autocomplete with existing tags
+        // Sanity will automatically suggest previously used tags
+      },
     }),
   ],
   preview: {
     select: {
       title: 'title',
-      category: 'category',
-      icon: 'icon',
+      categories: 'categories',
     },
-    prepare({ title, category, icon }) {
+    prepare({ title, categories }) {
       return {
         title: title || 'Untitled Service',
-        subtitle: category,
-        media: icon || 'Service',
+        subtitle: categories?.join(', ') || 'No categories',
       };
     },
   },

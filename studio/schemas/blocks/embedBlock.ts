@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { CodeIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'embedBlock',
   title: 'Embed Block',
   type: 'object',
+  icon: CodeIcon,
   fields: [
     defineField({
       name: 'title',

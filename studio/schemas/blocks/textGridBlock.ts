@@ -1,9 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { ThLargeIcon } from '@sanity/icons';
 
 export default defineType({
   name: 'textGridBlock',
   title: 'Text Grid Block',
   type: 'object',
+  icon: ThLargeIcon,
   fields: [
     defineField({
       name: 'title',
