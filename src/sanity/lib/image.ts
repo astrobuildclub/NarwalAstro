@@ -1,4 +1,4 @@
-import { urlForImage as sanityUrlForImage } from "@sanity/astro";
+import { urlForImage as sanityUrlForImage } from '@sanity/astro';
 import type { SanityImage } from '../types';
 
 /**
@@ -12,7 +12,7 @@ export function urlForImage(source: SanityImage | null | undefined) {
       fit: () => urlForImage(source),
       quality: () => urlForImage(source),
       format: () => urlForImage(source),
-      url: () => null
+      url: () => null,
     };
   }
 
@@ -22,13 +22,16 @@ export function urlForImage(source: SanityImage | null | undefined) {
 /**
  * Generate thumbnail image URL
  */
-export function urlForThumbnail(source: SanityImage | null | undefined, size: 'small' | 'default' | 'large' = 'default') {
+export function urlForThumbnail(
+  source: SanityImage | null | undefined,
+  size: 'small' | 'default' | 'large' = 'default',
+) {
   if (!source?.asset) return null;
 
   const sizes = {
     small: { width: 300, height: 200 },
     default: { width: 600, height: 400 },
-    large: { width: 900, height: 600 }
+    large: { width: 900, height: 600 },
   };
 
   const { width, height } = sizes[size];
@@ -58,7 +61,10 @@ export function urlForHero(source: SanityImage | null | undefined) {
 /**
  * Generate gallery image URL
  */
-export function urlForGallery(source: SanityImage | null | undefined, index: number = 0) {
+export function urlForGallery(
+  source: SanityImage | null | undefined,
+  index: number = 0,
+) {
   if (!source?.asset) return null;
 
   return urlForImage(source)

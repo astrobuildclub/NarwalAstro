@@ -1,5 +1,5 @@
 import { type QueryParams } from 'sanity';
-import { sanityClient } from 'sanity:client';
+import { createClient } from '@sanity/client';
 
 const visualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true';
@@ -21,15 +21,23 @@ export async function loadQuery<QueryResponse>({
 
     const perspective = visualEditingEnabled ? 'previewDrafts' : 'published';
 
-    const { result, resultSourceMap } = await sanityClient.fetch<QueryResponse>(
+    // Create client instance
+    const client = createClient({
+      projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+      dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+      apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION || '2025-01-28',
+      useCdn: !visualEditingEnabled,
+      token: visualEditingEnabled ? token : undefined,
+      perspective,
+    });
+
+    const { result, resultSourceMap } = await client.fetch<QueryResponse>(
       query,
       params ?? {},
       {
         filterResponse: false,
-        perspective,
         resultSourceMap: visualEditingEnabled ? 'withKeyArraySelector' : false,
         stega: visualEditingEnabled,
-        ...(visualEditingEnabled ? { token } : {}),
       },
     );
 
