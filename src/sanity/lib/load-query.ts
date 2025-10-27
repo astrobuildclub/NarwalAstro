@@ -1,8 +1,8 @@
-import { type QueryParams } from "sanity";
-import { sanityClient } from "sanity:client";
+import { type QueryParams } from 'sanity';
+import { sanityClient } from 'sanity:client';
 
 const visualEditingEnabled =
-  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === "true";
+  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true';
 const token = import.meta.env.SANITY_API_READ_TOKEN;
 
 export async function loadQuery<QueryResponse>({
@@ -15,11 +15,11 @@ export async function loadQuery<QueryResponse>({
   try {
     if (visualEditingEnabled && !token) {
       console.warn(
-        "The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing."
+        'The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing.',
       );
     }
 
-    const perspective = visualEditingEnabled ? "previewDrafts" : "published";
+    const perspective = visualEditingEnabled ? 'previewDrafts' : 'published';
 
     const { result, resultSourceMap } = await sanityClient.fetch<QueryResponse>(
       query,
@@ -27,10 +27,10 @@ export async function loadQuery<QueryResponse>({
       {
         filterResponse: false,
         perspective,
-        resultSourceMap: visualEditingEnabled ? "withKeyArraySelector" : false,
+        resultSourceMap: visualEditingEnabled ? 'withKeyArraySelector' : false,
         stega: visualEditingEnabled,
         ...(visualEditingEnabled ? { token } : {}),
-      }
+      },
     );
 
     return {
@@ -45,12 +45,12 @@ export async function loadQuery<QueryResponse>({
       console.warn(`Query:`, query);
       console.warn(`Params:`, params);
     }
-    
+
     // Return null gracefully for missing content
     return {
       data: null,
       sourceMap: null,
-      perspective: "published",
+      perspective: 'published',
     };
   }
 }

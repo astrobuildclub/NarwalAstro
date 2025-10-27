@@ -1,8 +1,8 @@
-import type { 
-  SanityHome, 
-  SanityProject, 
-  SanityPage, 
-  SanitySiteSettings 
+import type {
+  SanityHome,
+  SanityProject,
+  SanityPage,
+  SanitySiteSettings,
 } from './types';
 
 // Homepage query
