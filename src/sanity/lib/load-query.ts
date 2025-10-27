@@ -49,16 +49,12 @@ export async function loadQuery<QueryResponse>({
   } catch (error) {
     // Log error in development mode
     if (import.meta.env.DEV) {
-      console.warn(`Sanity query failed:`, error);
+      console.error(`❌ Sanity query failed:`, error);
       console.warn(`Query:`, query);
       console.warn(`Params:`, params);
     }
 
-    // Return null gracefully for missing content
-    return {
-      data: null,
-      sourceMap: null,
-      perspective: 'published',
-    };
+    // Throw error instead of returning null - laat de frontend crashen
+    throw new Error(`Sanity query failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }

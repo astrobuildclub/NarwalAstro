@@ -1,10 +1,9 @@
 ---
 // Import Components
 import { Image, getImage } from 'astro:assets';
-
-// import Image from 'astro/components/Image.astro'
 import TagGroup from '../components/TagGroup.astro'
 import {slugify} from '../lib/utils.js';
+import { urlForImage } from '../sanity/lib/image';
 
 // Type Definitions
 type Services = {
@@ -21,15 +20,99 @@ type ProjectProps = {
   size?: string
   services?: Services[]
   fitCards?: boolean
+  // Sanity specific props
+  _type?: string
+  _key?: string
+  thumbnail?: any
+  client?: any
 }
 
 // Defaults
-const { clientname, title, imgsrc, imgalt = '', vidsrc, link, size, services, fitCards } = Astro.props as ProjectProps
+const { 
+  clientname, 
+  title, 
+  imgsrc, 
+  imgalt = '', 
+  vidsrc, 
+  link, 
+  size, 
+  services, 
+  fitCards,
+  // Sanity props
+  _type,
+  _key,
+  thumbnail,
+  client
+} = Astro.props as ProjectProps
+
+// DEBUG: Log project card data
+if (import.meta.env.DEV) {
+  console.log('🎨 ProjectCard received:', {
+    title,
+    clientname,
+    size,
+    imgsrc,
+    imgalt,
+    vidsrc,
+    servicesCount: services?.length || 0,
+    link,
+    isSanity: _type === 'work' || _key !== undefined,
+    hasThumbnail: !!thumbnail
+  });
+}
+
+// Detect if this is Sanity data
+const isSanity = _type === 'work' || _key !== undefined;
+
+// Process Sanity data if needed
+let processedProps = {
+  clientname,
+  title,
+  imgsrc,
+  imgalt,
+  vidsrc,
+  link,
+  size,
+  services,
+  fitCards
+};
+
+if (isSanity) {
+  // Override with Sanity data
+  processedProps = {
+    clientname: client?.title || clientname,
+    title: title,
+    imgsrc: thumbnail?.image?.asset?.url || imgsrc,
+    imgalt: thumbnail?.alt || imgalt,
+    vidsrc: thumbnail?.videoUrl || vidsrc,
+    link: link,
+    size: thumbnail?.size || size,
+    services: services || [],
+    fitCards: fitCards
+  };
+
+  if (import.meta.env.DEV) {
+    console.log('🎨 Processed Sanity props:', processedProps);
+  }
+}
+
+// Use processed props
+const { 
+  clientname: finalClientname, 
+  title: finalTitle, 
+  imgsrc: finalImgsrc, 
+  imgalt: finalImgalt, 
+  vidsrc: finalVidsrc, 
+  link: finalLink, 
+  size: finalSize, 
+  services: finalServices, 
+  fitCards: finalFitCards 
+} = processedProps;
 let cardclasses = ''
 
-if (fitCards !== true) {
-  if (size) {
-    switch (size) {
+if (finalFitCards !== true) {
+  if (finalSize) {
+    switch (finalSize) {
       case 'small':
         cardclasses = 'lg:col-span-4'
         break
@@ -47,16 +130,28 @@ if (fitCards !== true) {
   cardclasses = 'lg:col-span-2'
 }
 
-const serviceTitles = services?.map(service => slugify(service.title)).join(' ') || '';
+const serviceTitles = finalServices?.map(service => slugify(service.title)).join(' ') || '';
 
+// Generate image URL for Sanity
+let imageSrc = finalImgsrc;
+if (isSanity && thumbnail?.image?.asset) {
+  try {
+    imageSrc = urlForImage(thumbnail.image).width(800).height(600).url();
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.warn('⚠️ Failed to generate Sanity image URL:', error);
+    }
+    imageSrc = finalImgsrc; // Fallback to direct URL
+  }
+}
 
-const theImage:any = imgsrc? await getImage({
-    src: imgsrc, 
+const theImage:any = imageSrc? await getImage({
+    src: imageSrc, 
     inferSize: true, 
     widths: [540, 960, 1440, 1920],
     sizes: "(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px",
-    alt: imgalt || "",
-    title: title || "",
+    alt: finalImgalt || "",
+    title: finalTitle || "",
     format: 'webp'
   }) : "";
 ---
@@ -64,7 +159,7 @@ const theImage:any = imgsrc? await getImage({
 <div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
   <div class="overflow-hidden project-media">
     {
-      vidsrc ? ( // if vidsrc is set, show video with poster image
+      finalVidsrc ? ( // if vidsrc is set, show video with poster image
         <div class="w-full project-video">
           <video
             preload="metadata"
@@ -72,24 +167,24 @@ const theImage:any = imgsrc? await getImage({
             disablepictureinpicture
             playsinline
             loop
-            title={title}
-            src={vidsrc}
+            title={finalTitle}
+            src={finalVidsrc}
             poster={theImage.src}
             autoplay={true}
             muted
           />
         </div>
       ) : (
-        imgsrc && ( // if no video, show image
+        imageSrc && ( // if no video, show image
           <div class="project-image">
             <Image 
-              src={imgsrc}
+              src={imageSrc}
               inferSize
               widths={[540, 960, 1440, 1920]}
               sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
               format='avif'
-              alt={imgalt || ""}
-              title={title || ""}
+              alt={finalImgalt || ""}
+              title={finalTitle || ""}
               class="min-w-full"
             />
           </div>
@@ -100,15 +195,15 @@ const theImage:any = imgsrc? await getImage({
 
   <div class="project-content">
     <div class="flex justify-between pt-6 mb-0 align-middle project-meta">
-      {clientname && <h3 class="font-medium project-client self-baseline opacity-80">{clientname}</h3>}
-      {services && <TagGroup tags={services} />}
+      {finalClientname && <h3 class="font-medium project-client self-baseline opacity-80">{finalClientname}</h3>}
+      {finalServices && <TagGroup tags={finalServices} />}
     </div>
 
     {
-      title && (
+      finalTitle && (
         <h2 class="leading-4 project-title">
-          <a href={link} class="project-link">
-            {title}
+          <a href={finalLink} class="project-link">
+            {finalTitle}
           </a>
         </h2>
       )

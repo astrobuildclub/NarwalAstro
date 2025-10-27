@@ -5,8 +5,8 @@ import type {
   SanitySiteSettings,
 } from './types';
 
-// Homepage query - probeer eerst alle pages, dan filter op pageType
-export const HOME_QUERY = `*[_type == "page"][0] {
+// Homepage query - zoek specifiek naar pageType "homepage"
+export const HOME_QUERY = `*[_type == "page" && pageType == "homepage"][0] {
   _id,
   _type,
   title,
@@ -15,10 +15,12 @@ export const HOME_QUERY = `*[_type == "page"][0] {
   statement,
   introCols[] {
     _key,
+    _type,
     content
   },
   slides[] {
     _key,
+    _type,
     title,
     subtitle,
     image {
@@ -47,26 +49,60 @@ export const HOME_QUERY = `*[_type == "page"][0] {
         asset->
       },
       size,
-      aspectRatio
-    },
-    "client": client-> {
-      _id,
-      title
-    },
-    "services": services[]-> {
-      _id,
-      title
+      alt
     }
   },
-  seo {
+ 
+}`;
+
+// Fallback query voor als pageType niet is ingesteld
+export const HOME_FALLBACK_QUERY = `*[_type == "page" && title == "Homepage"][0] {
+  _id,
+  _type,
+  title,
+  pageType,
+  intro,
+  statement,
+  introCols[] {
+    _key,
+    _type,
+    content
+  },
+  slides[] {
+    _key,
+    _type,
     title,
-    description,
-    keywords,
+    subtitle,
     image {
       ...,
       asset->
+    },
+    videoUrl,
+    link {
+      linkType,
+      url,
+      internalLink-> {
+        _type,
+        "slug": slug.current
+      }
     }
-  }
+  },
+  featuredProjects[]-> {
+    _id,
+    _type,
+    title,
+    "slug": slug.current,
+    subtitle,
+    thumbnail {
+      image {
+        ...,
+        asset->
+      },
+      size,
+      alt
+    }
+  },
+  
 }`;
 
 // Site settings query

@@ -3,16 +3,62 @@ import ProjectCard from '../components/ProjectCard.astro'
 
 const { projects, layout, fitCards } = Astro.props
 
-const projectCards = projects.map((project: any) => ({
-  title: project.projectHero?.details?.title || '',
-  clientname: project.projectMeta?.projectClient?.nodes[0].title || '',
-  size: project.projectMeta?.thumbnailGroup?.size?.toString() || '',
-  imgsrc: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.sourceUrl || '',
-  imgalt: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.altText || '',
-  vidsrc: project.projectMeta?.thumbnailGroup?.vimeo || '',
-  services: project.projectMeta?.services?.nodes || [],
-  link: `/project/${project.slug}/`,
-}))
+// DEBUG: Log projects data
+if (import.meta.env.DEV) {
+  console.log('📁 ProjectList received projects:', JSON.stringify(projects, null, 2));
+  console.log('📁 Projects count:', projects?.length || 0);
+}
+
+// Detect data source and process accordingly
+const projectCards = projects.map((project: any) => {
+  // Check if this is Sanity data
+  const isSanity = project._type === 'work' || project._key !== undefined;
+  
+  if (import.meta.env.DEV) {
+    console.log(`📁 Processing project "${project.title}":`, {
+      isSanity,
+      _type: project._type,
+      hasKey: !!project._key,
+      hasThumbnail: !!project.thumbnail,
+      hasImage: !!project.thumbnail?.image
+    });
+  }
+
+  if (isSanity) {
+    // Sanity data structure - pass through with additional Sanity props
+    return {
+      title: project.title || '',
+      clientname: project.client?.title || '',
+      size: project.thumbnail?.size?.toString() || '',
+      imgsrc: project.thumbnail?.image?.asset?.url || '',
+      imgalt: project.thumbnail?.alt || project.title || '',
+      vidsrc: project.thumbnail?.videoUrl || '',
+      services: project.services || [],
+      link: `/project/${project.slug}/`,
+      // Sanity specific props
+      _type: project._type,
+      _key: project._key,
+      thumbnail: project.thumbnail,
+      client: project.client
+    };
+  } else {
+    // WordPress data structure (existing)
+    return {
+      title: project.projectHero?.details?.title || '',
+      clientname: project.projectMeta?.projectClient?.nodes[0].title || '',
+      size: project.projectMeta?.thumbnailGroup?.size?.toString() || '',
+      imgsrc: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.sourceUrl || '',
+      imgalt: project.projectMeta?.thumbnailGroup?.thumbnail?.node?.altText || '',
+      vidsrc: project.projectMeta?.thumbnailGroup?.vimeo || '',
+      services: project.projectMeta?.services?.nodes || [],
+      link: `/project/${project.slug}/`,
+    };
+  }
+});
+
+if (import.meta.env.DEV) {
+  console.log('📁 Processed project cards:', projectCards);
+}
 ---
 
 <section
@@ -24,16 +70,17 @@ const projectCards = projects.map((project: any) => ({
     },
   ]}
 >
-  <div class="grid gap-12 gap-y-8 md:gap-y-12 lg:gap-y-24 project-list start">
+  <div class="grid gap-y-8 gap-12 md:gap-y-12 lg:gap-y-24 project-list start">
     {
       projectCards &&
         projectCards.map((item: any) => {
           return <ProjectCard {...item} {fitCards} />
-          
         })
     }
   </div>
 </section>
+
+
 
 <style is:global>
   .projects-wrapper {

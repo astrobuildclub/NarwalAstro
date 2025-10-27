@@ -74,8 +74,10 @@ export async function getNodeData(slug: string) {
       }
     } catch (error) {
       if (import.meta.env.DEV) {
-        console.warn('⚠️ Sanity homepage query failed:', error);
+        console.error('❌ Sanity homepage query failed:', error);
       }
+      // Gooi error door - geen fallback
+      throw error;
     }
   }
 
