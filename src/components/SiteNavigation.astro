@@ -1,9 +1,39 @@
 ---
-const { menu } = Astro.props
+import { loadQuery } from '../sanity/lib/load-query';
+import { SITE_SETTINGS_QUERY } from '../sanity/queries';
+import type { SanitySiteSettings } from '../sanity/types';
+
+// Haal site settings op uit Sanity
+const { data: siteSettings } = await loadQuery<SanitySiteSettings>({
+  query: SITE_SETTINGS_QUERY,
+});
+
+// DEBUG: Log site settings data
+if (import.meta.env.DEV) {
+  console.log('🧭 SiteNavigation received siteSettings:', JSON.stringify(siteSettings, null, 2));
+}
+
+// Verwerk navigation data
+const menuItems = siteSettings?.navigation?.menuItems || [];
+
+// Sorteer menu items op order
+const sortedMenuItems = menuItems.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+// DEBUG: Log processed menu items
+if (import.meta.env.DEV) {
+  console.log('🧭 Processed menu items:', sortedMenuItems);
+  console.log('🧭 Menu items with links:', sortedMenuItems.map(item => ({
+    label: item.label,
+    linkType: item.link?.linkType,
+    url: item.link?.url,
+    internalSlug: item.link?.internalLink?.slug,
+    pageType: item.link?.internalLink?.pageType
+  })));
+}
 ---
 
-<nav class="fixed z-10 w-full ">
-  <div class="flex items-center justify-between w-full inner">
+<nav class="fixed z-10 w-full">
+  <div class="flex justify-between items-center w-full inner">
     <div class="flex items-center mr-6 text-white">
     <a href="/" aria-label="Homepage">
       <svg
@@ -22,13 +52,46 @@ const { menu } = Astro.props
       >
     </a>
   </div>
-  <div class="flex items-center w-auto ">
+  <div class="flex items-center w-auto">
     <ul class="flex flex-grow gap-1 text-sm">
       {
-        menu.menuItems.nodes.map((menuItem: any) => {
+        sortedMenuItems.map((menuItem) => {
+          // Bepaal de URL op basis van link type
+          let href = '/';
+          if (menuItem.link) {
+            // Check voor external link
+            if (menuItem.link.linkType === 'external' && menuItem.link.url) {
+              href = menuItem.link.url;
+            } 
+            // Check voor internal link (ook als linkType null is maar internalLink bestaat)
+            else if (menuItem.link.internalLink) {
+              const slug = menuItem.link.internalLink.slug;
+              const pageType = menuItem.link.internalLink.pageType;
+              
+              if (slug) {
+                // Speciale handling voor verschillende page types
+                if (pageType === 'work') {
+                  // Work overview pagina
+                  href = '/our-work';
+                } else if (pageType === 'homepage') {
+                  // Homepage
+                  href = '/';
+                } else {
+                  // Gewone pagina's
+                  href = `/${slug}`;
+                }
+              }
+            }
+          }
+
+          // DEBUG: Log de href voor elke menu item
+          if (import.meta.env.DEV) {
+            console.log(`🧭 Menu item "${menuItem.label}" -> href: "${href}"`);
+          }
+
           return (
             <li class="block hover:text-white lg:mt-0 lg:inline-block">
-              <a href={menuItem.uri || '/'}>{menuItem.label}</a>
+              <a href={href}>{menuItem.label}</a>
             </li>
           )
         })

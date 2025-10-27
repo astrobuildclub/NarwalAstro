@@ -125,60 +125,6 @@ export const HOME_FALLBACK_QUERY = `*[_type == "page" && title == "Homepage"][0]
   
 }`;
 
-// Site settings query
-export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
-  _id,
-  _type,
-  title,
-  description,
-  url,
-  logo {
-    ...,
-    asset->
-  },
-  navigation {
-    menuItems[] {
-      _key,
-      label,
-      link {
-        linkType,
-        url,
-        internalLink-> {
-          _type,
-          "slug": slug.current
-        }
-      },
-      order
-    }
-  },
-  footer {
-    address {
-      company,
-      street,
-      city,
-      country
-    },
-    contact {
-      phone,
-      email
-    },
-    social {
-      instagram,
-      behance,
-      linkedin
-    }
-  },
-  defaultSeo {
-    title,
-    description,
-    keywords,
-    image {
-      ...,
-      asset->
-    }
-  }
-}`;
-
 // All projects query
 export const ALL_PROJECTS_QUERY = `*[_type == "work"] | order(_createdAt desc) {
   _id,
@@ -365,8 +311,72 @@ export const PAGE_BY_SLUG_QUERY = `*[_type == "page" && slug.current == $slug][0
   }
 }`;
 
+// Site settings query
+export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
+  _id,
+  _type,
+  title,
+  description,
+  url,
+  logo {
+    ...,
+    asset->
+  },
+  navigation {
+    menuItems[] {
+      label,
+      link {
+        linkType,
+        url,
+        internalLink-> {
+          _type,
+          "slug": slug.current,
+          pageType
+        }
+      },
+      order
+    }
+  },
+  footer {
+    address {
+      company,
+      street,
+      city,
+      country
+    },
+    contact {
+      phone,
+      email
+    },
+    social {
+      instagram,
+      behance,
+      linkedin
+    }
+  },
+  defaultSeo {
+    title,
+    description,
+    keywords,
+    image {
+      ...,
+      asset->
+    }
+  }
+}`;
+
+// Debug query to see all pages
+export const DEBUG_PAGES_QUERY = `*[_type == "page"] {
+  _id,
+  _type,
+  title,
+  "slug": slug.current,
+  pageType
+}`;
+
 // All slugs query for static paths
 export const ALL_SLUGS_QUERY = `{
   "pages": *[_type == "page" && defined(slug.current)].slug.current,
-  "projects": *[_type == "work" && defined(slug.current)].slug.current
+  "projects": *[_type == "work" && defined(slug.current)].slug.current,
+  "homepage": *[_type == "page" && pageType == "homepage"][0].slug.current
 }`;
