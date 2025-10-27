@@ -170,7 +170,7 @@ const theImage:any = imageSrc? await getImage({
   <div class={`overflow-hidden project-media ${aspectRatioClass}`}>
     {
       finalVidsrc ? ( // if vidsrc is set, show video with poster image
-        <div class="w-full h-full project-video">
+        <div class="project-video">
           <video
             preload="metadata"
             tabindex="-1"
@@ -182,12 +182,11 @@ const theImage:any = imageSrc? await getImage({
             poster={theImage?.src || imageSrc}
             autoplay={true}
             muted
-            class="w-full h-full object-cover"
           />
         </div>
       ) : (
         imageSrc && ( // if no video, show image
-          <div class="project-image w-full h-full">
+          <div class="project-image">
             <Image 
               src={imageSrc}
               inferSize
@@ -196,7 +195,6 @@ const theImage:any = imageSrc? await getImage({
               format='avif'
               alt={finalImgalt || ""}
               title={finalTitle || ""}
-              class="w-full h-full object-cover"
             />
           </div>
         )
@@ -245,10 +243,7 @@ const theImage:any = imageSrc? await getImage({
       padding:0;
     }
 
-    img,
-    video {
-      width: 100%;
-    }
+    /* Remove duplicate width rule - now handled by aspect ratio CSS */
 
     .project-title {
       /* text-edge: cap alphabetic; */
@@ -264,5 +259,19 @@ const theImage:any = imageSrc? await getImage({
     .aspect-3-4 { aspect-ratio: 3 / 4; }
     .aspect-4-5 { aspect-ratio: 4 / 5; }
     .aspect-9-16 { aspect-ratio: 9 / 16; }
+
+    /* Ensure media content fills the aspect ratio container */
+    .project-media img,
+    .project-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Ensure video container fills the aspect ratio */
+    .project-video {
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </div>
