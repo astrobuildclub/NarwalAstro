@@ -32,9 +32,10 @@ const projectCards = projects.map((project: any) => {
       size: project.thumbnail?.size?.toString() || '',
       imgsrc: project.thumbnail?.image?.asset?.url || '',
       imgalt: project.thumbnail?.alt || project.title || '',
-      vidsrc: project.thumbnail?.videoUrl || '',
+      vidsrc: project.thumbnail?.video || '',
       services: project.services || [],
       link: `/project/${project.slug}/`,
+      aspectRatio: project.thumbnail?.aspectRatio || '16:9',
       // Sanity specific props
       _type: project._type,
       _key: project._key,

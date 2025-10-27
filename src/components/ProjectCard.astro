@@ -20,6 +20,7 @@ type ProjectProps = {
   size?: string
   services?: Services[]
   fitCards?: boolean
+  aspectRatio?: string
   // Sanity specific props
   _type?: string
   _key?: string
@@ -38,6 +39,7 @@ const {
   size, 
   services, 
   fitCards,
+  aspectRatio = '16:9',
   // Sanity props
   _type,
   _key,
@@ -74,7 +76,8 @@ let processedProps = {
   link,
   size,
   services,
-  fitCards
+  fitCards,
+  aspectRatio
 };
 
 if (isSanity) {
@@ -84,11 +87,12 @@ if (isSanity) {
     title: title,
     imgsrc: thumbnail?.image?.asset?.url || imgsrc,
     imgalt: thumbnail?.alt || imgalt,
-    vidsrc: thumbnail?.videoUrl || vidsrc,
+    vidsrc: thumbnail?.video || vidsrc,
     link: link,
     size: thumbnail?.size || size,
     services: services || [],
-    fitCards: fitCards
+    fitCards: fitCards,
+    aspectRatio: thumbnail?.aspectRatio || aspectRatio
   };
 
   if (import.meta.env.DEV) {
@@ -108,6 +112,9 @@ const {
   services: finalServices, 
   fitCards: finalFitCards 
 } = processedProps;
+
+// Get final aspect ratio
+const finalAspectRatio = processedProps.aspectRatio || aspectRatio;
 let cardclasses = ''
 
 if (finalFitCards !== true) {
@@ -145,6 +152,9 @@ if (isSanity && thumbnail?.image?.asset) {
   }
 }
 
+// Aspect ratio CSS class
+const aspectRatioClass = `aspect-${finalAspectRatio.replace(':', '-')}`;
+
 const theImage:any = imageSrc? await getImage({
     src: imageSrc, 
     inferSize: true, 
@@ -157,10 +167,10 @@ const theImage:any = imageSrc? await getImage({
 ---
 
 <div class={`project-card ${cardclasses}`} data-services={serviceTitles}>
-  <div class="overflow-hidden project-media">
+  <div class={`overflow-hidden project-media ${aspectRatioClass}`}>
     {
       finalVidsrc ? ( // if vidsrc is set, show video with poster image
-        <div class="w-full project-video">
+        <div class="w-full h-full project-video">
           <video
             preload="metadata"
             tabindex="-1"
@@ -169,14 +179,15 @@ const theImage:any = imageSrc? await getImage({
             loop
             title={finalTitle}
             src={finalVidsrc}
-            poster={theImage.src}
+            poster={theImage?.src || imageSrc}
             autoplay={true}
             muted
+            class="w-full h-full object-cover"
           />
         </div>
       ) : (
         imageSrc && ( // if no video, show image
-          <div class="project-image">
+          <div class="project-image w-full h-full">
             <Image 
               src={imageSrc}
               inferSize
@@ -185,7 +196,7 @@ const theImage:any = imageSrc? await getImage({
               format='avif'
               alt={finalImgalt || ""}
               title={finalTitle || ""}
-              class="min-w-full"
+              class="w-full h-full object-cover"
             />
           </div>
         )
@@ -242,5 +253,16 @@ const theImage:any = imageSrc? await getImage({
     .project-title {
       /* text-edge: cap alphabetic; */
     }
+
+    /* Aspect ratio classes */
+    .aspect-16-9 { aspect-ratio: 16 / 9; }
+    .aspect-5-4 { aspect-ratio: 5 / 4; }
+    .aspect-4-3 { aspect-ratio: 4 / 3; }
+    .aspect-3-2 { aspect-ratio: 3 / 2; }
+    .aspect-1-1 { aspect-ratio: 1 / 1; }
+    .aspect-2-3 { aspect-ratio: 2 / 3; }
+    .aspect-3-4 { aspect-ratio: 3 / 4; }
+    .aspect-4-5 { aspect-ratio: 4 / 5; }
+    .aspect-9-16 { aspect-ratio: 9 / 16; }
   </style>
 </div>
