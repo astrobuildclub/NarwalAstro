@@ -5,8 +5,8 @@ import type {
   SanitySiteSettings,
 } from './types';
 
-// Homepage query
-export const HOME_QUERY = `*[_type == "page" && pageType == "homepage"][0] {
+// Homepage query - probeer eerst alle pages, dan filter op pageType
+export const HOME_QUERY = `*[_type == "page"][0] {
   _id,
   _type,
   title,

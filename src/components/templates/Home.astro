@@ -17,14 +17,38 @@ if (import.meta.env.DEV) {
 const isSanity = data?.dataSource === 'sanity';
 const isWordPress = data?.dataSource === 'wordpress';
 
-// Sanity data structure (gebaseerd op je JSON)
-const slides = data?.slides || [];
-const projects = data?.featuredProjects || [];
-const introCols = data?.introCols || [];
+    // Sanity data structure (gebaseerd op je JSON)
+    const slides = data?.slides || [];
+    const projects = data?.featuredProjects || [];
+    const introCols = data?.introCols || [];
 
-// Extract intro en statement uit introCols
-const intro = introCols[0]?.content || [];
-const statement = introCols[1]?.content || [];
+    // Extract intro en statement uit introCols
+    const intro = introCols[0]?.content || [];
+    const statement = introCols[1]?.content || [];
+
+    // Fallback voor als introCols leeg zijn - gebruik hardcoded content
+    const fallbackIntro = [
+      {
+        _key: 'fallback-intro',
+        _type: 'block',
+        children: [{ _key: 'fallback-text', _type: 'span', marks: [], text: 'error' }],
+        markDefs: [],
+        style: 'h3'
+      }
+    ];
+    const fallbackStatement = [
+      {
+        _key: 'fallback-statement',
+        _type: 'block',
+        children: [{ _key: 'fallback-text', _type: 'span', marks: [], text: 'error' }],
+        markDefs: [],
+        style: 'normal'
+      }
+    ];
+
+    // Gebruik fallback als introCols leeg zijn
+    const finalIntro = intro.length > 0 ? intro : fallbackIntro;
+    const finalStatement = statement.length > 0 ? statement : fallbackStatement;
 
 if (import.meta.env.DEV) {
   console.log('📊 Home data breakdown:', {
@@ -44,22 +68,22 @@ if (import.meta.env.DEV) {
 ---
 <Carousel {slides} />
 
-<PageIntro class="home">
-  <Fragment slot="column-one">
-    {intro.map((block: any) => (
-      <div class={`text-${block.style || 'normal'}`}>
-        {block.children?.map((child: any) => child.text).join('')}
-      </div>
-    ))}
-  </Fragment>
-  <Fragment slot="column-two">
-    {statement.map((block: any) => (
-      <div class={`text-${block.style || 'normal'}`}>
-        {block.children?.map((child: any) => child.text).join('')}
-      </div>
-    ))}
-  </Fragment>
-</PageIntro>
+    <PageIntro class="home">
+      <Fragment slot="column-one">
+        {finalIntro.map((block: any) => (
+          <div class={`text-${block.style || 'normal'}`}>
+            {block.children?.map((child: any) => child.text).join('')}
+          </div>
+        ))}
+      </Fragment>
+      <Fragment slot="column-two">
+        {finalStatement.map((block: any) => (
+          <div class={`text-${block.style || 'normal'}`}>
+            {block.children?.map((child: any) => child.text).join('')}
+          </div>
+        ))}
+      </Fragment>
+    </PageIntro>
 
 <ProjectList {projects} layout="grid" />
 

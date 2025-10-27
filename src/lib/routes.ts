@@ -11,8 +11,24 @@ import type { SanityHome } from '../sanity/types';
 // DEBUG: Debug functie voor Sanity data
 async function debugSanityData() {
   try {
+    // Test een eenvoudigere query eerst
+    const simpleQuery = `*[_type == "page"][0] { _id, _type, title, pageType }`;
+    const { data: simpleData } = await loadQuery({ query: simpleQuery });
+    console.log('🔍 Simple query result:', simpleData);
+
     const { data } = await loadQuery<SanityHome>({ query: HOME_QUERY });
     console.log('🔍 Sanity HOME_QUERY result:', JSON.stringify(data, null, 2));
+
+    // Extra debug voor pageType
+    if (data) {
+      console.log('🔍 PageType check:', {
+        hasPageType: 'pageType' in data,
+        pageTypeValue: data.pageType,
+        pageTypeType: typeof data.pageType,
+        allKeys: Object.keys(data),
+      });
+    }
+
     return data;
   } catch (error) {
     console.error('❌ Sanity query failed:', error);
@@ -34,9 +50,11 @@ export async function getNodeData(slug: string) {
     try {
       // DEBUG: Test de query direct
       const debugData = await debugSanityData();
-      
-      const { data: sanityHome } = await loadQuery<SanityHome>({ query: HOME_QUERY });
-      
+
+      const { data: sanityHome } = await loadQuery<SanityHome>({
+        query: HOME_QUERY,
+      });
+
       if (sanityHome) {
         if (import.meta.env.DEV) {
           console.log('🏠 Using Sanity data for homepage');
@@ -46,7 +64,7 @@ export async function getNodeData(slug: string) {
             pageType: sanityHome.pageType,
             slidesCount: sanityHome.slides?.length || 0,
             introColsCount: sanityHome.introCols?.length || 0,
-            featuredProjectsCount: sanityHome.featuredProjects?.length || 0
+            featuredProjectsCount: sanityHome.featuredProjects?.length || 0,
           });
         }
         return {
@@ -97,7 +115,9 @@ export function getTemplateByRoute(node: any) {
       dataSource: node.dataSource,
       _type: node._type,
       pageType: node.pageType,
-      title: node.title
+      title: node.title,
+      hasSlides: !!(node.slides && node.slides.length > 0),
+      slidesCount: node.slides?.length || 0,
     });
   }
 
@@ -105,12 +125,24 @@ export function getTemplateByRoute(node: any) {
   if (node.dataSource === 'sanity') {
     switch (node._type) {
       case 'page':
-        if (node.pageType === 'homepage') {
-          if (import.meta.env.DEV) console.log('🏠 Selected Home template');
+        // Check if this is homepage by pageType OR by having slides (fallback)
+        if (
+          node.pageType === 'homepage' ||
+          (node.slides && node.slides.length > 0) ||
+          (node.title === 'Homepage' && node._type === 'page')
+        ) {
+          if (import.meta.env.DEV)
+            console.log('🏠 Selected Home template (homepage detected)', {
+              pageType: node.pageType,
+              hasSlides: !!(node.slides && node.slides.length > 0),
+              title: node.title,
+              _type: node._type
+            });
           return Home;
         }
         if (node.pageType === 'work') {
-          if (import.meta.env.DEV) console.log('📁 Selected WorkOverview template');
+          if (import.meta.env.DEV)
+            console.log('📁 Selected WorkOverview template');
           return WorkOverview;
         }
         if (import.meta.env.DEV) console.log('📄 Selected Page template');
@@ -119,7 +151,8 @@ export function getTemplateByRoute(node: any) {
         if (import.meta.env.DEV) console.log('🎨 Selected WorkDetail template');
         return WorkDetail;
       default:
-        if (import.meta.env.DEV) console.log('📄 Selected Single template (default)');
+        if (import.meta.env.DEV)
+          console.log('📄 Selected Single template (default)');
         return Single;
     }
   }

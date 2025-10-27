@@ -74,39 +74,51 @@ const processedSlides = slides.map((slide: any) => {
   }
 });
 
-const backgroundSlides = processedSlides.map((slide: any) => {
-  const isSanity = slide._type === 'slide';
-  
-  if (isSanity) {
-    // Sanity image handling
-    const imageUrl = slide.image?.asset ? urlForImage(slide.image).width(1920).url() : "";
-    
-    // DEBUG: Log image details
-    if (import.meta.env.DEV) {
-      console.log('🖼️ Sanity slide image processing:', {
-        slideTitle: slide.title,
-        hasImage: !!slide.image,
-        hasAsset: !!slide.image?.asset,
-        assetRef: slide.image?.asset?._ref,
-        alt: slide.image?.alt,
-        generatedUrl: imageUrl
-      });
-    }
-    
-    return {
-      imgsrc: imageUrl,
-      imgalt: slide.image?.alt || slide.title || "",
-      vidsrc: slide.videoUrl || ""
-    };
-  } else {
-    // WordPress image handling
-    return {
-      imgsrc: slide.slideFields?.image?.node?.sourceUrl || "",
-      imgalt: slide.slideFields?.image?.node?.altText || slide.slideFields?.slideTitle || "",
-      vidsrc: slide.slideFields?.videoUrl || ""
-    };
-  }
-});
+    const backgroundSlides = processedSlides.map((slide: any) => {
+      const isSanity = slide._type === 'slide';
+
+      if (isSanity) {
+        // Sanity image handling
+        let imageUrl = "";
+        if (slide.image?.asset) {
+          try {
+            imageUrl = urlForImage(slide.image).width(1920).url();
+          } catch (error) {
+            if (import.meta.env.DEV) {
+              console.warn('⚠️ Failed to generate image URL:', error);
+            }
+            // Fallback to direct URL if available
+            imageUrl = slide.image?.asset?.url || "";
+          }
+        }
+
+        // DEBUG: Log image details
+        if (import.meta.env.DEV) {
+          console.log('🖼️ Sanity slide image processing:', {
+            slideTitle: slide.title,
+            hasImage: !!slide.image,
+            hasAsset: !!slide.image?.asset,
+            assetRef: slide.image?.asset?._ref,
+            alt: slide.image?.alt,
+            generatedUrl: imageUrl,
+            directUrl: slide.image?.asset?.url
+          });
+        }
+
+        return {
+          imgsrc: imageUrl,
+          imgalt: slide.image?.alt || slide.title || "",
+          vidsrc: slide.videoUrl || ""
+        };
+      } else {
+        // WordPress image handling
+        return {
+          imgsrc: slide.slideFields?.image?.node?.sourceUrl || "",
+          imgalt: slide.slideFields?.image?.node?.altText || slide.slideFields?.slideTitle || "",
+          vidsrc: slide.slideFields?.videoUrl || ""
+        };
+      }
+    });
 
 const foregroundSlides = processedSlides.map((slide: any) => {
   const isSanity = slide._type === 'slide';
