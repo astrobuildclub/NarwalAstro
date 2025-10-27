@@ -4,15 +4,23 @@ import PageIntro from '../PageIntro.astro'
 import PageTitle from '../PageTitle.astro';
 
 const { data } = Astro.props;
-const pageTitle = data.title;
 
-const pageHero = data.pageHero;
-const pageHeroTitle = data.pageHero.title;
-const pageHeroColOne = data.pageHero.intro.col1;
-const pageHeroColTwo = data.pageHero.intro.col2;
+// Null-safe data extraction
+const pageTitle = data?.title || 'Untitled Page';
 
-const pageIntroduction = data.content;
-const pageContent = data.pageContent?.content;
+// Check for Sanity vs WordPress data structure
+const isSanity = data?._type !== undefined;
+const isWordPress = data?.__typename !== undefined;
+
+// Sanity data structure
+const pageHero = isSanity ? data?.hero : data?.pageHero;
+const pageHeroTitle = pageHero?.title || pageTitle;
+const pageHeroColOne = isSanity ? pageHero?.col1 : pageHero?.intro?.col1;
+const pageHeroColTwo = isSanity ? pageHero?.col2 : pageHero?.intro?.col2;
+
+// Content handling
+const pageIntroduction = isSanity ? data?.introCols?.[0]?.content : data?.content;
+const pageContent = isSanity ? data?.content : data?.pageContent?.content;
 ---
 
 

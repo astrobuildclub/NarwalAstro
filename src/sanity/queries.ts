@@ -10,8 +10,13 @@ export const HOME_QUERY = `*[_type == "page" && pageType == "homepage"][0] {
   _id,
   _type,
   title,
+  pageType,
   intro,
   statement,
+  introCols[] {
+    _key,
+    content
+  },
   slides[] {
     _key,
     title,
@@ -30,7 +35,7 @@ export const HOME_QUERY = `*[_type == "page" && pageType == "homepage"][0] {
       }
     }
   },
-  "featuredProjects": featuredProjects[]-> {
+  featuredProjects[]-> {
     _id,
     _type,
     title,

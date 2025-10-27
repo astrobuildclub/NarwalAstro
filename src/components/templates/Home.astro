@@ -5,19 +5,60 @@ import ProjectList from '../ProjectList.astro'
 
 const { data } = Astro.props
 
-const fields = data.homeFields
-const slides = data.slides.nodes
-const projects = fields.featured.nodes
+// DEBUG: Log de volledige data structuur
+if (import.meta.env.DEV) {
+  console.log('🏠 Home data received:', JSON.stringify(data, null, 2));
+  console.log('🏠 Data source:', data?.dataSource);
+  console.log('🏠 Data type:', data?._type);
+  console.log('🏠 Page type:', data?.pageType);
+}
 
-const intro = fields.content.intro
-const statement = fields.content.statement
+// Check data source
+const isSanity = data?.dataSource === 'sanity';
+const isWordPress = data?.dataSource === 'wordpress';
+
+// Sanity data structure (gebaseerd op je JSON)
+const slides = data?.slides || [];
+const projects = data?.featuredProjects || [];
+const introCols = data?.introCols || [];
+
+// Extract intro en statement uit introCols
+const intro = introCols[0]?.content || [];
+const statement = introCols[1]?.content || [];
+
+if (import.meta.env.DEV) {
+  console.log('📊 Home data breakdown:', {
+    slidesCount: slides.length,
+    projectsCount: projects.length,
+    introColsCount: introCols.length,
+    introContent: intro,
+    statementContent: statement,
+    slides: slides.map(slide => ({
+      title: slide.title,
+      subtitle: slide.subtitle,
+      hasImage: !!slide.image,
+      imageAsset: slide.image?.asset?._ref
+    }))
+  });
+}
 ---
-
 <Carousel {slides} />
 
 <PageIntro class="home">
-  <Fragment slot="column-one" set:html={intro} />
-  <Fragment slot="column-two" set:html={statement} />
+  <Fragment slot="column-one">
+    {intro.map((block: any) => (
+      <div class={`text-${block.style || 'normal'}`}>
+        {block.children?.map((child: any) => child.text).join('')}
+      </div>
+    ))}
+  </Fragment>
+  <Fragment slot="column-two">
+    {statement.map((block: any) => (
+      <div class={`text-${block.style || 'normal'}`}>
+        {block.children?.map((child: any) => child.text).join('')}
+      </div>
+    ))}
+  </Fragment>
 </PageIntro>
 
 <ProjectList {projects} layout="grid" />
