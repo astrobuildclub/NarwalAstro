@@ -7,18 +7,39 @@ export default defineType({
   type: 'document',
   icon: CogIcon,
   // Singleton - only one instance allowed
+  groups: [
+    {
+      name: 'general',
+      title: 'General',
+      default: true,
+    },
+    {
+      name: 'navigation',
+      title: 'Navigation',
+    },
+    {
+      name: 'footer',
+      title: 'Footer',
+    },
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
       type: 'string',
       title: 'Site Title',
       validation: (Rule) => Rule.required().min(3).max(60),
+      group: 'general',
     }),
     defineField({
       name: 'description',
       type: 'text',
       title: 'Site Description',
       validation: (Rule) => Rule.required().min(10).max(160),
+      group: 'general',
     }),
     defineField({
       name: 'url',
@@ -28,12 +49,14 @@ export default defineType({
         Rule.required().uri({
           scheme: ['http', 'https'],
         }),
+      group: 'general',
     }),
     defineField({
       name: 'logo',
       type: 'image',
       title: 'Site Logo',
       options: { hotspot: true },
+      group: 'general',
       fields: [
         defineField({
           name: 'alt',
@@ -46,6 +69,7 @@ export default defineType({
       name: 'navigation',
       type: 'object',
       title: 'Main Navigation',
+      group: 'navigation',
       fields: [
         defineField({
           name: 'menuItems',
@@ -91,6 +115,7 @@ export default defineType({
       name: 'footer',
       type: 'object',
       title: 'Footer Settings',
+      group: 'footer',
       fields: [
         defineField({
           name: 'address',
@@ -165,6 +190,7 @@ export default defineType({
       name: 'defaultSeo',
       type: 'object',
       title: 'Default SEO Settings',
+      group: 'seo',
       fields: [
         defineField({
           name: 'title',
