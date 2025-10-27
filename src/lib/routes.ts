@@ -1,40 +1,11 @@
-import {
-  getHomeFields,
-  getSlideFields,
-  getAllProjects,
-  getNodeByUri,
-} from '../lib/api';
-import { loadQuery } from '../sanity/lib/load-query';
-import { HOME_QUERY } from '../sanity/queries';
-import type { SanityHome } from '../sanity/types';
+// Nieuwe Sanity imports
+import { 
+  getHomeData, 
+  getPageData, 
+  getProjectData 
+} from './sanity';
+import type { SanityHome, SanityProject, SanityPage } from '../sanity/types';
 
-// DEBUG: Debug functie voor Sanity data
-async function debugSanityData() {
-  try {
-    // Test een eenvoudigere query eerst
-    const simpleQuery = `*[_type == "page"][0] { _id, _type, title, pageType }`;
-    const { data: simpleData } = await loadQuery({ query: simpleQuery });
-    console.log('🔍 Simple query result:', simpleData);
-
-    const { data } = await loadQuery<SanityHome>({ query: HOME_QUERY });
-    console.log('🔍 Sanity HOME_QUERY result:', JSON.stringify(data, null, 2));
-
-    // Extra debug voor pageType
-    if (data) {
-      console.log('🔍 PageType check:', {
-        hasPageType: 'pageType' in data,
-        pageTypeValue: data.pageType,
-        pageTypeType: typeof data.pageType,
-        allKeys: Object.keys(data),
-      });
-    }
-
-    return data;
-  } catch (error) {
-    console.error('❌ Sanity query failed:', error);
-    return null;
-  }
-}
 
 // templates
 import Single from '../components/templates/Single.astro';
@@ -45,66 +16,50 @@ import Page from '../components/templates/Page.astro';
 import Home from '../components/templates/Home.astro';
 
 export async function getNodeData(slug: string) {
-  // Alleen Sanity voor homepage
+  // Homepage - alleen Sanity
   if (slug === '/' || slug === '') {
     try {
-      // DEBUG: Test de query direct
-      const debugData = await debugSanityData();
-
-      const { data: sanityHome } = await loadQuery<SanityHome>({
-        query: HOME_QUERY,
-      });
-
-      if (sanityHome) {
-        if (import.meta.env.DEV) {
-          console.log('🏠 Using Sanity data for homepage');
-          console.log('🏠 Sanity data structure:', {
-            _type: sanityHome._type,
-            title: sanityHome.title,
-            pageType: sanityHome.pageType,
-            slidesCount: sanityHome.slides?.length || 0,
-            introColsCount: sanityHome.introCols?.length || 0,
-            featuredProjectsCount: sanityHome.featuredProjects?.length || 0,
-          });
-        }
-        return {
-          ...sanityHome,
-          dataSource: 'sanity',
-        };
-      }
+      const sanityHome = await getHomeData();
+      return {
+        ...sanityHome,
+        dataSource: 'sanity',
+      };
     } catch (error) {
       if (import.meta.env.DEV) {
         console.error('❌ Sanity homepage query failed:', error);
       }
-      // Gooi error door - geen fallback
       throw error;
     }
   }
 
-  // Fall back naar WordPress
+  // Project detail pages - alleen Sanity
+  if (slug.startsWith('/project/')) {
+    const projectSlug = slug.replace('/project/', '');
+    try {
+      const sanityProject = await getProjectData(projectSlug);
+      return {
+        ...sanityProject,
+        dataSource: 'sanity',
+      };
+    } catch (error) {
+      if (import.meta.env.DEV) {
+        console.error('❌ Sanity project query failed:', error);
+      }
+      throw error;
+    }
+  }
+
+  // Andere pages - alleen Sanity
   try {
-    const data = await getNodeByUri(slug);
-    let node = data.nodeByUri;
-
-    //fetch additional fields on the homepage
-    if (node.isFrontPage) {
-      let homeFields = await getHomeFields();
-      let slideFields = await getSlideFields();
-      node = { ...node, ...homeFields.pageBy, ...slideFields };
-    }
-    // fetch additional fields on the project
-    if (node.template?.templateName === 'Work') {
-      let allProjects = await getAllProjects();
-      node = { ...node, ...allProjects };
-    }
-
+    const cleanSlug = slug.replace(/^\//, '').replace(/\/$/, '');
+    const sanityPage = await getPageData(cleanSlug);
     return {
-      ...node,
-      dataSource: 'wordpress',
+      ...sanityPage,
+      dataSource: 'sanity',
     };
   } catch (error) {
     if (import.meta.env.DEV) {
-      console.error('❌ WordPress fallback failed:', error);
+      console.error('❌ Sanity page query failed:', error);
     }
     throw error;
   }

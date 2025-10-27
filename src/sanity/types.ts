@@ -201,6 +201,7 @@ export interface SanitySiteSettings {
           slug: {
             current: string;
           };
+          pageType?: string; // Added pageType for internal links
         };
       };
       order?: number;
