@@ -12,19 +12,21 @@ export default defineType({
       name: 'title',
       type: 'string',
       title: 'Site Title',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(3).max(60),
     }),
     defineField({
       name: 'description',
       type: 'text',
       title: 'Site Description',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(10).max(160),
     }),
     defineField({
       name: 'url',
       type: 'url',
       title: 'Site URL',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().uri({
+        scheme: ['http', 'https']
+      }),
     }),
     defineField({
       name: 'logo',

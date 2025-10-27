@@ -11,14 +11,20 @@ export default defineType({
       name: 'title',
       type: 'string',
       title: 'Full Name',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(2).max(100),
     }),
     defineField({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().custom((slug) => {
+        if (!slug?.current) return 'Slug is required';
+        if (!/^[a-z0-9-]+$/.test(slug.current)) {
+          return 'Slug can only contain lowercase letters, numbers, and hyphens';
+        }
+        return true;
+      }),
     }),
     defineField({
       name: 'bio',
@@ -78,16 +84,23 @@ export default defineType({
       name: 'email',
       type: 'string',
       title: 'Email',
+      validation: (Rule) => Rule.email(),
     }),
     defineField({
       name: 'linkedin',
       type: 'url',
       title: 'LinkedIn URL',
+      validation: (Rule) => Rule.uri({
+        scheme: ['http', 'https']
+      }),
     }),
     defineField({
       name: 'twitter',
       type: 'url',
       title: 'Twitter URL',
+      validation: (Rule) => Rule.uri({
+        scheme: ['http', 'https']
+      }),
     }),
     defineField({
       name: 'featured',

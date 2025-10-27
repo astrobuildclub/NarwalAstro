@@ -30,7 +30,7 @@ export default defineType({
       name: 'title',
       type: 'string',
       title: 'Project Title',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(3).max(100),
       group: 'content',
     }),
     defineField({
@@ -38,7 +38,13 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().custom((slug) => {
+        if (!slug?.current) return 'Slug is required';
+        if (!/^[a-z0-9-]+$/.test(slug.current)) {
+          return 'Slug can only contain lowercase letters, numbers, and hyphens';
+        }
+        return true;
+      }),
       group: 'content',
     }),
     defineField({
@@ -79,6 +85,13 @@ export default defineType({
           type: 'string',
           title: 'Color',
           description: 'Hex color code (e.g., #ff0000)',
+          validation: (Rule) => Rule.custom((color) => {
+            if (!color) return true; // Optional field
+            if (!/^#[0-9A-Fa-f]{6}$/.test(color)) {
+              return 'Please enter a valid hex color code (e.g., #ff0000)';
+            }
+            return true;
+          }),
         }),
       ],
       group: 'hero',
@@ -222,6 +235,7 @@ export default defineType({
           title: 'Meta Description',
           description: 'Description for search engines',
           rows: 3,
+          validation: (Rule) => Rule.max(160).warning('Meta descriptions should be under 160 characters'),
         }),
         defineField({
           name: 'keywords',

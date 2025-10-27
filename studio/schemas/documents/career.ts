@@ -11,20 +11,27 @@ export default defineType({
       name: 'title',
       type: 'string',
       title: 'Job Title',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(3).max(100),
     }),
     defineField({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().custom((slug) => {
+        if (!slug?.current) return 'Slug is required';
+        if (!/^[a-z0-9-]+$/.test(slug.current)) {
+          return 'Slug can only contain lowercase letters, numbers, and hyphens';
+        }
+        return true;
+      }),
     }),
     defineField({
       name: 'excerpt',
       type: 'text',
       title: 'Job Excerpt',
       description: 'Short description of the position',
+      validation: (Rule) => Rule.max(200),
     }),
     defineField({
       name: 'content',
@@ -134,12 +141,19 @@ export default defineType({
       name: 'applicationEmail',
       type: 'string',
       title: 'Application Email',
-      validation: (Rule) => Rule.email(),
+      validation: (Rule) => Rule.email().custom((email) => {
+        if (!email) return true; // Optional field
+        if (!email.includes('@')) return 'Please enter a valid email address';
+        return true;
+      }),
     }),
     defineField({
       name: 'applicationUrl',
       type: 'url',
       title: 'Application URL',
+      validation: (Rule) => Rule.uri({
+        scheme: ['http', 'https']
+      }),
     }),
     defineField({
       name: 'publishedAt',
@@ -169,6 +183,7 @@ export default defineType({
           title: 'Meta Description',
           description: 'Description for search engines',
           rows: 3,
+          validation: (Rule) => Rule.max(160).warning('Meta descriptions should be under 160 characters'),
         }),
         defineField({
           name: 'keywords',
