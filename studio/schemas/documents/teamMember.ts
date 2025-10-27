@@ -18,13 +18,14 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required().custom((slug) => {
-        if (!slug?.current) return 'Slug is required';
-        if (!/^[a-z0-9-]+$/.test(slug.current)) {
-          return 'Slug can only contain lowercase letters, numbers, and hyphens';
-        }
-        return true;
-      }),
+      validation: (Rule) =>
+        Rule.required().custom((slug) => {
+          if (!slug?.current) return 'Slug is required';
+          if (!/^[a-z0-9-]+$/.test(slug.current)) {
+            return 'Slug can only contain lowercase letters, numbers, and hyphens';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'bio',
@@ -90,17 +91,19 @@ export default defineType({
       name: 'linkedin',
       type: 'url',
       title: 'LinkedIn URL',
-      validation: (Rule) => Rule.uri({
-        scheme: ['http', 'https']
-      }),
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https'],
+        }),
     }),
     defineField({
       name: 'twitter',
       type: 'url',
       title: 'Twitter URL',
-      validation: (Rule) => Rule.uri({
-        scheme: ['http', 'https']
-      }),
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https'],
+        }),
     }),
     defineField({
       name: 'featured',
@@ -120,14 +123,16 @@ export default defineType({
       title: 'title',
       roles: 'roles',
       media: 'featuredImage',
+      featured: 'featured',
+      email: 'email',
     },
-    prepare({ title, roles, media }) {
-      const roleNames =
-        roles?.map((role: any) => role.name).join(', ') || 'No roles';
+    prepare({ title, roles, media, featured, email }) {
+      const roleNames = roles?.map((role: any) => role.name).join(', ') || 'No roles';
+      const featuredBadge = featured ? '⭐ ' : '';
       return {
-        title: title || 'Untitled Team Member',
-        subtitle: roleNames,
-        media: media,
+        title: `${featuredBadge}${title || 'Untitled Team Member'}`,
+        subtitle: `${roleNames}${email ? ` • ${email}` : ''}`,
+        media: media || '👤',
       };
     },
   },

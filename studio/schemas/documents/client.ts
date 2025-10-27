@@ -44,12 +44,14 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
+      slug: 'slug.current',
       media: 'logo',
     },
-    prepare({ title, media }) {
+    prepare({ title, slug, media }) {
       return {
         title: title || 'Untitled Client',
-        media: media,
+        subtitle: `/${slug || 'no-slug'}`,
+        media: media || '🏢',
       };
     },
   },

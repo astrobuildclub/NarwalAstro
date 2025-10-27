@@ -24,9 +24,10 @@ export default defineType({
       name: 'url',
       type: 'url',
       title: 'Site URL',
-      validation: (Rule) => Rule.required().uri({
-        scheme: ['http', 'https']
-      }),
+      validation: (Rule) =>
+        Rule.required().uri({
+          scheme: ['http', 'https'],
+        }),
     }),
     defineField({
       name: 'logo',
@@ -202,12 +203,14 @@ export default defineType({
     select: {
       title: 'title',
       subtitle: 'description',
+      url: 'url',
+      logo: 'logo',
     },
-    prepare({ title, subtitle }) {
+    prepare({ title, subtitle, url, logo }) {
       return {
         title: title || 'Site Settings',
-        subtitle: subtitle || 'Configure your site settings',
-        media: 'Settings',
+        subtitle: `${subtitle || 'Configure your site settings'} • ${url || 'No URL'}`,
+        media: logo || '⚙️',
       };
     },
   },

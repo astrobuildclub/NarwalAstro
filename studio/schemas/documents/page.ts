@@ -225,11 +225,14 @@ export default defineType({
     select: {
       title: 'title',
       pageType: 'pageType',
+      slug: 'slug.current',
+      media: 'slides.0.image',
     },
-    prepare({ title, pageType }) {
+    prepare({ title, pageType, slug, media }) {
       return {
         title: title || 'Untitled Page',
-        subtitle: pageType,
+        subtitle: `${pageType} • /${slug || 'no-slug'}`,
+        media: media,
       };
     },
   },

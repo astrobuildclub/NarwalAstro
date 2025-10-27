@@ -63,12 +63,15 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
+      slug: 'slug.current',
       categories: 'categories',
     },
-    prepare({ title, categories }) {
+    prepare({ title, slug, categories }) {
+      const categoryList = categories?.slice(0, 2).join(', ') || 'No categories';
       return {
         title: title || 'Untitled Service',
-        subtitle: categories?.join(', ') || 'No categories',
+        subtitle: `/${slug || 'no-slug'} • ${categoryList}`,
+        media: '⚙️',
       };
     },
   },

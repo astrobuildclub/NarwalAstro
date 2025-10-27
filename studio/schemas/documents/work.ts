@@ -267,14 +267,18 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'client.title',
+      client: 'client.title',
+      tags: 'tags',
       media: 'thumbnail.image',
+      heroColor: 'hero.color',
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, client, tags, media, heroColor }) {
+      const tagList = tags?.slice(0, 2).join(', ') || '';
       return {
         title: title || 'Untitled Project',
-        subtitle: subtitle,
+        subtitle: `${client || 'No client'}${tagList ? ` • ${tagList}` : ''}`,
         media: media,
+        mediaColor: heroColor,
       };
     },
   },

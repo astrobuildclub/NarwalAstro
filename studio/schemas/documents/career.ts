@@ -18,13 +18,14 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       options: { source: 'title' },
-      validation: (Rule) => Rule.required().custom((slug) => {
-        if (!slug?.current) return 'Slug is required';
-        if (!/^[a-z0-9-]+$/.test(slug.current)) {
-          return 'Slug can only contain lowercase letters, numbers, and hyphens';
-        }
-        return true;
-      }),
+      validation: (Rule) =>
+        Rule.required().custom((slug) => {
+          if (!slug?.current) return 'Slug is required';
+          if (!/^[a-z0-9-]+$/.test(slug.current)) {
+            return 'Slug can only contain lowercase letters, numbers, and hyphens';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'excerpt',
@@ -141,19 +142,21 @@ export default defineType({
       name: 'applicationEmail',
       type: 'string',
       title: 'Application Email',
-      validation: (Rule) => Rule.email().custom((email) => {
-        if (!email) return true; // Optional field
-        if (!email.includes('@')) return 'Please enter a valid email address';
-        return true;
-      }),
+      validation: (Rule) =>
+        Rule.email().custom((email) => {
+          if (!email) return true; // Optional field
+          if (!email.includes('@')) return 'Please enter a valid email address';
+          return true;
+        }),
     }),
     defineField({
       name: 'applicationUrl',
       type: 'url',
       title: 'Application URL',
-      validation: (Rule) => Rule.uri({
-        scheme: ['http', 'https']
-      }),
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https'],
+        }),
     }),
     defineField({
       name: 'publishedAt',
@@ -183,7 +186,10 @@ export default defineType({
           title: 'Meta Description',
           description: 'Description for search engines',
           rows: 3,
-          validation: (Rule) => Rule.max(160).warning('Meta descriptions should be under 160 characters'),
+          validation: (Rule) =>
+            Rule.max(160).warning(
+              'Meta descriptions should be under 160 characters',
+            ),
         }),
         defineField({
           name: 'keywords',
@@ -216,11 +222,17 @@ export default defineType({
       title: 'title',
       department: 'department',
       location: 'location',
+      employmentType: 'employmentType',
+      experienceLevel: 'experienceLevel',
+      publishedAt: 'publishedAt',
+      deadline: 'deadline',
     },
-    prepare({ title, department, location }) {
+    prepare({ title, department, location, employmentType, experienceLevel, publishedAt, deadline }) {
+      const status = publishedAt ? '📅 Published' : '📝 Draft';
+      const urgency = deadline && new Date(deadline) < new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) ? '⚠️ ' : '';
       return {
-        title: title || 'Untitled Position',
-        subtitle: `${department} • ${location}`,
+        title: `${urgency}${title || 'Untitled Position'}`,
+        subtitle: `${department || 'No dept'} • ${location || 'No location'} • ${employmentType || 'No type'} • ${experienceLevel || 'No level'}`,
         media: '💼',
       };
     },
