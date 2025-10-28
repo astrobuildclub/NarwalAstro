@@ -4,18 +4,86 @@
 // Define Types
 interface Props{
   title?: string;
-  content?: string;
+  content?: string | any[]; // Support both string and portable text
   size?: "inline" | "popout" | "feature" | "full" | "inherit";
 }
 
 // Define Vars
 const { title = "", content = "", size = "" } = Astro.props;
+
+// Helper function to render portable text
+function renderPortableText(content: any) {
+  if (typeof content === 'string') {
+    return content;
+  }
+  
+  if (Array.isArray(content)) {
+    return content.map(block => {
+      if (block._type === 'block' && block.children) {
+        let html = '';
+        
+        // Handle different block styles
+        const style = block.style || 'normal';
+        const text = block.children.map((child: any) => {
+          let childText = child.text || '';
+          
+          // Apply marks (bold, italic, etc.)
+          if (child.marks && child.marks.length > 0) {
+            child.marks.forEach((mark: any) => {
+              switch (mark) {
+                case 'strong':
+                  childText = `<strong>${childText}</strong>`;
+                  break;
+                case 'em':
+                  childText = `<em>${childText}</em>`;
+                  break;
+                case 'underline':
+                  childText = `<u>${childText}</u>`;
+                  break;
+                case 'strike-through':
+                  childText = `<s>${childText}</s>`;
+                  break;
+              }
+            });
+          }
+          
+          return childText;
+        }).join('');
+        
+        // Wrap in appropriate HTML tag based on style
+        switch (style) {
+          case 'h3':
+            return `<h3>${text}</h3>`;
+          case 'h4':
+            return `<h4>${text}</h4>`;
+          case 'normal':
+          default:
+            return `<p>${text}</p>`;
+        }
+      }
+      return '';
+    }).join('');
+  }
+  
+  return '';
+}
+
+const renderedContent = renderPortableText(content);
+
+if (import.meta.env.DEV) {
+  console.log('📝 TextBlock received:', {
+    title,
+    content: typeof content,
+    size,
+    renderedContent: renderedContent.substring(0, 100) + '...'
+  });
+}
 ---
 
 <!--TextBlock -->
-<div class:list={['textblock',size]}>
+<div class:list={['textblock', size]}>
   {title &&
     <h2 class="textblock-title" set:html={title} />
   }
-  <div class="textblock-content" set:html={content}  />
+  <div class="textblock-content" set:html={renderedContent} />
 </div>

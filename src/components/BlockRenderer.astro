@@ -12,6 +12,7 @@ import EmbedBlock from './blocks/EmbedBlock.astro'
 import TeamBlock from './blocks/TeamBlock.astro'
 import ServicesBlock from './blocks/ServicesBlock.astro'
 import ClientsBlock from './blocks/ClientsBlock.astro'
+// import GalleryBlock from './blocks/GalleryBlock.astro'
 
 
 
@@ -27,7 +28,68 @@ const { prefix, blocks } = Astro.props;
 <div class="content">
   {blocks &&
     blocks.map((block:any) => {
-      switch (block.__typename) {
+      // Check dataSource om te bepalen welke structuur we gebruiken
+      const blockType = block._type || block.__typename;
+      
+      if (import.meta.env.DEV) {
+        console.log('🧩 BlockRenderer processing block:', {
+          _type: block._type,
+          __typename: block.__typename,
+          blockType: blockType,
+          prefix: prefix
+        });
+      }
+      
+      switch (blockType) {
+        // Sanity block types
+            case 'textBlock':
+              return <TextBlock content={block.text} size={block.size} />
+        case 'imageBlock':
+          return <ImageBlock 
+                    image={block.image}
+                    size={block.size}
+                    alt={block.alt} 
+                    title={block.title} 
+                    showCaption={block.showCaption}
+                    caption={block.caption} 
+                    />
+        case 'videoBlock':
+          return <VideoBlock video={block.video} size={block.size}/>
+        case 'colorBlock':
+          return <ColorBlock color={block.color} />
+        case 'testimonialBlock':
+          return <TestimonialBlock 
+                    quote={block.quote}
+                    name={block.name}
+                    role={block.role}
+                    photoSourceUrl={block.photo?.asset?.url}
+                    photoAltText={block.photo?.alt} 
+                    photoTitleText={block.photo?.title}
+                    />
+        case 'columnsBlock':
+          return <ColumnsBlock cols={block.cols} />
+        case 'textGridBlock':
+          return <TextGridBlock title={block.title} media={block.media} items={block.items} />
+        case 'teamBlock':
+          return <TeamBlock 
+                    title={block.title} 
+                    members={block.members} />
+        case 'servicesBlock':
+          return <ServicesBlock 
+                    title={block.title} 
+                    services={block.services} />
+        case 'clientsBlock':
+          return <ClientsBlock 
+                    title={block.title} 
+                    clients={block.clients} />
+        // case 'galleryBlock':
+        //   return <GalleryBlock 
+        //             title={block.title} 
+        //             images={block.images} />
+        case 'embedBlock':
+          return <EmbedBlock code={block.code} size={block.size} />
+        
+        // WordPress fallback (te verwijderen later)
         case `${prefix}ContentTextLayout`: // Text Block
           return <TextBlock content={block.text?.text || ''} size={block.text?.size.at(0)} />
         case `${prefix}ContentImageLayout`: // Image block
@@ -73,7 +135,10 @@ const { prefix, blocks } = Astro.props;
                     title={block.title} 
                     clients={block.clients?.nodes} />
         default:
-          null
+          if (import.meta.env.DEV) {
+            console.warn('🧩 Unknown block type:', blockType, block);
+          }
+          return null
       }
     })
   }
