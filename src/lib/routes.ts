@@ -34,7 +34,7 @@ export async function getNodeData(slug: string) {
 
   // Project detail pages - alleen Sanity
   if (slug.startsWith('/project/')) {
-    const projectSlug = slug.replace('/project/', '');
+    const projectSlug = slug.replace('/project/', '').replace(/\/$/, ''); // Verwijder trailing slash
     try {
       const sanityProject = await getProjectData(projectSlug);
       return {
