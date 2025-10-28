@@ -8,31 +8,143 @@ type Props = {
 
 const { data } = Astro.props
 
-const projectHero = data.projectHero?.details
-const projectClients = data.projectMeta?.projectClient?.nodes;
-const projectContent = data.projectContent?.content
+// DEBUG: Log project detail data
+if (import.meta.env.DEV) {
+  console.log('🎨 WorkDetail received data:', {
+    _type: data._type,
+    title: data.title,
+    hasHero: !!data.hero,
+    contentBlocks: data.content?.length || 0,
+    hasCredits: !!data.credits,
+    relatedProjects: data.relatedProjects?.length || 0
+  });
+}
+
+// Sanity data structuur
+const hero = data.hero;
+const content = data.content;
+const credits = data.credits;
+const relatedProjects = data.relatedProjects;
 
 const heroData = {
-    ...projectHero,
-    clients: projectClients
+  title: hero?.title || data.title,
+  subtitle: hero?.subtitle,
+  intro: hero?.intro,
+  coverMedia: hero?.coverMedia,
+  color: hero?.color,
+  clients: data.client ? [data.client] : []
+};
+
+if (import.meta.env.DEV) {
+  console.log('🎨 Processed hero data:', heroData);
+  console.log('🎨 Content blocks count:', content?.length || 0);
+  console.log('🎨 Related projects count:', relatedProjects?.length || 0);
 }
 ---
 
 <Hero data={heroData} />
 
 {
-  projectContent && (
+  content && content.length > 0 && (
     <article class="project">
-      <BlockRenderer prefix="ProjectContent" blocks={projectContent} />
+      <BlockRenderer prefix="ProjectContent" blocks={content} />
     </article>
   )
 }
 
+{
+  credits && credits.length > 0 && (
+    <section class="credits">
+      <div class="credits-content">
+        <h2>Credits</h2>
+        <div class="credits-text">
+          {credits.map((block: any) => (
+            <div class={`text-${block.style || 'normal'}`}>
+              {block.children?.map((child: any) => child.text).join('')}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  relatedProjects && relatedProjects.length > 0 && (
+    <section class="related-projects">
+      <div class="related-projects-content">
+        <h2>Related Projects</h2>
+        <div class="related-projects-grid">
+          {relatedProjects.map((project: any) => (
+            <a href={`/project/${project.slug}`} class="related-project-card">
+              <img src={project.thumbnail?.image?.asset?.url} alt={project.title} />
+              <h3>{project.title}</h3>
+              {project.client && <p>{project.client.title}</p>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 <style>
-  
   .project {
     padding: var(--site-padding);
-    
   }
 
+  .credits {
+    padding: var(--site-padding);
+    background: var(--clr-light);
+  }
+
+  .credits-content h2 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .credits-text {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .related-projects {
+    padding: var(--site-padding);
+  }
+
+  .related-projects-content h2 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .related-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .related-project-card {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+  }
+
+  .related-project-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .related-project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .related-project-card h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .related-project-card p {
+    color: var(--clr-muted);
+    font-size: var(--fs--1);
+  }
 </style>
