@@ -32,8 +32,9 @@
     'Nimbus Sans', Arial, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
     'DejaVu Sans Mono', monospace;
-  --font-heading: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif',
-    'Sitka Small', serif;
+  --font-heading:
+    Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small',
+    serif;
 
   /* Font Sizes */
   /* https://www.fluid-type-scale.com/ / https://bit.ly/4b7CNn3 */
@@ -139,11 +140,12 @@ img {
 
 .content {
   --gap: clamp(1rem, 6vw, 3rem);
-  --full: minmax(var(--gap), 1fr);
+  
   --inline: min(80ch, 100% - var(--gap) * 2);
   --content: min(80ch, 100% - var(--gap) * 2);
   --popout: minmax(0, 2rem);
   --feature: minmax(0, 5rem);
+--full: minmax(var(--gap), 1fr);
 
   display: grid; /* the grid */
 
@@ -158,6 +160,11 @@ img {
 }
 
 .content > * {
+  grid-column: content;
+}
+
+/* Size-based grid positioning */
+.content {
   grid-column: content;
 }
 

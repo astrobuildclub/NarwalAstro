@@ -5,11 +5,11 @@
 interface Props{
   title?: string;
   content?: string | any[]; // Support both string and portable text
-  size?: "inline" | "popout" | "feature" | "full" | "inherit";
+  size?: "content" | "popout" | "feature" | "full";
 }
 
 // Define Vars
-const { title = "", content = "", size = "" } = Astro.props;
+const { title = "", content = "", size = "content" } = Astro.props;
 
 // Helper function to render portable text
 function renderPortableText(content: any) {
@@ -87,3 +87,41 @@ if (import.meta.env.DEV) {
   }
   <div class="textblock-content" set:html={renderedContent} />
 </div>
+
+
+<style>
+  .textblock h2,
+  .textblock h3,
+  .textblock h4,
+  .textblock h5,
+  .textblock h6 {
+    line-height: 112.5%;
+    margin-block: 5em;
+    color:red;
+  }
+
+  .textblock p {
+    margin-bottom: 2em;
+  }
+
+  .textblock-content {
+    line-height: 133%;
+  }
+
+  /* Size-based typography - correct selectors */
+  .textblock.content .textblock-content {
+    font-size: var(--fs-0);
+  }
+
+  .textblock.popout .textblock-content {
+    font-size: var(--fs-1);
+  }
+
+  .textblock.feature .textblock-content {
+    font-size: var(--fs-2);
+  }
+
+  .textblock.full .textblock-content {
+    font-size: var(--fs-4);
+  }
+</style>

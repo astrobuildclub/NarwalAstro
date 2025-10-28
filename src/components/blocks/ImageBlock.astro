@@ -4,33 +4,74 @@ import { Image } from 'astro:assets'
 
 // Define Types
 interface Props{
-  sourceUrl: string;
+  sourceUrl?: string;
   size?: "inline" | "popout" | "feature" | "full" | "inherit";
   altText?: string;
   titleText?: string;
   showCaption?: boolean;
   captionText?: string;
+  // Sanity props
+  image?: {
+    asset?: {
+      url?: string;
+    };
+    alt?: string;
+    title?: string;
+  };
+  alt?: string;
+  title?: string;
+  caption?: string;
 }
 
 // Define Vars
-const { sourceUrl, size, altText, titleText, showCaption, captionText } = Astro.props;
+const { 
+  sourceUrl, 
+  size, 
+  altText, 
+  titleText, 
+  showCaption, 
+  captionText,
+  // Sanity props
+  image,
+  alt,
+  title,
+  caption
+} = Astro.props;
+
+// Determine the actual values to use (Sanity takes precedence)
+const finalSourceUrl = image?.asset?.url || sourceUrl;
+const finalAltText = image?.alt || alt || altText || titleText || "";
+const finalTitleText = image?.title || title || titleText || "";
+const finalCaptionText = caption || captionText || "";
+
+if (import.meta.env.DEV) {
+  console.log('🖼️ ImageBlock received:', {
+    sourceUrl: finalSourceUrl,
+    size,
+    altText: finalAltText,
+    titleText: finalTitleText,
+    showCaption,
+    captionText: finalCaptionText,
+    hasSanityImage: !!image
+  });
+}
 ---
 
 <!--ImageBlock -->
-{sourceUrl && 
-<div class:list={['imageblock',size]}>
+{finalSourceUrl && 
+<div class:list={['imageblock', size]}>
   <Image 
-    src={sourceUrl}
+    src={finalSourceUrl}
     inferSize
     widths={[540, 960, 1440, 1920]}
     sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
     format='avif'
-    alt={altText || titleText || ""} 
-    title={titleText || ""}
+    alt={finalAltText} 
+    title={finalTitleText}
     class="imageblock-img"
   />
-  {showCaption &&
-    <p class="imageblock-caption" set:html={captionText} />
+  {(showCaption || finalCaptionText) &&
+    <p class="imageblock-caption" set:html={finalCaptionText} />
   }
 </div>
 }

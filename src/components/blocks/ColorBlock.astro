@@ -1,4 +1,35 @@
 ---
+// Define Types
+interface Props{
+  color?: string;
+  size?: "inline" | "popout" | "feature" | "full" | "inherit";
+}
 
+// Define Vars
+const { color = "#000000", size } = Astro.props;
+
+if (import.meta.env.DEV) {
+  console.log('🎨 ColorBlock received:', {
+    color,
+    size
+  });
+}
 ---
-<div>ColorBlock</div>
+
+<div class:list={['colorblock', size]} style={`background-color: ${color};`}>
+  <div class="colorblock-content"></div>
+</div>
+
+<style>
+  .colorblock {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .colorblock-content {
+    width: 100%;
+    height: 100%;
+  }
+</style>

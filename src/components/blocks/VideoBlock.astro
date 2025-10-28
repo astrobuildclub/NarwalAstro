@@ -3,16 +3,33 @@
 
 // Define Types
 interface Props{
-  url: string;
+  url?: string;
   type?: string;
   size?: "inline" | "popout" | "feature" | "full" | "inherit";
+  // Sanity props
+  video?: {
+    url?: string;
+  };
 }
 
 // Define Vars
-const { url, type, size } = Astro.props;
+const { url, type, size, video } = Astro.props;
+
+// Determine the actual values to use (Sanity takes precedence)
+const finalUrl = video?.url || url;
+
+if (import.meta.env.DEV) {
+  console.log('🎥 VideoBlock received:', {
+    url: finalUrl,
+    type,
+    size,
+    hasSanityVideo: !!video
+  });
+}
 ---
 
 <!--VideoBlock -->
+{finalUrl &&
 <div class:list={['videoblock', size, type]}>
   <video
     preload="metadata"
@@ -22,8 +39,9 @@ const { url, type, size } = Astro.props;
     loop
     muted
     title=""
-    src={url}
+    src={finalUrl}
     autoplay
     class="videoblock-video"
   />
 </div>
+}
