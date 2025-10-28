@@ -119,20 +119,21 @@ export interface SanityBlock {
 export interface SanityTextBlock extends SanityBlock {
   _type: 'textBlock';
   text: string;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'content' | 'popout' | 'feature' | 'full';
 }
 
 export interface SanityImageBlock extends SanityBlock {
   _type: 'imageBlock';
   image: SanityImage;
   showCaption?: boolean;
-  size?: 'small' | 'medium' | 'large' | 'full';
+  size?: 'content' | 'popout' | 'feature' | 'full';
 }
 
 export interface SanityVideoBlock extends SanityBlock {
   _type: 'videoBlock';
   videoUrl?: string;
   embedCode?: string;
+  size?: 'content' | 'popout' | 'feature' | 'full';
 }
 
 export interface SanityGalleryBlock extends SanityBlock {

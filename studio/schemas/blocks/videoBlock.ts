@@ -34,17 +34,16 @@ export default defineType({
     defineField({
       name: 'size',
       type: 'string',
-      title: 'Block Size',
+      title: 'Size',
       options: {
         list: [
-          { title: 'Inline', value: 'inline' },
+          { title: 'Content (Default)', value: 'content' },
           { title: 'Popout', value: 'popout' },
           { title: 'Feature', value: 'feature' },
-          { title: 'Full', value: 'full' },
-          { title: 'Inherit', value: 'inherit' },
+          { title: 'Full Width', value: 'full' },
         ],
       },
-      initialValue: 'full',
+      initialValue: 'content',
     }),
     defineField({
       name: 'autoplay',

@@ -32,16 +32,16 @@ export default defineType({
     defineField({
       name: 'size',
       type: 'string',
-      title: 'Image Size',
+      title: 'Size',
       options: {
         list: [
-          { title: 'Small', value: 'small' },
-          { title: 'Medium', value: 'medium' },
-          { title: 'Large', value: 'large' },
+          { title: 'Content (Default)', value: 'content' },
+          { title: 'Popout', value: 'popout' },
+          { title: 'Feature', value: 'feature' },
           { title: 'Full Width', value: 'full' },
         ],
       },
-      initialValue: 'large',
+      initialValue: 'content',
     }),
   ],
   preview: {

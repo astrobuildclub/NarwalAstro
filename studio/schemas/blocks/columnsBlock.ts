@@ -13,6 +13,20 @@ export default defineType({
       title: 'Block Title',
     }),
     defineField({
+      name: 'size',
+      type: 'string',
+      title: 'Size',
+      options: {
+        list: [
+          { title: 'Content (Default)', value: 'content' },
+          { title: 'Popout', value: 'popout' },
+          { title: 'Feature', value: 'feature' },
+          { title: 'Full Width', value: 'full' },
+        ],
+      },
+      initialValue: 'content',
+    }),
+    defineField({
       name: 'columns',
       type: 'array',
       title: 'Columns',
