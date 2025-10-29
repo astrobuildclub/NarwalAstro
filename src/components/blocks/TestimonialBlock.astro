@@ -1,32 +1,110 @@
 ---
 // Import Components & Scripts
 import { Image } from 'astro:assets'
+import type { SanityImage } from '../../sanity/types'
 
 // Define Types
-interface Props{
+interface Props {
     quote?: string;
     name?: string;
     role?: string;
+    photo?: SanityImage;
+    size?: 'content' | 'popout' | 'feature' | 'full';
+    // Legacy props for WordPress compatibility
     photoSourceUrl?: string;
     photoAltText?: string;
     photoTitleText?: string;
 }
+
 // Define Vars
-const { quote, name, role, photoSourceUrl, photoAltText, photoTitleText } = Astro.props;
+const { 
+    quote, 
+    name, 
+    role, 
+    photo, 
+    size = 'content',
+    // Legacy props
+    photoSourceUrl, 
+    photoAltText, 
+    photoTitleText 
+} = Astro.props;
+
+// Generate image URL - prioritize Sanity data
+let finalPhotoUrl = '';
+let finalAltText = '';
+let finalTitleText = '';
+
+if (photo?.asset?._ref) {
+    try {
+        const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+        const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
+        
+        if (projectId && dataset) {
+            // Extract asset ID from reference - remove existing dimensions
+            const assetId = photo.asset._ref
+                .replace('image-', '')
+                .replace(/-1280x720-jpg$|-1280x720-png$|-1280x720-webp$|-1280x720-gif$/, '')
+                .replace(/-jpg$|-png$|-webp$|-gif$/, '');
+            
+            const extension = photo.asset._ref.includes('-jpg')
+                ? 'jpg'
+                : photo.asset._ref.includes('-png')
+                  ? 'png'
+                  : photo.asset._ref.includes('-webp')
+                    ? 'webp'
+                    : 'jpg';
+            
+            // Generate URL with proper dimensions for testimonial (200x200)
+            finalPhotoUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-200x200.${extension}`;
+        }
+        finalAltText = photo.alt || '';
+        finalTitleText = photo.caption || '';
+    } catch (error) {
+        console.warn('Failed to generate photo URL:', error);
+    }
+} else if (photoSourceUrl) {
+    // Fallback to legacy props
+    finalPhotoUrl = photoSourceUrl;
+    finalAltText = photoAltText || '';
+    finalTitleText = photoTitleText || '';
+}
+
+// Size class mapping
+function getSizeClass(size: string) {
+    switch (size) {
+        case "popout":
+            return "popout";
+        case "feature":
+            return "feature";
+        case "full":
+            return "full";
+        default:
+            return "content";
+    }
+}
+
+if (import.meta.env.DEV) {
+    console.log('💬 TestimonialBlock received:', {
+        quote: quote?.substring(0, 50) + '...',
+        name,
+        role,
+        hasPhoto: !!photo,
+        hasPhotoUrl: !!finalPhotoUrl,
+        size
+    });
+}
 ---
 <!--TestimonialBlock-->
-<div class:list={['testimonialblock']}>
+<section class={`testimonialblock ${getSizeClass(size)}`}>
    <blockquote class="testimonialblock-quote">{quote}</blockquote>
     <div class="testimonialblock-details">
-        {photoSourceUrl &&
+        {finalPhotoUrl &&
         <Image 
-            src={photoSourceUrl}
-            inferSize
-            widths={[540, 960, 1440, 1920]}
-            sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
-            format='avif'
-            alt={photoAltText || photoTitleText || ""} 
-            title={photoTitleText || ""}
+            src={finalPhotoUrl}
+            width={200}
+            height={200}
+            alt={finalAltText} 
+            title={finalTitleText}
             class="testimonialblock-img"
         />
         }
@@ -35,29 +113,75 @@ const { quote, name, role, photoSourceUrl, photoAltText, photoTitleText } = Astr
             <h4 class="testimonialblock-role">{role}</h4>
         </div>
     </div>
-</div>
+</section>
 
 <style>
+    .testimonialblock {
+        width: 100%;
+        padding: var(--space-lg);
+        background: var(--clr-light, #f8f9fa);
+        border-radius: var(--radius-md, 8px);
+        border-left: 4px solid var(--clr-primary, #007bff);
+    }
+
+    .testimonialblock-quote {
+        font-size: var(--fs-lg, 1.25rem);
+        font-style: italic;
+        margin: 0 0 var(--space-md) 0;
+        line-height: 1.6;
+        color: var(--clr-text, #333);
+    }
+
     .testimonialblock-details {
         display: flex;
         align-items: center;
         gap: 1rem;
     }
+
     .testimonialblock-person {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.25rem;
     }
 
-    img {
-        width: 100px;
-        height: 100px;
+    .testimonialblock-name {
+        font-size: var(--fs-base, 1rem);
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.2;
+        color: var(--clr-text, #333);
+    }
+
+    .testimonialblock-role {
+        font-size: var(--fs-sm, 0.875rem);
+        font-weight: 400;
+        margin: 0;
+        line-height: 1.2;
+        color: var(--clr-muted, #666);
+    }
+
+    .testimonialblock-img {
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         object-fit: cover;
+        flex-shrink: 0;
     }
 
-    h3, h4 {
-        margin: 0;
-        line-height: 1;
+    /* Size-based styling */
+    .testimonialblock.content {
+        grid-column: content;
+    }
+
+    .testimonialblock.popout {
+        grid-column: popout;
+    }
+
+    .testimonialblock.feature {
+        grid-column: feature;
+    }
+
+    .testimonialblock.full {
+        grid-column: full;
     }
 </style>

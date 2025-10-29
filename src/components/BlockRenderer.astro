@@ -62,9 +62,8 @@ const { prefix, blocks } = Astro.props;
                     quote={block.quote}
                     name={block.name}
                     role={block.role}
-                    photoSourceUrl={block.photo?.asset?.url}
-                    photoAltText={block.photo?.alt} 
-                    photoTitleText={block.photo?.title}
+                    photo={block.photo}
+                    size={block.size}
                     />
         case 'columnsBlock':
           return <ColumnsBlock cols={block.cols} />
@@ -104,8 +103,8 @@ const { prefix, blocks } = Astro.props;
         case `${prefix}ContentVideoLayout`: // Video Block
           if(block.option === "embed"){
             return <EmbedBlock code={block.embedCopy} size={block.size} />
-          }else{
-            return <VideoBlock type={block.option} url={block.embed} size={block.size}/>
+          } else {
+            return <VideoBlock video={block} size={block.size} />
           }
         case `${prefix}ContentColorModeLayout`: // Color Block
           return <ColorBlock />
