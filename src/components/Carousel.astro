@@ -1,4 +1,5 @@
 ---
+
 // Import Components
 import Image from 'astro/components/Image.astro'
 import {replaceUrls} from '../lib/utils'
@@ -10,7 +11,7 @@ const {slides} = Astro.props;
 if (import.meta.env.DEV) {
   console.log('🎠 Carousel received slides:', JSON.stringify(slides, null, 2));
   console.log('🎠 Slides count:', slides?.length || 0);
-  
+
   // Log elke slide individueel
   slides?.forEach((slide: any, index: number) => {
     console.log(`🎠 Slide ${index}:`, {
@@ -26,25 +27,26 @@ if (import.meta.env.DEV) {
 
 // Process slides based on data source
 const processedSlides = slides.map((slide: any) => {
-  // Check if this is Sanity data
-  const isSanity = slide._type === 'slide';
-  
+  // Check if this is Sanity data - check for _key instead of _type
+  const isSanity = slide._key !== undefined || slide._type === 'slide';
+
   if (import.meta.env.DEV) {
     console.log(`🎠 Processing slide "${slide.title}":`, {
       isSanity,
       hasImage: !!slide.image,
       hasAsset: !!slide.image?.asset,
-      imageRef: slide.image?.asset?._ref
+      imageRef: slide.image?.asset?._ref,
+      hasKey: !!slide._key
     });
   }
-  
+
   if (isSanity) {
     // Sanity data structure
     const linkObj = slide.link;
     const updatedTitle = linkObj?.title || "";
     const updatedUrl = linkObj?.url || "";
     const updatedTarget = linkObj?.target || "_top";
-    
+
     return {
       ...slide,
       link: {
@@ -59,7 +61,7 @@ const processedSlides = slides.map((slide: any) => {
     const updatedTitle = (linkObj) ? linkObj.title : "";
     const updatedUrl = (linkObj) ? replaceUrls(linkObj.url, `${import.meta.env.DEV_SITE_URL}`) : "";
     const updatedTarget = (linkObj && linkObj.target !== "") ? linkObj.target : "_top";
-    
+
     return {
       ...slide,
       slideFields: {
@@ -74,55 +76,55 @@ const processedSlides = slides.map((slide: any) => {
   }
 });
 
-    const backgroundSlides = processedSlides.map((slide: any) => {
-      const isSanity = slide._type === 'slide';
+const backgroundSlides = processedSlides.map((slide: any) => {
+  const isSanity = slide._key !== undefined || slide._type === 'slide';
 
-      if (isSanity) {
-        // Sanity image handling
-        let imageUrl = "";
-        if (slide.image?.asset) {
-          try {
-            imageUrl = urlForImage(slide.image).width(1920).url();
-          } catch (error) {
-            if (import.meta.env.DEV) {
-              console.warn('⚠️ Failed to generate image URL:', error);
-            }
-            // Fallback to direct URL if available
-            imageUrl = slide.image?.asset?.url || "";
-          }
-        }
-
-        // DEBUG: Log image details
+  if (isSanity) {
+    // Sanity image handling
+    let imageUrl = "";
+    if (slide.image?.asset) {
+      try {
+        imageUrl = urlForImage(slide.image).width(1920).url();
+      } catch (error) {
         if (import.meta.env.DEV) {
-          console.log('🖼️ Sanity slide image processing:', {
-            slideTitle: slide.title,
-            hasImage: !!slide.image,
-            hasAsset: !!slide.image?.asset,
-            assetRef: slide.image?.asset?._ref,
-            alt: slide.image?.alt,
-            generatedUrl: imageUrl,
-            directUrl: slide.image?.asset?.url
-          });
+          console.warn('⚠️ Failed to generate image URL:', error);
         }
-
-        return {
-          imgsrc: imageUrl,
-          imgalt: slide.image?.alt || slide.title || "",
-          vidsrc: slide.videoUrl || ""
-        };
-      } else {
-        // WordPress image handling
-        return {
-          imgsrc: slide.slideFields?.image?.node?.sourceUrl || "",
-          imgalt: slide.slideFields?.image?.node?.altText || slide.slideFields?.slideTitle || "",
-          vidsrc: slide.slideFields?.videoUrl || ""
-        };
+        // Fallback to direct URL if available
+        imageUrl = slide.image?.asset?.url || "";
       }
-    });
+    }
+
+    // DEBUG: Log image details
+    if (import.meta.env.DEV) {
+      console.log('🖼️ Sanity slide image processing:', {
+        slideTitle: slide.title,
+        hasImage: !!slide.image,
+        hasAsset: !!slide.image?.asset,
+        assetRef: slide.image?.asset?._ref,
+        alt: slide.image?.alt,
+        generatedUrl: imageUrl,
+        directUrl: slide.image?.asset?.url
+      });
+    }
+
+    return {
+      imgsrc: imageUrl,
+      imgalt: slide.image?.alt || slide.title || "",
+      vidsrc: slide.videoUrl || ""
+    };
+  } else {
+    // WordPress image handling
+    return {
+      imgsrc: slide.slideFields?.image?.node?.sourceUrl || "",
+      imgalt: slide.slideFields?.image?.node?.altText || slide.slideFields?.slideTitle || "",
+      vidsrc: slide.slideFields?.videoUrl || ""
+    };
+  }
+});
 
 const foregroundSlides = processedSlides.map((slide: any) => {
-  const isSanity = slide._type === 'slide';
-  
+  const isSanity = slide._key !== undefined || slide._type === 'slide';
+
   if (isSanity) {
     return {
       title: slide.title || "",

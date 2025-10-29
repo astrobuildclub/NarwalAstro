@@ -5,10 +5,10 @@ import Newsletter from '../components/Newsletter.astro'
 const currentYear = new Date().getFullYear()
 ---
 
-<footer class="bottom-0 flex flex-col h-screen md:fixed -z-10">
+<footer class="flex bottom-0 flex-col h-screen md:fixed -z-10">
   <!-- <CallToAction /> -->
   
-    <div class="flex flex-col justify-between flex-grow ">
+    <div class="flex flex-col flex-grow justify-between">
        <a href="/" aria-label="Homepage">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@ const currentYear = new Date().getFullYear()
         ><defs><clipPath id="a"><path fill="currentcolor" d="M0 0h150.943v40H0z"></path></clipPath></defs></svg
       >
     </a>
-      <p class="tracking-tight text-8xl text-balance">We're always up for conversation
+      <p class="text-8xl tracking-tight text-balance">We're always up for conversation
 <br> <span class="">Let's connect</span></p>
       <div class="grid grid-cols-1 gap-12 lg:gap-24 md:grid-cols-4">
         <Widget title="Join our Newsletter">
@@ -59,13 +59,14 @@ const currentYear = new Date().getFullYear()
       
     </div>
   <div class="flex justify-between text-xs text-2xs legal">
+     <button data-cc="show-preferencesModal" type="button" class="text-xs text-2xs">
+            Cookie voorkeuren
+          </button>
         <p>
           &copy; {currentYear} - Narwal Creative 
         </p>
         <div class="flex gap-4">
-          <button data-cc="show-preferencesModal" type="button" class="text-xs text-2xs">
-            Cookie voorkeuren
-          </button>
+         
           <a href="https://astro.build/" aria-label="Read our legal Terms & Conditions" >Terms & Conditions</a>
         </div>
       </div>
