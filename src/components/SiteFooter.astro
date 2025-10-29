@@ -1,6 +1,7 @@
 ---
 import Widget from '../components/Widget.astro'
 import Newsletter from '../components/Newsletter.astro'
+import CookieConsent from './CookieConsent.astro'
 
 const currentYear = new Date().getFullYear()
 ---
@@ -70,6 +71,9 @@ const currentYear = new Date().getFullYear()
           <a href="https://astro.build/" aria-label="Read our legal Terms & Conditions" >Terms & Conditions</a>
         </div>
       </div>
+      
+  <!-- CookieConsent component -->
+  <CookieConsent />
 </footer>
 
 <style>

@@ -5,7 +5,6 @@ import '../assets/scss/globals.scss'
 import SiteMeta from '../components/SiteMeta.astro'
 import SiteNavigation from '../components/SiteNavigation.astro'
 import SiteFooter from '../components/SiteFooter.astro'
-import CookieConsent from '../components/CookieConsent.astro'
 
 
 import { getNavigation } from '../lib/api'
@@ -59,9 +58,6 @@ const primaryMenu = menus.nodes[0]
       <slot />
     </main>
     <SiteFooter />
-    
-    <!-- CookieConsent component -->
-    <CookieConsent />
     
     <!-- JavaScript bestanden -->
     <script src="/js/cookieconsent.umd.js" is:inline></script>
