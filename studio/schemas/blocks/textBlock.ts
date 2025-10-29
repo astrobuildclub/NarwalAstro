@@ -75,11 +75,10 @@ export default defineType({
     select: { text: 'text', size: 'size' },
     prepare({ text, size }) {
       const textContent = text?.[0]?.children?.[0]?.text || 'Empty text block';
+      const title = textContent?.substring(0, 50) + (textContent?.length > 50 ? '...' : '');
       return {
-        title:
-          textContent?.substring(0, 50) +
-          (textContent?.length > 50 ? '...' : ''),
-        subtitle: `Text Block (${size})`,
+        title,
+        subtitle: `Text Block • ${size || 'content'}`,
       };
     },
   },

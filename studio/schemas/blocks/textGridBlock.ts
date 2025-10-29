@@ -101,7 +101,7 @@ export default defineType({
     prepare({ title, items, media }) {
       return {
         title: title || 'Text Grid Block',
-        subtitle: `${items?.length || 0} items`,
+        subtitle: `Text Grid Block • ${items?.length || 0} items`,
         media: media || '📝',
       };
     },

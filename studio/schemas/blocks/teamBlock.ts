@@ -50,11 +50,12 @@ export default defineType({
     select: {
       title: 'title',
       members: 'members',
+      layout: 'layout',
     },
-    prepare({ title, members }) {
+    prepare({ title, members, layout }) {
       return {
         title: title || 'Team Block',
-        subtitle: `${members?.length || 0} team members`,
+        subtitle: `Team Block • ${layout || 'grid'} • ${members?.length || 0} members`,
         media: '👥',
       };
     },

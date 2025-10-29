@@ -49,7 +49,7 @@ export default defineType({
     prepare({ media, size }) {
       return {
         title: 'Image Block',
-        subtitle: `Size: ${size}`,
+        subtitle: `Image Block • ${size || 'content'}`,
         media,
       };
     },

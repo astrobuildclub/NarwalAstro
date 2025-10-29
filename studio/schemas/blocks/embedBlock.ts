@@ -45,11 +45,13 @@ export default defineType({
     select: {
       title: 'title',
       code: 'code',
+      size: 'size',
+      aspectRatio: 'aspectRatio',
     },
-    prepare({ title, code }) {
+    prepare({ title, size, aspectRatio }) {
       return {
         title: title || 'Embed Block',
-        subtitle: code ? code.substring(0, 50) + '...' : 'No embed code',
+        subtitle: `Embed Block • ${aspectRatio || '16/9'} • ${size || 'content'}`,
       };
     },
   },

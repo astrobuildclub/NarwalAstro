@@ -48,7 +48,7 @@ export default defineType({
     prepare({ name, role, quote, media }) {
       return {
         title: name || 'Testimonial',
-        subtitle: role || quote?.substring(0, 50) + '...',
+        subtitle: `Testimonial Block • ${role || 'No role'}`,
         media: media,
       };
     },

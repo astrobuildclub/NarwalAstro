@@ -49,11 +49,12 @@ export default defineType({
     select: {
       title: 'title',
       clients: 'clients',
+      layout: 'layout',
     },
-    prepare({ title, clients }) {
+    prepare({ title, clients, layout }) {
       return {
         title: title || 'Clients Block',
-        subtitle: `${clients?.length || 0} clients`,
+        subtitle: `Clients Block • ${layout || 'list'} • ${clients?.length || 0} clients`,
         media: 'Clients',
       };
     },

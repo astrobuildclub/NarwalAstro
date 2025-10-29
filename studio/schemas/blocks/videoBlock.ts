@@ -140,16 +140,19 @@ export default defineType({
       title: 'title',
       videoType: 'videoType',
       id: 'id',
+      size: 'size',
       thumbnail: 'thumbnail',
     },
-    prepare({ title, videoType, id, thumbnail }) {
-      let subtitle = videoType || 'Video';
+    prepare({ title, videoType, size, thumbnail }) {
+      let subtitle = 'Video Block';
       if (videoType === 'youtube') {
-        subtitle = `YouTube - ${id || 'No ID'}`;
+        subtitle = `Video Block • YouTube • ${size || 'inline'}`;
       } else if (videoType === 'vimeo') {
-        subtitle = `Vimeo - ${id || 'No ID'}`;
+        subtitle = `Video Block • Vimeo • ${size || 'inline'}`;
       } else if (videoType === 'upload') {
-        subtitle = 'MP4 Upload';
+        subtitle = `Video Block • MP4 Upload • ${size || 'inline'}`;
+      } else {
+        subtitle = `Video Block • ${size || 'inline'}`;
       }
 
       return {

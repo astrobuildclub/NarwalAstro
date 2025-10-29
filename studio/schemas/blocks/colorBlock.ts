@@ -103,11 +103,12 @@ export default defineType({
     select: {
       colorMode: 'colorMode',
       backgroundColor: 'backgroundColor',
+      size: 'size',
     },
-    prepare({ colorMode, backgroundColor }) {
+    prepare({ colorMode, backgroundColor, size }) {
       return {
         title: 'Color Block',
-        subtitle: `${colorMode} mode`,
+        subtitle: `Color Block • ${colorMode || 'light'} • ${size || 'content'}`,
         media: 'Color',
       };
     },

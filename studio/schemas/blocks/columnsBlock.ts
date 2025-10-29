@@ -137,11 +137,12 @@ export default defineType({
     select: {
       title: 'title',
       columns: 'columns',
+      size: 'size',
     },
-    prepare({ title, columns }) {
+    prepare({ title, columns, size }) {
       return {
         title: title || 'Columns Block',
-        subtitle: `${columns?.length || 0} columns`,
+        subtitle: `Columns Block • ${columns?.length || 0} columns • ${size || 'content'}`,
         media: '📊',
       };
     },
