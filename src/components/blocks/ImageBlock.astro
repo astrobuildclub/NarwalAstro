@@ -1,23 +1,15 @@
 ---
 // Import Components & Scripts
 import { Image } from 'astro:assets'
+import { urlForImage } from '../../sanity/lib/image'
+import type { SanityImage } from '../../sanity/types'
 
 // Define Types
-interface Props{
-  sourceUrl?: string;
+interface Props {
   size?: "inline" | "popout" | "feature" | "full" | "inherit";
-  altText?: string;
-  titleText?: string;
   showCaption?: boolean;
-  captionText?: string;
   // Sanity props
-  image?: {
-    asset?: {
-      url?: string;
-    };
-    alt?: string;
-    title?: string;
-  };
+  image?: SanityImage;
   alt?: string;
   title?: string;
   caption?: string;
@@ -25,12 +17,8 @@ interface Props{
 
 // Define Vars
 const { 
-  sourceUrl, 
   size, 
-  altText, 
-  titleText, 
   showCaption, 
-  captionText,
   // Sanity props
   image,
   alt,
@@ -38,11 +26,22 @@ const {
   caption
 } = Astro.props;
 
-// Determine the actual values to use (Sanity takes precedence)
-const finalSourceUrl = image?.asset?.url || sourceUrl;
-const finalAltText = image?.alt || alt || altText || titleText || "";
-const finalTitleText = image?.title || title || titleText || "";
-const finalCaptionText = caption || captionText || "";
+// Generate image URL - Sanity data only
+let finalSourceUrl = '';
+let finalAltText = '';
+let finalTitleText = '';
+let finalCaptionText = '';
+
+if (image?.asset) {
+  try {
+    finalSourceUrl = urlForImage(image)?.url() || '';
+    finalAltText = image.alt || alt || '';
+    finalTitleText = image.caption || title || '';
+    finalCaptionText = image.caption || caption || '';
+  } catch (error) {
+    console.warn('Failed to generate image URL:', error);
+  }
+}
 
 if (import.meta.env.DEV) {
   console.log('🖼️ ImageBlock received:', {
@@ -63,9 +62,6 @@ if (import.meta.env.DEV) {
   <Image 
     src={finalSourceUrl}
     inferSize
-    widths={[540, 960, 1440, 1920]}
-    sizes={`(max-width: 360px) 540px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, 1920px`}
-    format='avif'
     alt={finalAltText} 
     title={finalTitleText}
     class="imageblock-img"
@@ -76,5 +72,9 @@ if (import.meta.env.DEV) {
 </div>
 }
 <style>
-
+  .imageblock-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 </style>

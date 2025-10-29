@@ -84,7 +84,7 @@ const backgroundSlides = processedSlides.map((slide: any) => {
     let imageUrl = "";
     if (slide.image?.asset) {
       try {
-        imageUrl = urlForImage(slide.image).width(1920).url();
+        imageUrl = urlForImage(slide.image)?.width(1920).url() || '';
       } catch (error) {
         if (import.meta.env.DEV) {
           console.warn('⚠️ Failed to generate image URL:', error);
@@ -190,12 +190,12 @@ if (import.meta.env.DEV) {
             <div role="listitem" class="swiper-slide">
               {slide.link ?
                 <a class="slide-text" href={slide.link.url} target={slide.link.target} aria-label={`View the ${slide.link.title} project`}>
-                  <h3 class=" opacity-80">{slide.subtitle}</h3>
-                  <h1 class=" md:text-9xl text-balance">{slide.title}</h1>
+                  <h3 class="opacity-80">{slide.subtitle}</h3>
+                  <h1 class="md:text-9xl text-balance">{slide.title}</h1>
                 </a>
               :
-                <h3 class=" opacity-80">{slide.subtitle}</h3>
-                <h1 class=" md:text-9xl text-balance">{slide.title}</h1>
+                <h3 class="opacity-80">{slide.subtitle}</h3>
+                <h1 class="md:text-9xl text-balance">{slide.title}</h1>
               }
             </div>
           ))

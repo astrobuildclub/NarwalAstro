@@ -143,7 +143,7 @@ const serviceTitles = finalServices?.map(service => slugify(service.title)).join
 let imageSrc = finalImgsrc;
 if (isSanity && thumbnail?.image?.asset) {
   try {
-    imageSrc = urlForImage(thumbnail.image).width(800).height(600).url();
+    imageSrc = urlForImage(thumbnail.image)?.width(800).height(600).url() || '';
   } catch (error) {
     if (import.meta.env.DEV) {
       console.warn('⚠️ Failed to generate Sanity image URL:', error);

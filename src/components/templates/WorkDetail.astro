@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets'
 import Hero from '../Hero.astro'
 import BlockRenderer from '../BlockRenderer.astro'
+import { urlForImage } from '../../sanity/lib/image'
 
 type Props = {
   data: any
@@ -75,13 +77,24 @@ if (import.meta.env.DEV) {
       <div class="related-projects-content">
         <h2>Related Projects</h2>
         <div class="related-projects-grid">
-          {relatedProjects.map((project: any) => (
-            <a href={`/project/${project.slug}`} class="related-project-card">
-              <img src={project.thumbnail?.image?.asset?.url} alt={project.title} />
-              <h3>{project.title}</h3>
-              {project.client && <p>{project.client.title}</p>}
-            </a>
-          ))}
+          {relatedProjects.map((project: any) => {
+            const thumbnailUrl = project.thumbnail?.image?.asset 
+              ? urlForImage(project.thumbnail.image)?.width(400).height(300).url() || ''
+              : '';
+            
+            return (
+              <a href={`/project/${project.slug}`} class="related-project-card">
+                <Image 
+                  src={thumbnailUrl} 
+                  alt={project.title}
+                  inferSize
+                  class="related-project-img"
+                />
+                <h3>{project.title}</h3>
+                {project.client && <p>{project.client.title}</p>}
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -131,7 +144,7 @@ if (import.meta.env.DEV) {
     transform: translateY(-4px);
   }
 
-  .related-project-card img {
+  .related-project-img {
     width: 100%;
     height: 200px;
     object-fit: cover;

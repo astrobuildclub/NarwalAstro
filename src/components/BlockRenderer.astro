@@ -93,12 +93,12 @@ const { prefix, blocks } = Astro.props;
           return <TextBlock content={block.text?.text || ''} size={block.text?.size.at(0)} />
         case `${prefix}ContentImageLayout`: // Image block
           return <ImageBlock 
-                    sourceUrl={block.image?.node?.sourceUrl} 
+                    image={block.image?.node}
                     size={block.size}
-                    altText={block.image?.node?.altText} 
-                    titleText={block.image?.node?.title} 
+                    alt={block.image?.node?.altText} 
+                    title={block.image?.node?.title} 
                     showCaption={block.showCaption}
-                    captionText={block.image?.node?.caption} 
+                    caption={block.image?.node?.caption} 
                     />
         case `${prefix}ContentVideoLayout`: // Video Block
           if(block.option === "embed"){
@@ -113,9 +113,7 @@ const { prefix, blocks } = Astro.props;
                     quote={block.testimonial}
                     name={block.name}
                     role={block.roleCompany}
-                    photoSourceUrl={block.photo?.node?.sourceUrl}
-                    photoAltText={block.photo?.node?.altText} 
-                    photoTitleText={block.photo?.node?.title}
+                    photo={block.photo?.node}
                     />
         case `${prefix}ContentMultiColsLayout`: // Testimonial Block
           return <ColumnsBlock cols={block.col} />

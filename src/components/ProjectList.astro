@@ -1,5 +1,6 @@
 ---
 import ProjectCard from '../components/ProjectCard.astro'
+import { urlForImage } from '../sanity/lib/image'
 
 const { projects, layout, fitCards } = Astro.props
 
@@ -30,7 +31,9 @@ const projectCards = projects.map((project: any) => {
       title: project.title || '',
       clientname: project.client?.title || '',
       size: project.thumbnail?.size?.toString() || '',
-      imgsrc: project.thumbnail?.image?.asset?.url || '',
+      imgsrc: project.thumbnail?.image?.asset 
+        ? urlForImage(project.thumbnail.image)?.width(800).height(600).url() || ''
+        : '',
       imgalt: project.thumbnail?.alt || project.title || '',
       vidsrc: project.thumbnail?.video || '',
       services: project.services || [],

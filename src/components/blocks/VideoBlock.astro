@@ -33,31 +33,11 @@ const service = videoType === 'youtube' ? 'youtube' : videoType === 'vimeo' ? 'v
 // Use size prop as fallback if video.size is not available
 const finalSize = videoSize || size || 'inline';
 
-// Generate thumbnail URL - simple approach like ImageBlock.astro
+// Generate thumbnail URL using @sanity/image-url
 let thumbnailUrl = '';
-if (thumbnail?.asset?._ref) {
+if (thumbnail?.asset) {
   try {
-    const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
-    const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
-    
-    if (projectId && dataset) {
-      // Extract asset ID from reference - remove the existing dimensions
-      const assetId = thumbnail.asset._ref
-        .replace('image-', '')
-        .replace(/-1280x720-jpg$|-1280x720-png$|-1280x720-webp$|-1280x720-gif$/, '')
-        .replace(/-jpg$|-png$|-webp$|-gif$/, '');
-      
-      const extension = thumbnail.asset._ref.includes('-jpg')
-        ? 'jpg'
-        : thumbnail.asset._ref.includes('-png')
-          ? 'png'
-          : thumbnail.asset._ref.includes('-webp')
-            ? 'webp'
-            : 'jpg';
-      
-      // Generate URL with proper dimensions
-      thumbnailUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-1280x720.${extension}`;
-    }
+    thumbnailUrl = urlForImage(thumbnail)?.width(1280).height(720).url() || '';
   } catch (error) {
     console.warn('Failed to generate thumbnail URL:', error);
   }

@@ -1,6 +1,7 @@
 ---
 // Import Components & Scripts
 import { Image } from 'astro:assets'
+import { urlForImage } from '../../sanity/lib/image'
 import type { SanityImage } from '../../sanity/types'
 
 // Define Types
@@ -10,10 +11,6 @@ interface Props {
     role?: string;
     photo?: SanityImage;
     size?: 'content' | 'popout' | 'feature' | 'full';
-    // Legacy props for WordPress compatibility
-    photoSourceUrl?: string;
-    photoAltText?: string;
-    photoTitleText?: string;
 }
 
 // Define Vars
@@ -22,51 +19,22 @@ const {
     name, 
     role, 
     photo, 
-    size = 'content',
-    // Legacy props
-    photoSourceUrl, 
-    photoAltText, 
-    photoTitleText 
+    size = 'content'
 } = Astro.props;
 
-// Generate image URL - prioritize Sanity data
+// Generate image URL - Sanity data only
 let finalPhotoUrl = '';
 let finalAltText = '';
 let finalTitleText = '';
 
-if (photo?.asset?._ref) {
+if (photo?.asset) {
     try {
-        const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
-        const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
-        
-        if (projectId && dataset) {
-            // Extract asset ID from reference - remove existing dimensions
-            const assetId = photo.asset._ref
-                .replace('image-', '')
-                .replace(/-1280x720-jpg$|-1280x720-png$|-1280x720-webp$|-1280x720-gif$/, '')
-                .replace(/-jpg$|-png$|-webp$|-gif$/, '');
-            
-            const extension = photo.asset._ref.includes('-jpg')
-                ? 'jpg'
-                : photo.asset._ref.includes('-png')
-                  ? 'png'
-                  : photo.asset._ref.includes('-webp')
-                    ? 'webp'
-                    : 'jpg';
-            
-            // Generate URL with proper dimensions for testimonial (200x200)
-            finalPhotoUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-200x200.${extension}`;
-        }
+        finalPhotoUrl = urlForImage(photo)?.width(200).height(200).url() || '';
         finalAltText = photo.alt || '';
         finalTitleText = photo.caption || '';
     } catch (error) {
         console.warn('Failed to generate photo URL:', error);
     }
-} else if (photoSourceUrl) {
-    // Fallback to legacy props
-    finalPhotoUrl = photoSourceUrl;
-    finalAltText = photoAltText || '';
-    finalTitleText = photoTitleText || '';
 }
 
 // Size class mapping
@@ -101,8 +69,7 @@ if (import.meta.env.DEV) {
         {finalPhotoUrl &&
         <Image 
             src={finalPhotoUrl}
-            width={200}
-            height={200}
+            inferSize
             alt={finalAltText} 
             title={finalTitleText}
             class="testimonialblock-img"
