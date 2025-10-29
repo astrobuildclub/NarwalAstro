@@ -14,8 +14,8 @@
   --im-btn-active-box-shadow: 0 0 0 0.25em hsl(from var(--primary) h s l / 90%);
 
   --im-btn-s-color: var(--bg);
-  --im-btn-s-bg: hsl(from var(--grey--dark) h s calc(l + 10));
-  --im-btn-s-hover-bg: hsl(from var(--grey--dark) h s calc(l + 40));
+  --im-btn-s-bg: hsl(from var(--secondary-500) h s calc(l + 10));
+  --im-btn-s-hover-bg: hsl(from var(--secondary-400) h s calc(l - 40));
   --im-btn-s-active-bg: rgba(225, 239, 255, 0.6);
 
   --im-overlay-bg: linear-gradient(
