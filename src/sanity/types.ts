@@ -141,7 +141,6 @@ export interface SanityImageBlock extends SanityBlock {
 export interface SanityVideoBlock extends SanityBlock {
   _type: 'videoBlock';
   videoType?: 'upload' | 'youtube' | 'vimeo';
-  service?: 'youtube' | 'vimeo';
   id?: string;
   title?: string;
   params?: string;
@@ -160,7 +159,7 @@ export interface SanityVideoBlock extends SanityBlock {
     | '9:20';
   autoscale?: boolean;
   widget?: boolean;
-  size?: 'inline' | 'feature' | 'page' | 'full' | 'none';
+  size?: 'inline' | 'popout' | 'feature' | 'full' | 'inherit';
   videoFile?: SanityFile;
   autoplay?: boolean;
   loop?: boolean;

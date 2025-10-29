@@ -32,7 +32,7 @@ export function urlForImage(source: SanityImage | null | undefined) {
     };
   }
 
-  // Extract asset ID from reference
+  // Extract asset ID from reference (like ImageBlock.astro)
   const assetId = source.asset._ref
     .replace('image-', '')
     .replace(/-jpg$|-png$|-webp$|-gif$/, '');
@@ -44,6 +44,7 @@ export function urlForImage(source: SanityImage | null | undefined) {
         ? 'webp'
         : 'jpg';
 
+  // Use the same URL structure as ImageBlock.astro
   const baseUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-1280x720.${extension}`;
 
   return {

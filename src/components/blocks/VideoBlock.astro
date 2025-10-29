@@ -5,7 +5,7 @@ import type { SanityVideoBlock } from '../../sanity/types';
 // Define Types - following EmbedBlock structure
 interface Props {
   video: SanityVideoBlock;
-  size?: "inline" | "feature" | "page" | "full" | "none";
+  size?: "inline" | "popout" | "feature" | "full" | "inherit";
 }
 
 // Define Vars
@@ -13,7 +13,6 @@ const { video, size } = Astro.props;
 
 const {
   videoType = 'upload',
-  service,
   id,
   title,
   params,
@@ -28,21 +27,36 @@ const {
   muted = true
 } = video;
 
+// Determine service from videoType
+const service = videoType === 'youtube' ? 'youtube' : videoType === 'vimeo' ? 'vimeo' : undefined;
+
 // Use size prop as fallback if video.size is not available
 const finalSize = videoSize || size || 'inline';
 
-// Generate thumbnail URL
+// Generate thumbnail URL - simple approach like ImageBlock.astro
 let thumbnailUrl = '';
-if (thumbnail?.asset) {
+if (thumbnail?.asset?._ref) {
   try {
-    const imageBuilder = urlForImage(thumbnail);
-    if (imageBuilder && typeof imageBuilder.url === 'function') {
-      thumbnailUrl = imageBuilder
-        .width(800)
-        .height(450)
-        .fit('crop')
-        .quality(80)
-        .url();
+    const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+    const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
+    
+    if (projectId && dataset) {
+      // Extract asset ID from reference - remove the existing dimensions
+      const assetId = thumbnail.asset._ref
+        .replace('image-', '')
+        .replace(/-1280x720-jpg$|-1280x720-png$|-1280x720-webp$|-1280x720-gif$/, '')
+        .replace(/-jpg$|-png$|-webp$|-gif$/, '');
+      
+      const extension = thumbnail.asset._ref.includes('-jpg')
+        ? 'jpg'
+        : thumbnail.asset._ref.includes('-png')
+          ? 'png'
+          : thumbnail.asset._ref.includes('-webp')
+            ? 'webp'
+            : 'jpg';
+      
+      // Generate URL with proper dimensions
+      thumbnailUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-1280x720.${extension}`;
     }
   } catch (error) {
     console.warn('Failed to generate thumbnail URL:', error);
@@ -81,14 +95,14 @@ if (videoFile?.asset) {
 // Size class mapping - following EmbedBlock structure
 function getSizeClass(size: string) {
   switch (size) {
+    case "popout":
+      return "popout";
     case "feature":
       return "feature";
-    case "page":
-      return "page";
     case "full":
       return "full";
-    case "none":
-      return "";
+    case "inherit":
+      return "inherit";
     default:
       return "inline";
   }
@@ -97,8 +111,9 @@ function getSizeClass(size: string) {
 if (import.meta.env.DEV) {
   console.log('🎥 VideoBlock received:', {
     videoType,
-    service,
+    service: service || 'N/A',
     id,
+    title: title || 'No title',
     hasVideoFile: !!videoFile,
     hasThumbnail: !!thumbnail,
     size: finalSize,
@@ -118,10 +133,10 @@ if (import.meta.env.DEV) {
 ---
 
     <!-- VideoBlock - following EmbedBlock structure -->
-    <section class={`video-container ${getSizeClass(finalSize)}`}>
+    <section class={`video-container ${getSizeClass(finalSize)}`} style={`aspect-ratio: ${aspectRatioCSS};`}>
       {videoType === 'upload' && videoFileUrl && (
         <!-- MP4 Upload Video -->
-        <div class="videoblock upload" style={`aspect-ratio: ${aspectRatioCSS};`}>
+        <div class="videoblock upload">
           <video
             controls
             preload="metadata"
@@ -144,27 +159,26 @@ if (import.meta.env.DEV) {
           class="embed"
           data-service={service}
           data-id={id}
-          data-title={title}
+          data-title={title || 'Video'}
           data-params={params ? `${params}&enablejsapi=1` : "enablejsapi=1"}
           data-thumbnail={thumbnailUrl}
           data-ratio={ratio}
           data-autoscale={autoscale ? "" : undefined}
           data-widget={widget ? "" : undefined}
-          style={`aspect-ratio: ${aspectRatioCSS};`}
         >
         </div>
       )}
 
       {videoType === 'upload' && !videoFileUrl && (
         <!-- Fallback for missing video file -->
-        <div class="videoblock error" style={`aspect-ratio: ${aspectRatioCSS};`}>
+        <div class="videoblock error">
           <p>Video bestand niet gevonden</p>
         </div>
       )}
 
       {(videoType === 'youtube' || videoType === 'vimeo') && !id && (
         <!-- Fallback for missing video ID -->
-        <div class="videoblock error" style={`aspect-ratio: ${aspectRatioCSS};`}>
+        <div class="videoblock error">
           <p>Video ID niet gevonden</p>
         </div>
       )}
@@ -173,6 +187,7 @@ if (import.meta.env.DEV) {
 <style>
   .video-container {
     width: 100%;
+    background-color: #333;
   }
 
   .videoblock {
@@ -210,15 +225,19 @@ if (import.meta.env.DEV) {
     grid-column: content;
   }
 
+  .video-container.popout {
+    grid-column: popout;
+  }
+
   .video-container.feature {
     grid-column: feature;
   }
 
-  .video-container.page {
-    grid-column: popout;
-  }
-
   .video-container.full {
     grid-column: full;
+  }
+
+  .video-container.inherit {
+    grid-column: inherit;
   }
 </style>

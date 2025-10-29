@@ -21,6 +21,16 @@
   --clr-rgb-light: 240, 240, 240;
   --clr-tag: rgba(var(--clr-rgb-light), 0.5);
 
+  --white: #4d4d4d;
+  --black: #efeeeb;
+  --primary: #ff851b;
+  --font-color: var(--neutral-100);
+  --action-color: var(--secondary-100);
+  --action-color-state: var(--secondary-500);
+  --background: var(--dark-100);
+  --primary-background: var(--primary-500);
+  --neutral-background: var(--neutral-900);
+
   /* Modes */
   --base: var(--clr-white);
   --text: var(--clr-black);
@@ -75,6 +85,7 @@
   :root {
     --base: var(--clr-black);
     --text: var(--clr-white);
+
     --clr-tag: rgba(var(--clr-rgb-light), 0.05);
     --clr-tag-text: rgba(var(--clr-rgb-light), 0.75);
     --clr-front-rgb: 255, 255, 255;

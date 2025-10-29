@@ -21,19 +21,7 @@ export default defineType({
       initialValue: 'upload',
     }),
     // Embed fields (YouTube/Vimeo) - following EmbedBlock structure
-    defineField({
-      name: 'service',
-      type: 'string',
-      title: 'Video Service',
-      options: {
-        list: [
-          { title: 'YouTube', value: 'youtube' },
-          { title: 'Vimeo', value: 'vimeo' },
-        ],
-      },
-      hidden: ({ parent }) =>
-        parent?.videoType !== 'youtube' && parent?.videoType !== 'vimeo',
-    }),
+    // Service is automatically determined from videoType
     defineField({
       name: 'id',
       type: 'string',
@@ -107,10 +95,10 @@ export default defineType({
       options: {
         list: [
           { title: 'Inline (Default)', value: 'inline' },
+          { title: 'Popout', value: 'popout' },
           { title: 'Feature', value: 'feature' },
-          { title: 'Page', value: 'page' },
           { title: 'Full Width', value: 'full' },
-          { title: 'None', value: 'none' },
+          { title: 'Inherit', value: 'inherit' },
         ],
       },
       initialValue: 'inline',
@@ -151,14 +139,15 @@ export default defineType({
     select: {
       title: 'title',
       videoType: 'videoType',
-      service: 'service',
       id: 'id',
       thumbnail: 'thumbnail',
     },
-    prepare({ title, videoType, service, id, thumbnail }) {
+    prepare({ title, videoType, id, thumbnail }) {
       let subtitle = videoType || 'Video';
-      if (videoType === 'youtube' || videoType === 'vimeo') {
-        subtitle = `${service} - ${id || 'No ID'}`;
+      if (videoType === 'youtube') {
+        subtitle = `YouTube - ${id || 'No ID'}`;
+      } else if (videoType === 'vimeo') {
+        subtitle = `Vimeo - ${id || 'No ID'}`;
       } else if (videoType === 'upload') {
         subtitle = 'MP4 Upload';
       }
