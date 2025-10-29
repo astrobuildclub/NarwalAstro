@@ -15,6 +15,15 @@ export interface SanityImage {
   };
 }
 
+export interface SanityFile {
+  _type: 'file';
+  asset: {
+    _ref: string;
+    _type: 'reference';
+  };
+  url?: string;
+}
+
 export interface SanityReference {
   _type: 'reference';
   _ref: string;
@@ -131,9 +140,31 @@ export interface SanityImageBlock extends SanityBlock {
 
 export interface SanityVideoBlock extends SanityBlock {
   _type: 'videoBlock';
-  videoUrl?: string;
-  embedCode?: string;
-  size?: 'content' | 'popout' | 'feature' | 'full';
+  videoType?: 'upload' | 'youtube' | 'vimeo';
+  service?: 'youtube' | 'vimeo';
+  id?: string;
+  title?: string;
+  params?: string;
+  thumbnail?: SanityImage;
+  ratio?:
+    | '1:1'
+    | '2:1'
+    | '3:2'
+    | '5:2'
+    | '4:3'
+    | '16:9'
+    | '16:10'
+    | '20:9'
+    | '21:9'
+    | '9:16'
+    | '9:20';
+  autoscale?: boolean;
+  widget?: boolean;
+  size?: 'inline' | 'feature' | 'page' | 'full' | 'none';
+  videoFile?: SanityFile;
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
 }
 
 export interface SanityGalleryBlock extends SanityBlock {

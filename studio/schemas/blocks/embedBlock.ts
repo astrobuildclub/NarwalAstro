@@ -50,7 +50,6 @@ export default defineType({
       return {
         title: title || 'Embed Block',
         subtitle: code ? code.substring(0, 50) + '...' : 'No embed code',
-        media: '📺',
       };
     },
   },

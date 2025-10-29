@@ -1,0 +1,25 @@
+---
+
+---
+
+<script>
+  import { cookieConsentConfig } from "../lib/CookieConsentConfig";
+  import { iframeManagerConfig } from "../lib/IframeManagerConfig";
+
+  declare global {
+    interface Window {
+      CookieConsent: any;
+      iframemanager: any;
+    }
+  }
+
+  window.addEventListener("load", () => {
+    const im = window.iframemanager();
+    im.run(iframeManagerConfig);
+    window.CookieConsent.run(cookieConsentConfig);
+  });
+</script>
+
+<button data-cc="show-preferencesModal" type="button">
+  Cookie voorkeuren
+</button>

@@ -62,7 +62,12 @@ const currentYear = new Date().getFullYear()
         <p>
           &copy; {currentYear} - Narwal Creative 
         </p>
-        <a href="https://astro.build/" aria-label="Read our legal Terms & Conditions" >Terms & Conditions</a>
+        <div class="flex gap-4">
+          <button data-cc="show-preferencesModal" type="button" class="text-xs text-2xs">
+            Cookie voorkeuren
+          </button>
+          <a href="https://astro.build/" aria-label="Read our legal Terms & Conditions" >Terms & Conditions</a>
+        </div>
       </div>
 </footer>
 

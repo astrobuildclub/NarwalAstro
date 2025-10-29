@@ -1,47 +1,224 @@
 ---
-// Import Components & Scripts
+import { urlForImage } from '../../sanity/lib/image';
+import type { SanityVideoBlock } from '../../sanity/types';
 
-// Define Types
-interface Props{
-  url?: string;
-  type?: string;
-  size?: "inline" | "popout" | "feature" | "full" | "inherit";
-  // Sanity props
-  video?: {
-    url?: string;
-  };
+// Define Types - following EmbedBlock structure
+interface Props {
+  video: SanityVideoBlock;
+  size?: "inline" | "feature" | "page" | "full" | "none";
 }
 
 // Define Vars
-const { url, type, size, video } = Astro.props;
+const { video, size } = Astro.props;
 
-// Determine the actual values to use (Sanity takes precedence)
-const finalUrl = video?.url || url;
+const {
+  videoType = 'upload',
+  service,
+  id,
+  title,
+  params,
+  thumbnail,
+  ratio = '16:9',
+  autoscale = true,
+  widget = false,
+  size: videoSize = 'inline',
+  videoFile,
+  autoplay = false,
+  loop = false,
+  muted = true
+} = video;
+
+// Use size prop as fallback if video.size is not available
+const finalSize = videoSize || size || 'inline';
+
+// Generate thumbnail URL
+let thumbnailUrl = '';
+if (thumbnail?.asset) {
+  try {
+    const imageBuilder = urlForImage(thumbnail);
+    if (imageBuilder && typeof imageBuilder.url === 'function') {
+      thumbnailUrl = imageBuilder
+        .width(800)
+        .height(450)
+        .fit('crop')
+        .quality(80)
+        .url();
+    }
+  } catch (error) {
+    console.warn('Failed to generate thumbnail URL:', error);
+  }
+}
+
+// Calculate aspect ratio CSS
+const aspectRatioMap = {
+  '1:1': '1/1',
+  '2:1': '2/1', 
+  '3:2': '3/2',
+  '5:2': '5/2',
+  '4:3': '4/3',
+  '16:9': '16/9',
+  '16:10': '16/10',
+  '20:9': '20/9',
+  '21:9': '21/9',
+  '9:16': '9/16',
+  '9:20': '9/20'
+};
+
+const aspectRatioCSS = aspectRatioMap[ratio] || '16/9';
+
+// Generate video file URL
+let videoFileUrl = '';
+if (videoFile?.asset) {
+  try {
+    // For Sanity files, we need to construct the URL manually
+    const assetId = videoFile.asset._ref.replace('file-', '').replace('-mp4', '');
+    videoFileUrl = `https://cdn.sanity.io/files/${import.meta.env.PUBLIC_SANITY_PROJECT_ID}/${import.meta.env.PUBLIC_SANITY_DATASET}/${assetId}.mp4`;
+  } catch (error) {
+    console.warn('Failed to generate video file URL:', error);
+  }
+}
+
+// Size class mapping - following EmbedBlock structure
+function getSizeClass(size: string) {
+  switch (size) {
+    case "feature":
+      return "feature";
+    case "page":
+      return "page";
+    case "full":
+      return "full";
+    case "none":
+      return "";
+    default:
+      return "inline";
+  }
+}
 
 if (import.meta.env.DEV) {
   console.log('🎥 VideoBlock received:', {
-    url: finalUrl,
-    type,
-    size,
-    hasSanityVideo: !!video
+    videoType,
+    service,
+    id,
+    hasVideoFile: !!videoFile,
+    hasThumbnail: !!thumbnail,
+    size: finalSize,
+    thumbnailUrl,
+    videoFileUrl,
+    ratio,
+    aspectRatioCSS
+  });
+  
+  console.log('🎥 Thumbnail details:', {
+    thumbnail,
+    thumbnailAsset: thumbnail?.asset,
+    thumbnailUrl,
+    urlForImageResult: thumbnail?.asset ? urlForImage(thumbnail) : 'No thumbnail asset'
   });
 }
 ---
 
-<!--VideoBlock -->
-{finalUrl &&
-<div class:list={['videoblock', size, type]}>
-  <video
-    preload="metadata"
-    tabindex="-1"
-    disablepictureinpicture
-    playsinline
-    loop
-    muted
-    title=""
-    src={finalUrl}
-    autoplay
-    class="videoblock-video"
-  />
-</div>
-}
+    <!-- VideoBlock - following EmbedBlock structure -->
+    <section class={`video-container ${getSizeClass(finalSize)}`}>
+      {videoType === 'upload' && videoFileUrl && (
+        <!-- MP4 Upload Video -->
+        <div class="videoblock upload" style={`aspect-ratio: ${aspectRatioCSS};`}>
+          <video
+            controls
+            preload="metadata"
+            playsinline
+            loop={loop}
+            muted={muted}
+            autoplay={autoplay}
+            poster={thumbnailUrl}
+            title={title || 'Video'}
+          >
+            <source src={videoFileUrl} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      )}
+
+      {(videoType === 'youtube' || videoType === 'vimeo') && id && (
+        <!-- YouTube/Vimeo Embed with IframeManager - exact EmbedBlock structure -->
+        <div
+          class="embed"
+          data-service={service}
+          data-id={id}
+          data-title={title}
+          data-params={params ? `${params}&enablejsapi=1` : "enablejsapi=1"}
+          data-thumbnail={thumbnailUrl}
+          data-ratio={ratio}
+          data-autoscale={autoscale ? "" : undefined}
+          data-widget={widget ? "" : undefined}
+          style={`aspect-ratio: ${aspectRatioCSS};`}
+        >
+        </div>
+      )}
+
+      {videoType === 'upload' && !videoFileUrl && (
+        <!-- Fallback for missing video file -->
+        <div class="videoblock error" style={`aspect-ratio: ${aspectRatioCSS};`}>
+          <p>Video bestand niet gevonden</p>
+        </div>
+      )}
+
+      {(videoType === 'youtube' || videoType === 'vimeo') && !id && (
+        <!-- Fallback for missing video ID -->
+        <div class="videoblock error" style={`aspect-ratio: ${aspectRatioCSS};`}>
+          <p>Video ID niet gevonden</p>
+        </div>
+      )}
+    </section>
+
+<style>
+  .video-container {
+    width: 100%;
+  }
+
+  .videoblock {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-sm, 4px);
+  }
+
+  .videoblock.upload video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .videoblock.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    color: #666;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* EmbedBlock structure - let iframemanager handle the styling */
+  div[data-service],
+  div[data-service] .cll,
+  div[data-service] .cll a,
+  div[data-service] .cll button {
+  }
+
+  /* Size-based styling - following EmbedBlock pattern */
+  .video-container.inline {
+    grid-column: content;
+  }
+
+  .video-container.feature {
+    grid-column: feature;
+  }
+
+  .video-container.page {
+    grid-column: popout;
+  }
+
+  .video-container.full {
+    grid-column: full;
+  }
+</style>

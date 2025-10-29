@@ -1,4 +1,3 @@
-import { urlForImage as sanityUrlForImage } from '@sanity/astro';
 import type { SanityImage } from '../types';
 
 /**
@@ -6,17 +5,65 @@ import type { SanityImage } from '../types';
  */
 export function urlForImage(source: SanityImage | null | undefined) {
   if (!source?.asset) {
+    const fallbackBuilder = {
+      width: () => fallbackBuilder,
+      height: () => fallbackBuilder,
+      fit: () => fallbackBuilder,
+      quality: () => fallbackBuilder,
+      format: () => fallbackBuilder,
+      url: () => null,
+    };
+    return fallbackBuilder;
+  }
+
+  // Generate Sanity image URL manually
+  const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+  const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
+
+  if (!projectId || !dataset) {
+    console.warn('Missing Sanity project ID or dataset');
     return {
-      width: () => urlForImage(source),
-      height: () => urlForImage(source),
-      fit: () => urlForImage(source),
-      quality: () => urlForImage(source),
-      format: () => urlForImage(source),
+      width: () => fallbackBuilder,
+      height: () => fallbackBuilder,
+      fit: () => fallbackBuilder,
+      quality: () => fallbackBuilder,
+      format: () => fallbackBuilder,
       url: () => null,
     };
   }
 
-  return sanityUrlForImage(source);
+  // Extract asset ID from reference
+  const assetId = source.asset._ref
+    .replace('image-', '')
+    .replace(/-jpg$|-png$|-webp$|-gif$/, '');
+  const extension = source.asset._ref.includes('-jpg')
+    ? 'jpg'
+    : source.asset._ref.includes('-png')
+      ? 'png'
+      : source.asset._ref.includes('-webp')
+        ? 'webp'
+        : 'jpg';
+
+  const baseUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-1280x720.${extension}`;
+
+  return {
+    width: (w: number) => ({
+      height: (h: number) => ({
+        fit: (f: string) => ({
+          quality: (q: number) => ({
+            format: (fmt: string) => ({
+              url: () => `${baseUrl}?w=${w}&h=${h}&fit=${f}&q=${q}&fm=${fmt}`,
+            }),
+            url: () => `${baseUrl}?w=${w}&h=${h}&fit=${f}&q=${q}`,
+          }),
+          url: () => `${baseUrl}?w=${w}&h=${h}&fit=${f}`,
+        }),
+        url: () => `${baseUrl}?w=${w}&h=${h}`,
+      }),
+      url: () => `${baseUrl}?w=${w}`,
+    }),
+    url: () => baseUrl,
+  };
 }
 
 /**

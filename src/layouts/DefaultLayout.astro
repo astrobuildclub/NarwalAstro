@@ -5,6 +5,7 @@ import '../assets/scss/globals.scss'
 import SiteMeta from '../components/SiteMeta.astro'
 import SiteNavigation from '../components/SiteNavigation.astro'
 import SiteFooter from '../components/SiteFooter.astro'
+import CookieConsent from '../components/CookieConsent.astro'
 
 import { getNavigation } from '../lib/api'
 
@@ -28,6 +29,10 @@ const primaryMenu = menus.nodes[0]
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml"  />
     <link rel="icon" href="/favicon.ico" sizes="any">
+    
+    <!-- CookieConsent CSS -->
+    <link rel="stylesheet" href="/css/cookieconsent.css" />
+    <link rel="stylesheet" href="/css/iframemanager.css" />
 
     <SiteMeta
       title={title}
@@ -46,6 +51,13 @@ const primaryMenu = menus.nodes[0]
       <slot />
     </main>
     <SiteFooter />
+    
+    <!-- CookieConsent component -->
+    <CookieConsent />
+    
+    <!-- JavaScript bestanden -->
+    <script src="/js/cookieconsent.umd.js" is:inline></script>
+    <script src="/js/iframemanager.js" is:inline></script>
   </body>
 </html>
 

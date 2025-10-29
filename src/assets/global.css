@@ -28,9 +28,11 @@
   /* Fonts */
   --font-system: system-ui, sans-serif;
   /* use as fallback */
-  --font-body: 'Helvetica Neue', Helvetica, Inter, Roboto, 'Arial Nova',
-    'Nimbus Sans', Arial, sans-serif;
-  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+  --font-body:
+    'Helvetica Neue', Helvetica, Inter, Roboto, 'Arial Nova', 'Nimbus Sans',
+    Arial, sans-serif;
+  --font-mono:
+    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
     'DejaVu Sans Mono', monospace;
   --font-heading:
     Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small',
@@ -140,12 +142,12 @@ img {
 
 .content {
   --gap: clamp(1rem, 6vw, 3rem);
-  
+
   --inline: min(80ch, 100% - var(--gap) * 2);
   --content: min(80ch, 100% - var(--gap) * 2);
   --popout: minmax(0, 2rem);
   --feature: minmax(0, 5rem);
---full: minmax(var(--gap), 1fr);
+  --full: minmax(var(--gap), 1fr);
 
   display: grid; /* the grid */
 

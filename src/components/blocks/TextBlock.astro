@@ -1,5 +1,6 @@
 ---
 // Import Components & Scripts
+import { PortableText } from 'astro-portabletext';
 
 // Define Types
 interface Props{
@@ -11,71 +12,32 @@ interface Props{
 // Define Vars
 const { title = "", content = "", size = "content" } = Astro.props;
 
-// Helper function to render portable text
-function renderPortableText(content: any) {
-  if (typeof content === 'string') {
-    return content;
+// Custom components for Portable Text rendering
+const components = {
+  types: {
+    // Add custom block types here if needed in the future
+  },
+  marks: {
+    // Custom mark components if needed
+  },
+  block: {
+    // Custom block components if needed
+  },
+  list: {
+    // Custom list components if needed
+  },
+  listItem: {
+    // Custom list item components if needed
   }
-  
-  if (Array.isArray(content)) {
-    return content.map(block => {
-      if (block._type === 'block' && block.children) {
-        let html = '';
-        
-        // Handle different block styles
-        const style = block.style || 'normal';
-        const text = block.children.map((child: any) => {
-          let childText = child.text || '';
-          
-          // Apply marks (bold, italic, etc.)
-          if (child.marks && child.marks.length > 0) {
-            child.marks.forEach((mark: any) => {
-              switch (mark) {
-                case 'strong':
-                  childText = `<strong>${childText}</strong>`;
-                  break;
-                case 'em':
-                  childText = `<em>${childText}</em>`;
-                  break;
-                case 'underline':
-                  childText = `<u>${childText}</u>`;
-                  break;
-                case 'strike-through':
-                  childText = `<s>${childText}</s>`;
-                  break;
-              }
-            });
-          }
-          
-          return childText;
-        }).join('');
-        
-        // Wrap in appropriate HTML tag based on style
-        switch (style) {
-          case 'h3':
-            return `<h3>${text}</h3>`;
-          case 'h4':
-            return `<h4>${text}</h4>`;
-          case 'normal':
-          default:
-            return `<p>${text}</p>`;
-        }
-      }
-      return '';
-    }).join('');
-  }
-  
-  return '';
-}
-
-const renderedContent = renderPortableText(content);
+};
 
 if (import.meta.env.DEV) {
   console.log('📝 TextBlock received:', {
     title,
     content: typeof content,
     size,
-    renderedContent: renderedContent.substring(0, 100) + '...'
+    isArray: Array.isArray(content),
+    contentLength: Array.isArray(content) ? content.length : 0
   });
 }
 ---
@@ -85,20 +47,18 @@ if (import.meta.env.DEV) {
   {title &&
     <h2 class="textblock-title" set:html={title} />
   }
-  <div class="textblock-content" set:html={renderedContent} />
+  <div class="textblock-content">
+    {typeof content === 'string' ? (
+      <div set:html={content} />
+    ) : Array.isArray(content) ? (
+      <PortableText value={content} components={components} />
+    ) : null}
+  </div>
 </div>
 
 
 <style>
-  .textblock h2,
-  .textblock h3,
-  .textblock h4,
-  .textblock h5,
-  .textblock h6 {
-    line-height: 112.5%;
-    margin-block: 5em;
-    color:red;
-  }
+  
 
   .textblock p {
     margin-bottom: 2em;
@@ -106,6 +66,17 @@ if (import.meta.env.DEV) {
 
   .textblock-content {
     line-height: 133%;
+
+    h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 800;
+    line-height: 112.5%;
+    margin-block: 1em 0.25em;
+    
+  }
   }
 
   /* Size-based typography - correct selectors */

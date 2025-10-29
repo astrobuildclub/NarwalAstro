@@ -1,0 +1,63 @@
+---
+// src/layouts/Layout.astro
+import CookieConsent from "../components/CookieConsent.astro";
+
+const {
+  title = "Title",
+  description = "Description",
+  url,
+  image = "/social-preview-image.png",
+  author = "Author",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="nl" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- CookieConsent CSS -->
+    <link rel="stylesheet" href="/css/cookieconsent.css" />
+    <link rel="stylesheet" href="/css/iframemanager.css" />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={url} />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+  </head>
+  <body>
+    <slot />
+    
+    <!-- CookieConsent component -->
+    <CookieConsent />
+    
+    <!-- JavaScript bestanden -->
+    <script src="/js/cookieconsent.umd.js"></script>
+    <script src="/js/iframemanager.js"></script>
+    
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </body>
+</html>

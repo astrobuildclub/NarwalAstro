@@ -54,7 +54,7 @@ const { prefix, blocks } = Astro.props;
                     caption={block.caption} 
                     />
         case 'videoBlock':
-          return <VideoBlock video={block.video} size={block.size}/>
+          return <VideoBlock video={block} size={block.size}/>
         case 'colorBlock':
           return <ColorBlock color={block.color} />
         case 'testimonialBlock':
@@ -148,7 +148,7 @@ const { prefix, blocks } = Astro.props;
 <style>
   .content { 
     display: grid;
-    grid-row-gap: var(--space-6xl)
+    grid-row-gap: var(--space-2xl)
   }
 
 </style>

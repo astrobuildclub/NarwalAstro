@@ -1,0 +1,74 @@
+---
+interface Props {
+  service: "youtube" | "vimeo";
+  id: string;
+  title?: string;
+  params?: string;
+  thumbnail?: string;
+  ratio?:
+    | "1:1"
+    | "2:1"
+    | "3:2"
+    | "5:2"
+    | "4:3"
+    | "16:9"
+    | "16:10"
+    | "20:9"
+    | "21:9"
+    | "9:16"
+    | "9:20";
+  autoscale?: boolean;
+  widget?: boolean;
+  size?: "inline" | "feature" | "page" | "full" | "none";
+}
+
+const {
+  service,
+  id,
+  title,
+  params,
+  thumbnail,
+  ratio,
+  autoscale = true,
+  widget = false,
+  size = "inline",
+} = Astro.props;
+
+function getSizeClass(size: string) {
+  switch (size) {
+    case "feature":
+      return "feature";
+    case "page":
+      return "page";
+    case "full":
+      return "full";
+    case "none":
+      return "";
+    default:
+      return "inline";
+  }
+}
+---
+
+<section class="full-width">
+  <div
+    class={`embed ${getSizeClass(size)}`}
+    data-service={service}
+    data-id={id}
+    data-title={title}
+    data-params={params ? `${params}&enablejsapi=1` : "enablejsapi=1"}
+    data-thumbnail={thumbnail}
+    data-ratio={ratio}
+    data-autoscale={autoscale ? "" : undefined}
+    data-widget={widget ? "" : undefined}
+  >
+  </div>
+</section>
+
+<style>
+  div[data-service],
+  div[data-service] .cll,
+  div[data-service] .cll a,
+  div[data-service] .cll button {
+  }
+</style>
