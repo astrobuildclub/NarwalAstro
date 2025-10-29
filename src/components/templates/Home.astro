@@ -43,12 +43,12 @@ if (import.meta.env.DEV) {
     introColsCount: introCols.length,
     introContent: intro,
     statementContent: statement,
-    slides: slides.map(slide => ({
+    slides: (slides as Array<any>).map((slide: any) => ({
       title: slide.title,
       subtitle: slide.subtitle,
       hasImage: !!slide.image,
       // imageAsset: slide.image?.asset?._ref
-    }))
+    })),
   });
 }
 ---
