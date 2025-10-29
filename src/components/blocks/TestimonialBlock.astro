@@ -91,6 +91,23 @@ if (import.meta.env.DEV) {
         border-left: 4px solid var(--clr-primary, #007bff);
     }
 
+    /* Size-based grid positioning */
+    .testimonialblock.content {
+        grid-column: content;
+    }
+
+    .testimonialblock.popout {
+        grid-column: popout;
+    }
+
+    .testimonialblock.feature {
+        grid-column: feature;
+    }
+
+    .testimonialblock.full {
+        grid-column: full;
+    }
+
     .testimonialblock-quote {
         font-size: var(--fs-lg, 1.25rem);
         font-style: italic;

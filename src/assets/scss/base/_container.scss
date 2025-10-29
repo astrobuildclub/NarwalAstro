@@ -6,16 +6,16 @@
 
 .container {
   margin: 0 auto;
-  padding: 0 calc(4rem / 2);
+  padding: 0 calc(2rem / 2);
   max-width: 100%;
 
   @include breakpoint(medium) {
-    padding: 0 3rem;
+    padding: 0 2rem;
   }
 
   @include breakpoint(large) {
     padding: 0 calc(2rem / 2);
-    max-width: 2560px;
+    max-width: 1200px;
   }
 
   &.stretch {

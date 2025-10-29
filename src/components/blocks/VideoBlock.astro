@@ -83,8 +83,10 @@ function getSizeClass(size: string) {
       return "full";
     case "inherit":
       return "inherit";
+    case "content":
+      return "content";
     default:
-      return "inline";
+      return "content";
   }
 }
 

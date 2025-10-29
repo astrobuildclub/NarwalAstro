@@ -77,4 +77,29 @@ if (import.meta.env.DEV) {
     height: auto;
     display: block;
   }
+
+  /* Size-based grid positioning */
+  .imageblock.content {
+    grid-column: content;
+  }
+
+  .imageblock.popout {
+    grid-column: popout;
+  }
+
+  .imageblock.feature {
+    grid-column: feature;
+  }
+
+  .imageblock.full {
+    grid-column: full;
+  }
+
+  .imageblock.inline {
+    grid-column: content;
+  }
+
+  .imageblock.inherit {
+    grid-column: inherit;
+  }
 </style>

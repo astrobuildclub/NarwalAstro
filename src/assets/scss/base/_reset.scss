@@ -1,7 +1,10 @@
-// | -------------------------------------------------------------
-// | > Reset
-// | -------------------------------------------------------------
+/* 
+| -------------------------------------------------------------
+| > Reset
+| -------------------------------------------------------------
+*/
 
+/* Box-sizing and layout defaults */
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -14,14 +17,26 @@ html {
       animation-delay: 0s !important;
     }
   }
+
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
 *,
-*::after,
-*::before {
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  margin: 0;
+
+}
+
+/* Remove default margin and padding from common elements */
 blockquote,
 body,
 figure,
@@ -36,12 +51,16 @@ li,
 ol,
 p,
 pre,
-ul {
+ul,
+dl,
+dd {
   margin: 0;
   padding: 0;
 }
 
-ul:where([class]) {
+ul[role='list'],
+ul:where([class]),
+ol[role='list'] {
   list-style: none;
 }
 
@@ -49,14 +68,18 @@ button,
 input,
 select,
 textarea {
+  font: inherit;
   color: inherit;
   letter-spacing: inherit;
-  font: inherit;
 }
 
 input[type="text"],
 textarea {
   width: 100%;
+}
+
+textarea:not([rows]) {
+  min-height: 10em;
 }
 
 fieldset {
@@ -77,17 +100,14 @@ textarea {
 
 button {
   padding: 0.75em 1em;
-  border-radius: 0;
   background-color: transparent;
+  border-radius: 0;
   line-height: 1;
+  cursor: pointer;
 }
 
 button * {
   pointer-events: none;
-}
-
-button:hover {
-  cursor: pointer;
 }
 
 embed,
@@ -95,7 +115,8 @@ iframe,
 img,
 object,
 svg,
-video {
+video,
+picture {
   display: block;
   max-width: 100%;
 }
@@ -118,4 +139,50 @@ noscript {
 [tabindex="-1"] {
   outline: none !important;
   box-shadow: none !important;
+}
+
+/* Headings and text elements */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+  line-height: 1.1;
+}
+
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+/* Links */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Images */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inputs */
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Targeted elements */
+:target {
+  scroll-margin-block: 5ex;
 }

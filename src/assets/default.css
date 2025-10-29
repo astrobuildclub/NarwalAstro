@@ -1,0 +1,362 @@
+/*---------------------*/
+/* TAILWIND            */
+/*---------------------*/
+
+/* Note: install PostCSS Language Support for VScode, to remove "Unknown at Rule" */
+/* Copy & Paste the following command in your browser: vscode:extension/csstools.postcss   */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #111;
+  --white: #fdfdfa;
+  --black: #222;
+  --primary: #00b7c6;
+  --grey--dark: #7b7974;
+  --font-color: var(--black);
+  --background: var(--white);
+  --action-color: var(--primary-300);
+  --action-color-state: var(--primary-500);
+  --primary-background: var(--primary-100);
+  --neutral-background: var(--neutral-200);
+
+  --gap-default: var(--space-s);
+  --grid-gutter: var(--space-m);
+  /* Spacing - now handled by Utopia in SCSS */
+  --site-padding: clamp(1rem, 0.2857rem + 3.5714vi, 6rem);
+
+  --font-measure: 70ch;
+  --font-family-default:
+    'Instrument Sans', Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans',
+    Arial, sans-serif;
+  --font-family-special: 'Instrument Serif', serif;
+  --font-mono: 'Geist Mono Variable', monospace;
+
+  --radius-small: 3px;
+  --radius-large: 6px;
+  --radius-default: clamp(1rem, 0.7692rem + 1.0256vw, 2rem);
+
+  --easing-easeOutBack: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --easing-easeInOutQuart: cubic-bezier(0.76, 0, 0.24, 1);
+  --easing-easeOutExpo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme='dark'] {
+  --white: #111;
+  --black: #e6e6e4;
+  --primary: #ff851b;
+  --font-color: var(--neutral-100);
+  --action-color: var(--secondary-100);
+  --action-color-state: var(--secondary-500);
+  --background: var(--dark-100);
+  --primary-background: var(--primary-500);
+  --neutral-background: var(--neutral-900);
+
+  --cc-bg: #000;
+  --cc-primary-color: rgb(239, 244, 246);
+  --cc-secondary-color: #b1bdc3 !important;
+
+  --cc-btn-primary-bg: #ffffff;
+  --cc-btn-primary-color: #000;
+  --cc-btn-primary-hover-bg: #ccd4d8;
+  --cc-btn-primary-hover-color: #000;
+  --cc-btn-primary-border-color: var(--cc-btn-primary-bg);
+
+  --cc-btn-secondary-bg: rgba(255, 255, 255, 0.039);
+  --cc-btn-secondary-color: var(--cc-primary-color);
+  --cc-btn-secondary-border-color: #252729;
+  --cc-btn-secondary-hover-bg: #252729;
+  --cc-btn-secondary-hover-color: #fff;
+  --cc-btn-secondary-hover-border-color: #252729;
+
+  --cc-cookie-category-block-bg: #101111;
+  --cc-cookie-category-block-border: #1d1e1f;
+  --cc-cookie-category-block-hover-bg: #151516;
+  --cc-cookie-category-block-hover-border: #1d1e1f;
+  --cc-cookie-category-expanded-block-hover-bg: #1d1e1f;
+  --cc-cookie-category-expanded-block-bg: #101111;
+  --cc-toggle-readonly-bg: #2f3132;
+  --cc-overlay-bg: rgba(0, 0, 0, 0.9) !important;
+
+  --cc-toggle-on-bg: var(--cc-btn-primary-bg);
+  --cc-toggle-off-bg: #525f6b;
+  --cc-toggle-on-knob-bg: var(--cc-bg);
+  --cc-toggle-off-knob-bg: var(--cc-btn-primary-color);
+  --cc-toggle-readonly-knob-bg: var(--cc-cookie-category-block-bg);
+  --cc-toggle-enabled-icon-color: var(--cc-btn-primary-color);
+  --cc-toggle-disabled-icon-color: var(--cc-btn-primary-color);
+  --cc-toggle-readonly-knob-icon-color: var(--cc-toggle-readonly-bg);
+  --cc-section-category-border: #1e2428;
+
+  --cc-webkit-scrollbar-bg: var(--cc-section-category-border);
+  --cc-webkit-scrollbar-hover-bg: var(--cc-btn-primary-hover-bg);
+
+  --cc-separator-border-color: #252729;
+
+  --cc-footer-bg: #000;
+  --cc-footer-color: var(--cc-secondary-color);
+  --cc-footer-border-color: #212529;
+}
+
+.logo {
+  width: 6rem;
+  color: var(--neutral-100);
+}
+
+body {
+  color: var(--black);
+  background: var(--white);
+}
+
+.page-layout > *,
+.full-width > * {
+  grid-column: content;
+  background: var(--debug);
+}
+
+.page-layout > * {
+  margin-block: var(--space-l);
+}
+
+.full > * {
+  background: var(--debug);
+}
+.page-layout,
+.full-width {
+  --minimum-content-padding: 1rem;
+
+  --full-max-width: 1fr;
+  /** pixels **/
+  --page-max-width: 1304px;
+  --feature-max-width: 1080px;
+  --popout-max-width: 840px;
+  --content-max-width: 632px;
+  --inset-content-max-width: 408px;
+  /* Percentages */
+  --page-max-width: 86.24%;
+  --feature-max-width: 71.43%;
+  --popout-max-width: 55.56%;
+  --content-max-width: 41.81%;
+  --inset-content-max-width: 26.98%;
+  /* Clamp */
+  --page-max-width: clamp(
+    768px,
+    calc(100vw - 4rem),
+    calc(100vw - var(--space-2xl))
+  );
+  --feature-max-width: clamp(720px, 71.43vw, 71.43%);
+  --popout-max-width: clamp(640px, 55.56vw, 55.56%);
+  --content-max-width: clamp(480px, 41.81vw, 41.81%);
+  --inset-content-max-width: clamp(420px, 26.98vw, 26.98%);
+
+  /** TRACK SIZES **/
+  --full: minmax(var(--minimum-content-padding), 1fr);
+  --page: minmax(
+    0,
+    calc((var(--page-max-width) - var(--feature-max-width)) * 0.5)
+  );
+  --feature: minmax(
+    0,
+    calc((var(--feature-max-width) - var(--popout-max-width)) * 0.5)
+  );
+  --popout: minmax(
+    0,
+    calc((var(--popout-max-width) - var(--content-max-width)) * 0.5)
+  );
+  --content: minmax(
+    0,
+    calc((var(--content-max-width) - var(--inset-content-max-width)) * 0.5)
+  );
+  --inset-content: min(
+    var(--inset-content-max-width),
+    100% - var(--minimum-content-padding) * 2
+  );
+
+  display: grid;
+  grid-template-columns:
+    [full-start]
+    var(--full)
+    [page-start]
+    var(--page)
+    [feature-start]
+    var(--feature)
+    [popout-start]
+    var(--popout)
+    [content-start]
+    var(--content)
+    [inset-content-start]
+    var(--inset-content)
+    [inset-content-end]
+    var(--content)
+    [content-end]
+    var(--popout)
+    [popout-end]
+    var(--feature)
+    [feature-end]
+    var(--page)
+    [page-end]
+    var(--full)
+    [full-end];
+}
+
+/** CLASSES **/
+.full {
+  grid-column: full;
+}
+.full-start {
+  grid-column-start: full-start;
+}
+.full-end {
+  grid-column-end: full-end;
+}
+.page {
+  grid-column: page;
+}
+.page-start {
+  grid-column-start: page-start;
+}
+.page-end {
+  grid-column-end: page-end;
+}
+.feature {
+  grid-column: feature;
+}
+.feature-start {
+  grid-column-start: feature-start;
+}
+.feature-end {
+  grid-column-end: feature-end;
+}
+.popout {
+  grid-column: popout;
+}
+.popout-start {
+  grid-column-start: popout-start;
+}
+.popout-end {
+  grid-column-end: popout-end;
+}
+.content {
+  grid-column: content;
+}
+.content-start {
+  grid-column-start: content-start;
+}
+.content-end {
+  grid-column-end: content-end;
+}
+.inset-content {
+  grid-column: inset-content;
+}
+.inset-content-start {
+  grid-column-start: inset-content-start;
+}
+.inset-content-end {
+  grid-column-end: inset-content-end;
+}
+.full-width {
+  grid-column: full;
+}
+.full-content,
+.full-content-nopad {
+  grid-column: full;
+}
+.full-content {
+  padding-inline: var(--minimum-content-padding);
+}
+.full {
+  grid-column: full;
+  background: var(--debug);
+}
+.page {
+  grid-column: page;
+}
+.feature {
+  grid-column: feature;
+}
+.popout {
+  grid-column: popout;
+}
+.content {
+  grid-column: content;
+}
+.inset-content {
+  grid-column: inset-content;
+}
+
+/* Content Blocks */
+
+.columns {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(0px, 1fr)
+  ); /* Min 240px, max 1fr */
+}
+
+/* Zorg dat er nooit een los item verschijnt */
+.columns > div {
+  min-width: 0; /* Voorkomt overflow */
+  background: var(--debug);
+  text-align: center;
+}
+
+.column > * {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.full .column > figcaption {
+  padding: 0;
+}
+
+figure figcaption {
+  grid-column: page;
+}
+
+:not(.full) > figcaption {
+  padding: var(--space-2xs) 0;
+}
+
+.full > figcaption {
+  padding: var(--space-2xs);
+}
+
+.multi-col-block .column figcaption {
+  padding: var(--space-2xs) 0 !important;
+}
+
+.text-block p + h3,
+.text-block p + h4,
+.text-block p + h5,
+.text-block p + h6 {
+  margin-top: 2rem; /* Of een andere gewenste waarde */
+}
+
+.text-block p + p {
+  margin-top: 1rem; /* Of een andere gewenste waarde */
+}
+
+.swiper-slide > *,
+.media-item > * {
+  display: inline-block;
+  margin: 0 !important;
+  width: 100%;
+}
+
+/* Als de ruimte te klein is, forceer alles onder elkaar */
+@media (max-width: 768px) {
+  .columns {
+    grid-template-columns: 1fr !important; /* Alles onder elkaar */
+  }
+}
+
+pre {
+  font-size: 0.675rem;
+  padding: 0.25rem;
+  background: rgba(255, 0, 0, 0.2) !important;
+  display: none;
+}

@@ -25,7 +25,7 @@ const { prefix, blocks } = Astro.props;
 
 
 ---
-<div class="content">
+<div class="page-layout">
   {blocks &&
     blocks.map((block:any) => {
       // Check dataSource om te bepalen welke structuur we gebruiken
@@ -143,9 +143,9 @@ const { prefix, blocks } = Astro.props;
 
 
 <style>
-  .content { 
+  .page-layout { 
     display: grid;
-    grid-row-gap: var(--space-2xl)
+    grid-row-gap: calc(2vh + var(--space-m));
   }
 
 </style>

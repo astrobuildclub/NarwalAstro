@@ -79,20 +79,24 @@ if (import.meta.env.DEV) {
   }
   }
 
-  /* Size-based typography - correct selectors */
-  .textblock.content .textblock-content {
+  /* Size-based grid positioning and typography */
+  .textblock.content {
+    grid-column: content;
     font-size: var(--fs-0);
   }
 
-  .textblock.popout .textblock-content {
+  .textblock.popout {
+    grid-column: popout;
     font-size: var(--fs-1);
   }
 
-  .textblock.feature .textblock-content {
+  .textblock.feature {
+    grid-column: feature;
     font-size: var(--fs-2);
   }
 
-  .textblock.full .textblock-content {
+  .textblock.full {
+    grid-column: full;
     font-size: var(--fs-4);
   }
 </style>
