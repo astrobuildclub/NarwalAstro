@@ -266,3 +266,12 @@ export interface SanitySEO {
   image?: SanityImage;
   canonical?: string;
 }
+
+// Columns Block types
+export interface SanityColumnsBlock {
+  _type: 'columnsBlock';
+  _key: string;
+  title?: string;
+  size: 'feature' | 'full';
+  columns: Array<SanityTextBlock | SanityImageBlock | SanityVideoBlock>;
+}

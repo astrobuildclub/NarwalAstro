@@ -66,7 +66,11 @@ const { prefix, blocks } = Astro.props;
                     size={block.size}
                     />
         case 'columnsBlock':
-          return <ColumnsBlock cols={block.cols} />
+          return <ColumnsBlock 
+                    title={block.title}
+                    size={block.size}
+                    columns={block.columns}
+                 />
         case 'textGridBlock':
           return <TextGridBlock title={block.title} media={block.media} items={block.items} />
         case 'teamBlock':
@@ -115,10 +119,10 @@ const { prefix, blocks } = Astro.props;
                     role={block.roleCompany}
                     photo={block.photo?.node}
                     />
-        case `${prefix}ContentMultiColsLayout`: // Testimonial Block
-          return <ColumnsBlock cols={block.col} />
+        case `${prefix}ContentMultiColsLayout`: // Columns Block
+          return <ColumnsBlock columns={block.columns} />
         case `${prefix}ContentTextGridLayout`: // Textgrid Block
-          return <TextGridBlock title={block.title} media={block.media} items={block.item} />
+          return <TextGridBlock title={block.title} media={block.media} items={block.items} />
         case `${prefix}ContentTeamLayout`: // Team Block
           return <TeamBlock 
                     title={block.title} 

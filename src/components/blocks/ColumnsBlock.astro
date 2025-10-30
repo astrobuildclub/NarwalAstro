@@ -2,67 +2,43 @@
 // Import Components & Scripts
 import TextBlock from './TextBlock.astro'
 import ImageBlock from './ImageBlock.astro'
-// import VideoBlock from './VideoBlock.astro'
+import VideoBlock from './VideoBlock.astro'
 
 // Define Types
-interface ImageNode {
-  altText: string;
-  title: string;
-  sourceUrl: string;
-}
-interface Image {
-  node: ImageNode;
-}
-interface ColItem {
-  contentType: "image" | "video" | "text";
-  showText: boolean;
-  text: string | null;
-  title: string | null;
-  verticalAlign: string[];
-  video: any | null;
-  image: Image;
-}
-type Props = {
-  cols: ColItem[];
+interface Props {
+  title?: string;
+  size?: 'feature' | 'full';
+  columns: Array<any>; // Will be textBlock, imageBlock, or videoBlock
 }
 
 // Define Vars
-const { cols } = Astro.props
+const { title, size = 'feature', columns } = Astro.props
 ---
 
 <!-- ColumnsBlock -->
-<div class="grid gap-6 multicols full  lg:grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))]">
-   {cols &&
-    cols.map((col) => {
-      switch (col.contentType) {
-        case 'image': // Image
-          if(!col.showText){
-            return (
-              <div class="col"><ImageBlock sourceUrl={col.image?.node?.sourceUrl || ""} altText={col.image?.node?.altText || ""} /></div>
-            )
-          }else{
-            return (
-              <div class="col">
-                <ImageBlock sourceUrl={col.image?.node?.sourceUrl || ""} altText={col.image?.node?.altText || ""} />
-                <TextBlock title={col.title || ""} content={col.text || ""}  />
-              </div>
-            )
-          }
-        case 'video': //Videoblock
-        // if(!col.showText){
-        //     return <div class="col"><VideoBlock /></div>
-        //   }else{
-        //     return (
-        //       <div class="col">
-        //        <VideoBlock />
-        //         <TextBlock title={col.title || ""} content={col.text || ""}  />
-        //       </div>
-        //     )
-        //   }
-        case 'text':  // Textblock
+<div class={`grid gap-6 multicols ${size} lg:grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))]`}>
+   {columns &&
+    columns.map((column) => {
+      switch (column._type) {
+        case 'textBlock':
+          return <div class="col"><TextBlock content={column.text} size="inherit" /></div>
+        case 'imageBlock':
+          return <div class="col"><ImageBlock image={column.image} alt={column.alt} size="inherit" /></div>
+        case 'videoBlock':
+          return <div class="col"><VideoBlock video={column} size="inherit" /></div>
         default:
-          return  <div class="col"><TextBlock title={col.title || ""} content={col.text || ""}  /></div>
+          return null
       }
     })
   }
 </div>
+
+<style>
+  .multicols.feature {
+    grid-column: feature;
+  }
+  
+  .multicols.full {
+    grid-column: full;
+  }
+</style>
