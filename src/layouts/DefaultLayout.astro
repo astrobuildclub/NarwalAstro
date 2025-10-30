@@ -29,6 +29,17 @@ const primaryMenu = menus.nodes[0]
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script is:inline>
+      (function () {
+        try {
+          const doc = document.documentElement;
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = stored || (prefersDark ? 'dark' : 'light');
+          doc.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml"  />
     <link rel="icon" href="/favicon.ico" sizes="any">
     
@@ -70,6 +81,14 @@ const primaryMenu = menus.nodes[0]
     <!-- JavaScript bestanden -->
     <script src="/js/cookieconsent.umd.js" is:inline></script>
     <script src="/js/iframemanager.js" is:inline></script>
+    <script is:inline>
+      // Re-scan embeds after Astro view transitions
+      const __rescanEmbeds = () => {
+        try { window.iframemanager && window.iframemanager.scan && window.iframemanager.scan(); } catch (e) {}
+      };
+      document.addEventListener('astro:page-load', __rescanEmbeds);
+      document.addEventListener('astro:after-swap', __rescanEmbeds);
+    </script>
   </body>
 </html>
 

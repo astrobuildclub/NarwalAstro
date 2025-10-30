@@ -189,41 +189,46 @@
 <script>
   // @ts-nocheck
   const setDarkMode = (active = false) => {
-    const wrapper = document.querySelector(":root");
+    const root = document.documentElement;
     if (active) {
-      wrapper.setAttribute("data-theme", "dark");
+      root.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
     } else {
-      wrapper.setAttribute("data-theme", "light");
+      root.setAttribute("data-theme", "light");
       localStorage.setItem("theme", "light");
     }
   };
 
   const toggleDarkMode = () => {
-    const theme = document.querySelector(":root").getAttribute("data-theme");
-    // If the current theme is "light", we want to activate dark
+    const theme = document.documentElement.getAttribute("data-theme");
     setDarkMode(theme === "light");
   };
 
   const initDarkMode = () => {
     const query = window.matchMedia("(prefers-color-scheme: dark)");
-    const themePreference = localStorage.getItem("theme");
-
-    let active = query.matches;
-    if (themePreference === "dark") {
-      active = true;
-    }
-    if (themePreference === "light") {
-      active = false;
-    }
-
+    const pref = localStorage.getItem("theme");
+    let active = pref ? pref === "dark" : query.matches;
     setDarkMode(active);
-
-    query.addListener((e) => setDarkMode(e.matches));
-
-    const toggleButton = document.querySelector(".js__dark-mode-toggle");
-    toggleButton.addEventListener("click", toggleDarkMode);
+    if (!pref && query.addEventListener) {
+      query.addEventListener("change", (e) => setDarkMode(e.matches));
+    }
   };
 
-  initDarkMode();
+  const bindToggle = () => {
+    if (document.documentElement.dataset.dmDelegated === "true") return;
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      if (t && (t.closest?.(".js__dark-mode-toggle"))) {
+        toggleDarkMode();
+      }
+    });
+    document.documentElement.dataset.dmDelegated = "true";
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initDarkMode();
+    bindToggle();
+  });
+  document.addEventListener("astro:page-load", bindToggle);
+  document.addEventListener("astro:after-swap", bindToggle);
 </script>

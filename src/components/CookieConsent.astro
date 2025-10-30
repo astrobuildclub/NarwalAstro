@@ -14,9 +14,20 @@
   }
 
   window.addEventListener("load", () => {
-    const im = window.iframemanager();
-    im.run(iframeManagerConfig);
-    window.CookieConsent.run(cookieConsentConfig);
+    try {
+      if (!(window as any).__ifmInit) {
+        const im = window.iframemanager();
+        im.run(iframeManagerConfig);
+        (window as any).__ifmInit = true;
+      }
+    } catch (e) {}
+
+    try {
+      if (!(window as any).__ccInit) {
+        window.CookieConsent.run(cookieConsentConfig);
+        (window as any).__ccInit = true;
+      }
+    } catch (e) {}
   });
 </script>
 
