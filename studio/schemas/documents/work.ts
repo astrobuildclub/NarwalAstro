@@ -81,20 +81,6 @@ export default defineType({
             }),
           ],
         }),
-        defineField({
-          name: 'color',
-          type: 'string',
-          title: 'Color',
-          description: 'Hex color code (e.g., #ff0000)',
-          validation: (Rule) =>
-            Rule.custom((color) => {
-              if (!color) return true; // Optional field
-              if (!/^#[0-9A-Fa-f]{6}$/.test(color)) {
-                return 'Please enter a valid hex color code (e.g., #ff0000)';
-              }
-              return true;
-            }),
-        }),
       ],
       group: 'hero',
     }),
