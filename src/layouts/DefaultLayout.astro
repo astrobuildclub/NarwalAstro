@@ -30,6 +30,15 @@ const primaryMenu = menus.nodes[0]
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script is:inline>
+      // Carry current theme into the incoming document before swap
+      document.addEventListener('astro:before-swap', (event) => {
+        try {
+          const theme = localStorage.getItem('theme') || document.documentElement.getAttribute('data-theme') || 'light';
+          event.newDocument.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      });
+    </script>
+    <script is:inline>
       (function () {
         try {
           const doc = document.documentElement;

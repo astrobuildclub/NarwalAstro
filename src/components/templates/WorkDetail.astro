@@ -83,7 +83,7 @@ if (import.meta.env.DEV) {
               : '';
             
             return (
-              <a href={`/project/${project.slug}`} class="related-project-card">
+              <a href={`/project/${project.slug}`} class="related-project-card" data-astro-reload>
                 <Image 
                   src={thumbnailUrl} 
                   alt={project.title}

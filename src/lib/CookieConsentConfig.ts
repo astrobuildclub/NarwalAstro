@@ -23,13 +23,29 @@ export const cookieConsentConfig = {
       services: {
         youtube: {
           label: 'Youtube Embed',
-          onAccept: () => (window as any).iframemanager().acceptService('youtube'),
-          onReject: () => (window as any).iframemanager().rejectService('youtube'),
+          onAccept: () => {
+            (window as any).iframemanager().acceptService('youtube');
+            try { (window as any).iframemanager().scan(); } catch(e) {}
+            document.dispatchEvent(new CustomEvent('consent:changed', { detail: { service: 'youtube', accepted: true }}));
+          },
+          onReject: () => {
+            (window as any).iframemanager().rejectService('youtube');
+            try { (window as any).iframemanager().scan(); } catch(e) {}
+            document.dispatchEvent(new CustomEvent('consent:changed', { detail: { service: 'youtube', accepted: false }}));
+          },
         },
         vimeo: {
           label: 'Vimeo Embed',
-          onAccept: () => (window as any).iframemanager().acceptService('vimeo'),
-          onReject: () => (window as any).iframemanager().rejectService('vimeo'),
+          onAccept: () => {
+            (window as any).iframemanager().acceptService('vimeo');
+            try { (window as any).iframemanager().scan(); } catch(e) {}
+            document.dispatchEvent(new CustomEvent('consent:changed', { detail: { service: 'vimeo', accepted: true }}));
+          },
+          onReject: () => {
+            (window as any).iframemanager().rejectService('vimeo');
+            try { (window as any).iframemanager().scan(); } catch(e) {}
+            document.dispatchEvent(new CustomEvent('consent:changed', { detail: { service: 'vimeo', accepted: false }}));
+          },
         },
       },
     },
