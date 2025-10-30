@@ -6,7 +6,7 @@ import { PortableText } from 'astro-portabletext';
 interface Props{
   title?: string;
   content?: string | any[]; // Support both string and portable text
-  size?: "content" | "popout" | "feature" | "full";
+  size?: "content" | "popout" | "feature" | "page" | "inherit";
 }
 
 // Define Vars
@@ -95,8 +95,12 @@ if (import.meta.env.DEV) {
     font-size: var(--fs-2);
   }
 
-  .textblock.full {
-    grid-column: full;
-    font-size: var(--fs-4);
+  .textblock.page {
+    grid-column: page;
+    font-size: var(--fs-3);
+  }
+
+  .textblock.inherit {
+    grid-column: inherit;
   }
 </style>

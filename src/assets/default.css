@@ -24,7 +24,7 @@
   --gap-default: var(--space-s);
   --grid-gutter: var(--space-m);
   /* Spacing - now handled by Utopia in SCSS */
-  --site-padding: clamp(1rem, 0.2857rem + 3.5714vi, 6rem);
+  --site-padding: var(--space-l);
 
   --font-measure: 70ch;
   --font-family-default:
@@ -122,24 +122,11 @@ body {
 .full > * {
   background: var(--debug);
 }
+
 .page-layout,
 .full-width {
   --minimum-content-padding: 1rem;
-
   --full-max-width: 1fr;
-  /** pixels **/
-  --page-max-width: 1304px;
-  --feature-max-width: 1080px;
-  --popout-max-width: 840px;
-  --content-max-width: 632px;
-  --inset-content-max-width: 408px;
-  /* Percentages */
-  --page-max-width: 86.24%;
-  --feature-max-width: 71.43%;
-  --popout-max-width: 55.56%;
-  --content-max-width: 41.81%;
-  --inset-content-max-width: 26.98%;
-  /* Clamp */
   --page-max-width: clamp(
     768px,
     calc(100vw - 4rem),
@@ -149,8 +136,6 @@ body {
   --popout-max-width: clamp(640px, 55.56vw, 55.56%);
   --content-max-width: clamp(480px, 41.81vw, 41.81%);
   --inset-content-max-width: clamp(420px, 26.98vw, 26.98%);
-
-  /** TRACK SIZES **/
   --full: minmax(var(--minimum-content-padding), 1fr);
   --page: minmax(
     0,
@@ -172,31 +157,13 @@ body {
     var(--inset-content-max-width),
     100% - var(--minimum-content-padding) * 2
   );
-
   display: grid;
   grid-template-columns:
-    [full-start]
-    var(--full)
-    [page-start]
-    var(--page)
-    [feature-start]
-    var(--feature)
-    [popout-start]
-    var(--popout)
-    [content-start]
-    var(--content)
-    [inset-content-start]
-    var(--inset-content)
-    [inset-content-end]
-    var(--content)
-    [content-end]
-    var(--popout)
-    [popout-end]
-    var(--feature)
-    [feature-end]
-    var(--page)
-    [page-end]
-    var(--full)
+    [full-start] var(--full) [page-start] var(--page)
+    [feature-start] var(--feature) [popout-start] var(--popout)
+    [content-start] var(--content) [inset-content-start] var(--inset-content)
+    [inset-content-end] var(--content) [content-end] var(--popout)
+    [popout-end] var(--feature) [feature-end] var(--page) [page-end] var(--full)
     [full-end];
 }
 

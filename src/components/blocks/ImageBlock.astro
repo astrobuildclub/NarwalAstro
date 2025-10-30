@@ -6,7 +6,7 @@ import type { SanityImage } from '../../sanity/types'
 
 // Define Types
 interface Props {
-  size?: "inline" | "popout" | "feature" | "full" | "inherit";
+  size?: "content" | "popout" | "feature" | "page" | "full" | "inherit";
   showCaption?: boolean;
   // Sanity props
   image?: SanityImage;
@@ -89,6 +89,10 @@ if (import.meta.env.DEV) {
 
   .imageblock.feature {
     grid-column: feature;
+  }
+
+  .imageblock.page {
+    grid-column: page;
   }
 
   .imageblock.full {

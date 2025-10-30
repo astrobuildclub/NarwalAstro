@@ -7,12 +7,12 @@ import VideoBlock from './VideoBlock.astro'
 // Define Types
 interface Props {
   title?: string;
-  size?: 'feature' | 'full';
+  size?: 'page' | 'feature';
   columns: Array<any>; // Will be textBlock, imageBlock, or videoBlock
 }
 
 // Define Vars
-const { title, size = 'feature', columns } = Astro.props
+const { title, size = 'page', columns } = Astro.props
 ---
 
 <!-- ColumnsBlock -->
@@ -34,11 +34,11 @@ const { title, size = 'feature', columns } = Astro.props
 </div>
 
 <style>
-  .multicols.feature {
-    grid-column: feature;
+  .multicols.page {
+    grid-column: page;
   }
   
-  .multicols.full {
-    grid-column: full;
+  .multicols.feature {
+    grid-column: feature;
   }
 </style>

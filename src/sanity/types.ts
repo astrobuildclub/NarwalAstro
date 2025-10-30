@@ -128,14 +128,14 @@ export interface SanityBlock {
 export interface SanityTextBlock extends SanityBlock {
   _type: 'textBlock';
   text: string;
-  size?: 'content' | 'popout' | 'feature' | 'full';
+  size?: 'content' | 'popout' | 'feature' | 'page';
 }
 
 export interface SanityImageBlock extends SanityBlock {
   _type: 'imageBlock';
   image: SanityImage;
   showCaption?: boolean;
-  size?: 'content' | 'popout' | 'feature' | 'full';
+  size?: 'content' | 'popout' | 'feature' | 'page' | 'full';
 }
 
 export interface SanityVideoBlock extends SanityBlock {
@@ -159,7 +159,14 @@ export interface SanityVideoBlock extends SanityBlock {
     | '9:20';
   autoscale?: boolean;
   widget?: boolean;
-  size?: 'inline' | 'popout' | 'feature' | 'full' | 'inherit';
+  size?:
+    | 'content'
+    | 'inline'
+    | 'popout'
+    | 'feature'
+    | 'page'
+    | 'full'
+    | 'inherit';
   videoFile?: SanityFile;
   autoplay?: boolean;
   loop?: boolean;
@@ -272,6 +279,6 @@ export interface SanityColumnsBlock {
   _type: 'columnsBlock';
   _key: string;
   title?: string;
-  size: 'feature' | 'full';
+  size: 'page' | 'feature';
   columns: Array<SanityTextBlock | SanityImageBlock | SanityVideoBlock>;
 }

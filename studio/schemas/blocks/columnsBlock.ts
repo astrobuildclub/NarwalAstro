@@ -18,11 +18,11 @@ export default defineType({
       title: 'Size',
       options: {
         list: [
+          { title: 'Page', value: 'page' },
           { title: 'Feature', value: 'feature' },
-          { title: 'Full Width', value: 'full' },
         ],
       },
-      initialValue: 'feature',
+      initialValue: 'page',
     }),
     defineField({
       name: 'columns',
@@ -44,10 +44,10 @@ export default defineType({
     },
     prepare({ title, columns, size }) {
       const columnTypes =
-        columns?.map((col) => col._type).join(', ') || 'No columns';
+        columns?.map((col: any) => col._type).join(', ') || 'No columns';
       return {
         title: title || 'Columns Block',
-        subtitle: `Columns Block • ${columns?.length || 0} columns (${columnTypes}) • ${size || 'feature'}`,
+        subtitle: `Columns Block • ${columns?.length || 0} columns (${columnTypes}) • ${size || 'page'}`,
       };
     },
   },

@@ -38,6 +38,7 @@ export default defineType({
           { title: 'Content (Default)', value: 'content' },
           { title: 'Popout', value: 'popout' },
           { title: 'Feature', value: 'feature' },
+          { title: 'Page', value: 'page' },
           { title: 'Full Width', value: 'full' },
         ],
       },

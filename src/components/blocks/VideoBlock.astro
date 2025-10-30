@@ -5,7 +5,7 @@ import type { SanityVideoBlock } from '../../sanity/types';
 // Define Types - following EmbedBlock structure
 interface Props {
   video: SanityVideoBlock;
-  size?: "inline" | "popout" | "feature" | "full" | "inherit";
+  size?: "content" | "inline" | "popout" | "feature" | "page" | "full" | "inherit";
 }
 
 // Define Vars
@@ -79,6 +79,8 @@ function getSizeClass(size: string) {
       return "popout";
     case "feature":
       return "feature";
+    case "page":
+      return "page";
     case "full":
       return "full";
     case "inherit":
@@ -217,6 +219,10 @@ if (import.meta.env.DEV) {
 
   .video-container.feature {
     grid-column: feature;
+  }
+
+  .video-container.page {
+    grid-column: page;
   }
 
   .video-container.full {

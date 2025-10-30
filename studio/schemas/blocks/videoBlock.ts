@@ -95,8 +95,10 @@ export default defineType({
       options: {
         list: [
           { title: 'Inline (Default)', value: 'inline' },
+          { title: 'Content', value: 'content' },
           { title: 'Popout', value: 'popout' },
           { title: 'Feature', value: 'feature' },
+          { title: 'Page', value: 'page' },
           { title: 'Full Width', value: 'full' },
           { title: 'Inherit', value: 'inherit' },
         ],
