@@ -58,46 +58,26 @@ if (import.meta.env.DEV) {
     vidsrc,
     servicesCount: services?.length || 0,
     link,
-    isSanity: _type === 'work' || _key !== undefined,
     hasThumbnail: !!thumbnail
   });
 }
 
-// Detect if this is Sanity data
-const isSanity = _type === 'work' || _key !== undefined;
-
-// Process Sanity data if needed
-let processedProps = {
-  clientname,
-  title,
-  imgsrc,
-  imgalt,
-  vidsrc,
-  link,
-  size,
-  services,
-  fitCards,
-  aspectRatio
+// Process Sanity data
+const processedProps = {
+  clientname: client?.title || clientname,
+  title: title,
+  imgsrc: thumbnail?.image?.asset?.url || imgsrc,
+  imgalt: thumbnail?.alt || imgalt,
+  vidsrc: thumbnail?.video || vidsrc,
+  link: link,
+  size: thumbnail?.size || size,
+  services: services || [],
+  fitCards: fitCards,
+  aspectRatio: thumbnail?.aspectRatio || aspectRatio
 };
 
-if (isSanity) {
-  // Override with Sanity data
-  processedProps = {
-    clientname: client?.title || clientname,
-    title: title,
-    imgsrc: thumbnail?.image?.asset?.url || imgsrc,
-    imgalt: thumbnail?.alt || imgalt,
-    vidsrc: thumbnail?.video || vidsrc,
-    link: link,
-    size: thumbnail?.size || size,
-    services: services || [],
-    fitCards: fitCards,
-    aspectRatio: thumbnail?.aspectRatio || aspectRatio
-  };
-
-  if (import.meta.env.DEV) {
-    console.log('🎨 Processed Sanity props:', processedProps);
-  }
+if (import.meta.env.DEV) {
+  console.log('🎨 Processed Sanity props:', processedProps);
 }
 
 // Use processed props
@@ -141,7 +121,7 @@ const serviceTitles = finalServices?.map(service => slugify(service.title)).join
 
 // Generate image URL for Sanity
 let imageSrc = finalImgsrc;
-if (isSanity && thumbnail?.image?.asset) {
+if (thumbnail?.image?.asset) {
   try {
     imageSrc = urlForImage(thumbnail.image)?.width(800).height(600).url() || '';
   } catch (error) {
@@ -272,6 +252,7 @@ const theImage:any = imageSrc? await getImage({
     .project-video {
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   </style>
 </div>

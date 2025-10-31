@@ -2,40 +2,58 @@
 import BlockRenderer from '../BlockRenderer.astro';
 import PageIntro from '../PageIntro.astro'
 import PageTitle from '../PageTitle.astro';
+import { PortableText } from 'astro-portabletext';
 
 const { data } = Astro.props;
 
 // Null-safe data extraction
 const pageTitle = data?.title || 'Untitled Page';
 
-// Check for Sanity vs WordPress data structure
-const isSanity = data?._type !== undefined;
-const isWordPress = data?.__typename !== undefined;
-
 // Sanity data structure
-const pageHero = isSanity ? data?.hero : data?.pageHero;
+const pageHero = data?.hero;
 const pageHeroTitle = pageHero?.title || pageTitle;
-const pageHeroColOne = isSanity ? pageHero?.col1 : pageHero?.intro?.col1;
-const pageHeroColTwo = isSanity ? pageHero?.col2 : pageHero?.intro?.col2;
+const pageHeroColOne = pageHero?.col1;
+const pageHeroColTwo = pageHero?.col2;
 
 // Content handling
-const pageIntroduction = isSanity ? data?.introCols?.[0]?.content : data?.content;
-const pageContent = isSanity ? data?.content : data?.pageContent?.content;
+const pageIntroduction = data?.introCols?.[0]?.content;
+const pageIntroductionColTwo = data?.introCols?.[1]?.content;
+const pageContent = data?.content;
+
+// PortableText components
+const components = {
+  types: {},
+  marks: {},
+  block: {},
+  list: {},
+  listItem: {},
+};
 ---
 
 
 {pageHero ?
   <PageTitle title={pageHeroTitle} />
   <PageIntro class="page">
-    <Fragment slot="column-one" set:html={pageHeroColOne} />
-    <Fragment slot="column-two" set:html={pageHeroColTwo} />
+    {pageHeroColOne && (
+      <Fragment slot="column-one" set:html={pageHeroColOne} />
+    )}
+    {pageHeroColTwo && (
+      <Fragment slot="column-two" set:html={pageHeroColTwo} />
+    )}
   </PageIntro>
 :
   <PageTitle title={pageTitle} />
   <PageIntro>
-    {pageIntroduction &&
-      <Fragment slot="column-one" set:html={pageIntroduction} />
-    }
+    {pageIntroduction && (
+      <Fragment slot="column-one">
+        <PortableText value={pageIntroduction} components={components} />
+      </Fragment>
+    )}
+    {pageIntroductionColTwo && (
+      <Fragment slot="column-two">
+        <PortableText value={pageIntroductionColTwo} components={components} />
+      </Fragment>
+    )}
   </PageIntro>
 }
 
@@ -46,8 +64,3 @@ const pageContent = isSanity ? data?.content : data?.pageContent?.content;
   )
 }
 
-<style>
-  .page {
-    padding: var(--site-padding);
-  }
-</style>

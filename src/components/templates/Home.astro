@@ -13,14 +13,10 @@ if (import.meta.env.DEV) {
   console.log('🏠 Page type:', data?.pageType);
 }
 
-// Check data source
-const isSanity = data?.dataSource === 'sanity';
-const isWordPress = data?.dataSource === 'wordpress';
-
-    // Sanity data structure (gebaseerd op je JSON)
-    const slides = data?.slides || [];
-    const projects = data?.featuredProjects || [];
-    const introCols = data?.introCols || [];
+// Sanity data structure
+const slides = data?.slides || [];
+const projects = data?.featuredProjects || [];
+const introCols = data?.introCols || [];
 
     // Extract intro en statement uit introCols
     const intro = introCols[0]?.content || [];

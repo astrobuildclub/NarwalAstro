@@ -1,11 +1,6 @@
 // Nieuwe Sanity imports
-import { 
-  getHomeData, 
-  getPageData, 
-  getProjectData 
-} from './sanity';
+import { getHomeData, getPageData, getProjectData } from './sanity';
 import type { SanityHome, SanityProject, SanityPage } from '../sanity/types';
-
 
 // templates
 import Single from '../components/templates/Single.astro';
@@ -93,7 +88,7 @@ export function getTemplateByRoute(node: any) {
               pageType: node.pageType,
               hasSlides: !!(node.slides && node.slides.length > 0),
               title: node.title,
-              _type: node._type
+              _type: node._type,
             });
           return Home;
         }
@@ -114,20 +109,9 @@ export function getTemplateByRoute(node: any) {
     }
   }
 
-  // Fall back to WordPress logic
-  switch (node.__typename) {
-    case 'Post':
-      return Single;
-    case 'Page':
-      if (node.isFrontPage) return Home;
-      if (node.template?.templateName === 'Work') return WorkOverview;
-      return Page;
-    case 'Project':
-      return WorkDetail;
-    case 'Category':
-    case 'Tag':
-      return Archive;
-    default:
-      return Single;
+  // No WordPress fallback - only Sanity supported
+  if (import.meta.env.DEV) {
+    console.warn('⚠️ Unknown data source or node type:', node);
   }
+  return Single;
 }
