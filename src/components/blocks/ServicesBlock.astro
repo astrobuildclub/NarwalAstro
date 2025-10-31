@@ -1,14 +1,30 @@
 ---
 // Import Components & Scripts
+import { PortableText } from 'astro-portabletext';
 
 // Define Types
 interface Props{
   title: string;
-  services: any;
+  services: Array<{
+    _id: string;
+    title: string;
+    content?: any[]; // Portable Text
+  }>;
+  layout?: 'list' | 'grid' | 'cards';
+  showDescriptions?: boolean;
 }
 
 // Define Vars
-const {title, services} = Astro.props;
+const { title, services, layout = 'list', showDescriptions = true } = Astro.props;
+
+// PortableText components
+const components = {
+  types: {},
+  marks: {},
+  block: {},
+  list: {},
+  listItem: {},
+};
 ---
 
 <!-- ServicesBlock -->
@@ -17,12 +33,15 @@ const {title, services} = Astro.props;
   
   <div class="mt-8">
     {services &&
-      services.map((service:any)=>( // service
-
+      services.map((service) => (
         <!-- Service -->
         <div class="grid gap-2 py-12 md:gap-8 service-item service md:grid-cols-2">
           <h3 class="service-name">{service.title}</h3>
-          <div class="service-desc" set:html={service.content} />
+          {showDescriptions && service.content && (
+            <div class="service-desc">
+              <PortableText value={service.content} components={components} />
+            </div>
+          )}
         </div>
       ))
     } 

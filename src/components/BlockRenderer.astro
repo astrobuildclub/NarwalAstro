@@ -78,7 +78,9 @@ const { prefix, blocks } = Astro.props;
         case 'servicesBlock':
           return <ServicesBlock 
                     title={block.title} 
-                    services={block.services} />
+                    services={block.services}
+                    layout={block.layout}
+                    showDescriptions={block.showDescriptions} />
         case 'clientsBlock':
           return <ClientsBlock 
                     title={block.title} 
