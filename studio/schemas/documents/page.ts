@@ -66,7 +66,12 @@ export default defineType({
       name: 'introCols',
       type: 'array',
       title: 'Intro Columns',
-      description: 'Maximum 2 columns for intro text',
+      description: ({ document }) => {
+        const isWorkPage = document?.pageType === 'work';
+        return isWorkPage
+          ? 'Maximum 1 column for Work Overview pages (Project Filter will be in column 2)'
+          : 'Maximum 2 columns for intro text';
+      },
       of: [
         {
           type: 'object',
@@ -132,7 +137,17 @@ export default defineType({
           },
         },
       ],
-      validation: (Rule) => Rule.max(2),
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const isWorkPage = context.document?.pageType === 'work';
+          if (isWorkPage && value && value.length > 1) {
+            return 'Work Overview pages can only have 1 intro column';
+          }
+          if (!isWorkPage && value && value.length > 2) {
+            return 'Maximum 2 columns allowed';
+          }
+          return true;
+        }),
       group: 'content',
     }),
     defineField({

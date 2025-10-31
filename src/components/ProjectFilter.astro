@@ -19,7 +19,13 @@ const {services} = Astro.props;
   function filterProjects(service) {
     const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach(card => {
-      const services = card.getAttribute('data-services').split(' ');
+      const dataServices = card.getAttribute('data-services');
+      if (!dataServices) {
+        // If no services attribute, show all or hide based on service filter
+        card.style.display = service === 'all' ? 'block' : 'none';
+        return;
+      }
+      const services = dataServices.split(' ').filter(Boolean);
       if (services.includes(service) || service === 'all') {
         card.style.display = 'block';
       } else {

@@ -3,24 +3,37 @@ import PageTitle from '../PageTitle.astro';
 import PageIntro from '../PageIntro.astro'
 import ProjectList from '../ProjectList.astro'
 import ProjectFilter from '../ProjectFilter.astro';
+import { PortableText } from 'astro-portabletext';
 
 const { data } = Astro.props;
 const pageTitle = data.title || "";
-const pageIntroduction = data.content;
-const projectData = data.work.nodes;
+const pageIntroduction = data.introCols?.[0]?.content;
+const projectData = data.work?.nodes || [];
 
+// Extract services from Sanity structure (services is an array with title property)
 const allServices = projectData.flatMap((project:any) => 
-  project.projectMeta?.services?.nodes?.map((service:any) => service.title) || []
+  project.services?.map((service:any) => service.title) || []
 ).filter(Boolean);
 
 const uniqueServices = [...new Set(allServices)];
+
+// PortableText components
+const components = {
+  types: {},
+  marks: {},
+  block: {},
+  list: {},
+  listItem: {},
+};
 ---
 
 <PageTitle title={pageTitle} />
 <PageIntro>
-  {pageIntroduction &&
-    <Fragment slot="column-one" set:html={pageIntroduction} />
-  }
+  {pageIntroduction && Array.isArray(pageIntroduction) ? (
+    <Fragment slot="column-one">
+      <PortableText value={pageIntroduction} components={components} />
+    </Fragment>
+  ) : null}
   <ProjectFilter services={uniqueServices} slot="column-two" />
 </PageIntro>
 
