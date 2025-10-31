@@ -29,8 +29,8 @@ if (import.meta.env.DEV) {
 }
 ---
 
-<nav class="fixed z-10 w-full">
-  <div class="flex justify-between items-center w-full inner">
+<nav class="fixed z-10 w-full page-layout">
+  <div class="flex justify-between items-center page inner">
     <div class="flex items-center mr-6 text-white">
     <a href="/" aria-label="Homepage">
       <svg
@@ -90,14 +90,16 @@ if (import.meta.env.DEV) {
 <style>
 
 nav{
-  padding: var(--space-xs) var(--site-padding);
+  /* padding: var(--space-xs) var(--site-padding); */
   z-index: 999;
   mix-blend-mode: exclusion;
+  
 }
 
 nav .inner{
   position: relative;
   z-index: 2;
+  margin-block: var(--space-s);
 }
 
 nav::after{

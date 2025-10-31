@@ -1,7 +1,7 @@
 ---
 const {title} = Astro.props;
 ---
-<header>
+<header class="page">
   <h1 class="heroTitle">{title}</h1>
 </header>
 
@@ -11,7 +11,7 @@ const {title} = Astro.props;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    padding: 4rem var(--site-padding) 0 var(--site-padding);
+    padding-block: 4rem 0;
     min-height:20rem;
     height:30vh;
   }

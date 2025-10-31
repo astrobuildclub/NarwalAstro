@@ -4,34 +4,13 @@
 
 /* Note: install PostCSS Language Support for VScode, to remove "Unknown at Rule" */
 /* Copy & Paste the following command in your browser: vscode:extension/csstools.postcss   */
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 /*---------------------*/
 /* VARIABLES           */
 /*---------------------*/
-
-:root {
-  /* Colors */
-  /* --clr-white: #fff;
-  --clr-brand: #ff0051;
-  --clr-black: rgba(12, 12, 12);
-  --clr-rgb-dark: 10, 10, 10;
-  --clr-rgb-light: 240, 240, 240;
-  --clr-tag: rgba(var(--clr-rgb-light), 0.5); */
-
-  /* These variables are now defined in default.css and SCSS */
-
-  /* Modes - now handled by SCSS color system */
-
-  /* Fonts - now defined in default.css and SCSS */
-  /* --font-system: system-ui, sans-serif; */
-
-  /* Font Sizes - now handled by Utopia in SCSS */
-
-  /* Colors are now handled by SCSS color system */
-}
 
 /* Dark mode is now handled by DarkMode.astro component */
 

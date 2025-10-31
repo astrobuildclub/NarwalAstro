@@ -47,7 +47,7 @@ if (import.meta.env.DEV) {
 
 {
   content && content.length > 0 && (
-    <article class="project">
+    <article class="project full">
       <BlockRenderer prefix="ProjectContent" blocks={content} />
     </article>
   )
@@ -55,7 +55,7 @@ if (import.meta.env.DEV) {
 
 {
   credits && credits.length > 0 && (
-    <section class="credits">
+    <section class="credits page">
       <div class="credits-content">
         <h2>Credits</h2>
         <div class="credits-text">
@@ -106,7 +106,7 @@ if (import.meta.env.DEV) {
   }
 
   .credits {
-    padding: var(--site-padding);
+    
     background: var(--clr-light);
   }
 

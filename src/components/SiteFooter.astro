@@ -6,10 +6,10 @@ import Newsletter from '../components/Newsletter.astro'
 const currentYear = new Date().getFullYear()
 ---
 
-<footer class="flex bottom-0 flex-col h-screen md:fixed -z-10">
-  <!-- <CallToAction /> -->
+<footer class="relative content-around h-screen md:bottom-0 page-layout md:fixed -z-10">
   
-    <div class="flex flex-col flex-grow justify-between">
+  
+    <div class="flex flex-col flex-grow justify-between page">
        <a href="/" aria-label="Homepage">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -29,13 +29,16 @@ const currentYear = new Date().getFullYear()
     </a>
       <p class="text-8xl tracking-tight text-balance">We're always up for conversation
 <br> <span class="">Let's connect</span></p>
-      <div class="grid grid-cols-1 gap-12 lg:gap-24 md:grid-cols-4">
+      
+      
+    </div>
+    <di class="page"><div class="grid grid-cols-1 gap-12 lg:gap-24 md:grid-cols-4">
         <Widget title="Join our Newsletter">
           <Newsletter />
         </Widget>
         <Widget title="Address">
           <address>
-            <ul role="list">
+            <ul role="list" class="list-none">
               <li>Narwal Creative</li>
               <li>Westerkade 4 — 5</li>
               <li>3511 HA Utrecht</li>
@@ -44,7 +47,7 @@ const currentYear = new Date().getFullYear()
           </address>
         </Widget>
         <Widget title="Socialize">
-          <ul role="list">
+          <ul role="list" class="list-none">
             <li><a href="https://www.instagram.com/narwalcreative/" aria-label="Follow us on instagram" target="_blank">Instagram</a></li>
             <li><a href="https://www.behance.net/jelmerscheffer" aria-label="Follow us on behance" target="_blank">Behance</a></li>
             <li><a href="https://www.linkedin.com/company/narwal-creative" aria-label="Follow us on linkedin" target="_blank">Linkedin</a></li>
@@ -57,9 +60,7 @@ const currentYear = new Date().getFullYear()
           </ul>
         </Widget>
       </div>
-      
-    </div>
-  <div class="flex justify-between text-xs text-2xs legal">
+  <div class="flex justify-between items-end text-xs text-2xs legal page">
      <button data-cc="show-preferencesModal" type="button" class="">
             Cookie voorkeuren
           </button>
@@ -72,7 +73,7 @@ const currentYear = new Date().getFullYear()
         </div>
       </div>
       
-  <!-- CookieConsent component -->
+  </div>
   
 </footer>
 
@@ -92,14 +93,10 @@ const currentYear = new Date().getFullYear()
 
   footer {
     width: 100%;
-    position: fixed;
-    min-height: 960px;
+    
+    min-height: 100vh;
   }
 
-footer > div {
-    padding: 2rem var(--site-padding) 1rem var(--site-padding);
-    
-  }
 
   ul li {
     margin-block: 0.0125em;
@@ -114,7 +111,7 @@ footer > div {
     }
 
   footer .legal {
-    padding: var(--space-l) var(--site-padding);
+    
     font-size: var(--fs--3);
   }
 

@@ -66,7 +66,7 @@ if (import.meta.env.DEV) {
 ---
 
 <section
-  class="projects-wrapper"
+  class="projects-wrapper full"
   class:list={[
     {
       'layout-grid': layout === 'grid',
@@ -74,7 +74,7 @@ if (import.meta.env.DEV) {
     },
   ]}
 >
-  <div class="grid gap-y-8 gap-12 md:gap-y-12 lg:gap-y-24 project-list start">
+  <div class="grid gap-y-8 gap-12 md:gap-y-12 lg:gap-y-24 project-list start page">
     {
       projectCards &&
         projectCards.map((item: any) => {

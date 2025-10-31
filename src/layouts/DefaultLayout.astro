@@ -81,7 +81,7 @@ const primaryMenu = menus.nodes[0]
 
   <body>
     <SiteNavigation menu={primaryMenu} generalSettings={generalSettings} />
-    <main>
+    <main class="page-layout md:mb-[100vh]">
       <slot />
     </main>
     <SiteFooter />
@@ -103,7 +103,7 @@ const primaryMenu = menus.nodes[0]
 
 <style>
   main {
-    margin-bottom: 100vh;
+    
     padding-bottom: 20vh;
     background-color: var(--white);
     position: relative;

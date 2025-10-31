@@ -2,22 +2,19 @@
 const { class: customClass } = Astro.props;
 ---
 
-<section class={`page-intro ${customClass}`}>
-  <div class="grid gap-4 md:gap-12 md:grid-cols-2 content-baseline">
+<section class={`page-intro full ${customClass}`}>
+  <div class="grid gap-4 md:gap-12 page md:grid-cols-2 content-baseline">
     <div class="col-1 col self-baseline">
       <slot name="column-one" />
     </div>
-    <div class="self-auto col-2 col ">
+    <div class="self-auto col-2 col">
       <slot name="column-two" />
     </div>
   </div>
 </section>
 
 <style>
-  section {
-    padding: calc(1.5*var(--site-padding)) var(--site-padding);
-    
-  }
+
 
   .col-1 {
     font-size: var(--fs-1);
@@ -61,10 +58,5 @@ const { class: customClass } = Astro.props;
   color: var(--text);
 }
 
-  
-  @media (max-width: 768px) {
-    section {
-      padding: var(--site-padding);
-    }
-  }
+ 
 </style>

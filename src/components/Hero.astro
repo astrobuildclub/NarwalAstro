@@ -14,9 +14,9 @@ const heroDescription = data.intro
 const heroBackgroundColor = data.color
 ---
 
-<section class:list={['hero', { is_cover: isCover }]}>
-    <div class="grid gap-4 mt-40 lg:mt-0 lg:gap-12 md:grid-cols-12 lg:grid-cols-16 md:gap-4 full">
-       <div class="order-1 md:col-span-8 lg:order-2 lg:col-span-7 title ">
+<section class:list={['hero page', { is_cover: isCover }]}>
+    <div class="grid gap-4 mt-40 lg:mt-0 lg:gap-12 md:grid-cols-12 lg:grid-cols-16 md:gap-4">
+       <div class="order-1 md:col-span-8 lg:order-2 lg:col-span-7 title">
         <h3 class="hero-meta">Title</h3>
         {heroTitle && <h1 class="hero-title">{heroTitle}</h1>}
       </div>
@@ -27,7 +27,7 @@ const heroBackgroundColor = data.color
         
      </div>
 }
-      <div class="order-3 md:col-span-12 lg:order-3 lg:col-span-6 descritpion">
+      <div class="order-3 md:col-span-12 lg:order-3 lg:col-span-6">
        <p class="hero-meta">Description</p>
       {heroDescription && <p class="text-xs md:text-xl hero-description">{heroDescription}</p>}
       </div>
@@ -40,19 +40,17 @@ const heroBackgroundColor = data.color
     display: flex;
     align-items:end;
     justify-content: center;
-    width: 100%;
+    
     min-height: 60vh;
     text-wrap: balance;
-    background-color: var(--heroBackgroundColor);
-    padding: var(--site-padding);
+    
+    
   }
   .is_cover {
     /* background-color: red;  */
     /* wat was het idee ook alweer hier? */
   }
-  .content {
-    padding: 6rem 8rem;
-  }
+ 
 
   .hero-meta {
     opacity: 0.6;
