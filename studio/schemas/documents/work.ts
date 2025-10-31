@@ -171,6 +171,7 @@ export default defineType({
               { title: 'Small', value: 'small' },
               { title: 'Default', value: 'default' },
               { title: 'Large', value: 'large' },
+              { title: 'Full', value: 'full' },
             ],
           },
           initialValue: 'default',
