@@ -102,7 +102,7 @@ export default defineType({
       return {
         title: title || 'Text Grid Block',
         subtitle: `Text Grid Block • ${items?.length || 0} items`,
-        media: media || '📝',
+        media: media,
       };
     },
   },

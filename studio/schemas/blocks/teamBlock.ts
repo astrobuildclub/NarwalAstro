@@ -56,7 +56,6 @@ export default defineType({
       return {
         title: title || 'Team Block',
         subtitle: `Team Block • ${layout || 'grid'} • ${members?.length || 0} members`,
-        media: '👥',
       };
     },
   },
