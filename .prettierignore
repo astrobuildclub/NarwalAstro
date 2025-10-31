@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+.astro
+.sanity
+
+# Generated files
+*.min.js
+*.min.css
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
